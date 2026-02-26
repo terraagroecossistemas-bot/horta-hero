@@ -293,7 +293,83 @@
                 gap: 1rem;
             }
         }
-    </style>
+    
+        /* Modal de Detalhes */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s ease-in-out;
+        }
+        .dark .modal-content {
+            background-color: #374151;
+            color: #e5e7eb;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .close-modal {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #6b7280;
+            cursor: pointer;
+        }
+        .close-modal:hover {
+            color: #000;
+        }
+        .dark .close-modal:hover {
+            color: #fff;
+        }
+        
+        /* Botão de Tema */
+        .theme-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #22c55e;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+</style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
@@ -2695,6 +2771,40 @@ function renderShop() {
     {"id": "jabuticaba", "name": "Jabuticaba", "icon": "\ud83d\udfe3", "daysToHarvest": 1825, "basePoints": 500, "season": "Primavera", "type": "Fruto", "stratum": "Baixo", "succession": "Cl\u00edmax", "difficulty": "dif\u00edcil", "lifecycle": "Perene", "carbonSequestration": 45.0, "benefits": ["Nativa", "Altamente nutritiva", "Ornamental"], "sintropicNotes": "Planta de sub-bosque que aprecia sombra parcial e solo muito \u00famido.", "notes": "Crescimento lento, mas muito recompensador.", "companions": ["Caf\u00e9", "Samambaias"], "waterFrequency": 4},
     {"id": "papaya", "name": "Mam\u00e3o", "icon": "\ud83e\udd6d", "daysToHarvest": 270, "basePoints": 90, "season": "Ano Todo", "type": "Fruto", "stratum": "Emergente", "succession": "Secund\u00e1ria", "difficulty": "m\u00e9dio", "lifecycle": "Perene", "carbonSequestration": 15.0, "benefits": ["Crescimento r\u00e1pido", "Rico em enzimas", "Ocupa pouco espa\u00e7o horizontal"], "sintropicNotes": "Planta de ciclo curto que ocupa o estrato emergente temporariamente.", "notes": "Sens\u00edvel ao excesso de \u00e1gua nas ra\u00edzes.", "companions": ["Banana", "Caf\u00e9"], "waterFrequency": 2},
     {"id": "banana", "name": "Banana", "icon": "\ud83c\udf4c", "daysToHarvest": 365, "basePoints": 120, "season": "Ano Todo", "type": "Fruto", "stratum": "Alto", "succession": "Secund\u00e1ria", "difficulty": "f\u00e1cil", "lifecycle": "Perene", "carbonSequestration": 25.0, "benefits": ["Produ\u00e7\u00e3o de biomassa", "Reten\u00e7\u00e3o de \u00e1gua", "Alimento energ\u00e9tico"], "sintropicNotes": "O 'tanque de \u00e1gua' da agrofloresta. Essencial para manter a umidade do sistema.", "notes": "Exige muita mat\u00e9ria org\u00e2nica e pot\u00e1ssio.", "companions": ["Caf\u00e9", "Cacau"], "waterFrequency": 3}
+,
+    {"id": "tomato", "name": "Tomate", "icon": "\ud83c\udf45", "daysToHarvest": 70, "basePoints": 80, "season": "Primavera/Ver\u00e3o", "type": "Fruto", "stratum": "M\u00e9dio", "succession": "Placenta", "difficulty": "m\u00e9dio", "lifecycle": "Anual", "carbonSequestration": 4.5, "benefits": ["Licopeno", "Vitamina C", "Vers\u00e1til"], "sintropicNotes": "Planta que aprecia tutoramento e solo rico em mat\u00e9ria org\u00e2nica.", "notes": "Pode sofrer com doen\u00e7as f\u00fangicas em clima \u00famido.", "companions": ["Manjeric\u00e3o", "Cenoura", "Cebola"], "waterFrequency": 3},
+    {"id": "lettuce", "name": "Alface", "icon": "\ud83e\udd6c", "daysToHarvest": 50, "basePoints": 35, "season": "Outono/Inverno", "type": "Folha", "stratum": "Baixo", "succession": "Placenta", "difficulty": "f\u00e1cil", "lifecycle": "Anual", "carbonSequestration": 1.8, "benefits": ["Baixa caloria", "Fibras", "Crescimento r\u00e1pido"], "sintropicNotes": "Ideal para ocupar espa\u00e7os entre plantas maiores.", "notes": "Prefere temperaturas mais frias.", "companions": ["Cenoura", "Rabanete"], "waterFrequency": 3},
+    {"id": "spinach", "name": "Espinafre", "icon": "\ud83e\udd6c", "daysToHarvest": 45, "basePoints": 40, "season": "Outono/Inverno", "type": "Folha", "stratum": "Baixo", "succession": "Placenta", "difficulty": "f\u00e1cil", "lifecycle": "Anual", "carbonSequestration": 2.0, "benefits": ["Ferro", "C\u00e1lcio", "Prote\u00edna"], "sintropicNotes": "Planta de ciclo curto que prepara o solo para culturas maiores.", "notes": "Colha as folhas externas primeiro.", "companions": ["Morango", "Beterraba"], "waterFrequency": 2},
+    {"id": "carrot", "name": "Cenoura", "icon": "\ud83e\udd55", "daysToHarvest": 70, "basePoints": 50, "season": "Ano Todo", "type": "Raiz", "stratum": "Baixo", "succession": "Placenta", "difficulty": "m\u00e9dio", "lifecycle": "Anual", "carbonSequestration": 2.5, "benefits": ["Beta-caroteno", "Doce", "Longa conserva\u00e7\u00e3o"], "sintropicNotes": "Raiz que ajuda a estruturar o solo.", "notes": "Gosta de solo solto e bem drenado.", "companions": ["Cebola", "Alface"], "waterFrequency": 2},
+    {"id": "cucumber", "name": "Pepino", "icon": "\ud83e\udd52", "daysToHarvest": 60, "basePoints": 45, "season": "Primavera/Ver\u00e3o", "type": "Fruto", "stratum": "Rasteiro", "succession": "Placenta", "difficulty": "f\u00e1cil", "lifecycle": "Anual", "carbonSequestration": 3.2, "benefits": ["Hidrata\u00e7\u00e3o", "Baixa caloria", "Crescimento r\u00e1pido"], "sintropicNotes": "Trepadeira que pode usar outras plantas como suporte.", "notes": "Necessita de bastante \u00e1gua.", "companions": ["Milho", "Rabanete"], "waterFrequency": 4},
+    {"id": "radish", "name": "Rabanete", "icon": "\ud83c\udf36\ufe0f", "daysToHarvest": 30, "basePoints": 25, "season": "Ano Todo", "type": "Raiz", "stratum": "Baixo", "succession": "Placenta", "difficulty": "f\u00e1cil", "lifecycle": "Anual", "carbonSequestration": 1.0, "benefits": ["Crescimento ultrarr\u00e1pido", "Pungente", "Descompacta solo"], "sintropicNotes": "Planta de ciclo curt\u00edssimo para ocupar espa\u00e7os vazios.", "notes": "Colha quando ainda pequeno.", "companions": ["Alface", "Cenoura"], "waterFrequency": 2},
+    {"id": "zucchini", "name": "Abobrinha", "icon": "\ud83e\udd52", "daysToHarvest": 50, "basePoints": 55, "season": "Primavera/Ver\u00e3o", "type": "Fruto", "stratum": "Rasteiro", "succession": "Placenta", "difficulty": "f\u00e1cil", "lifecycle": "Anual", "carbonSequestration": 6.0, "benefits": ["Produ\u00e7\u00e3o abundante", "Vers\u00e1til", "Cobertura de solo"], "sintropicNotes": "Excelente para cobrir solo e suprimir ervas daninhas.", "notes": "Colha regularmente para estimular produ\u00e7\u00e3o.", "companions": ["Milho", "Feij\u00e3o"], "waterFrequency": 3},
+    {"id": "peas", "name": "Ervilha", "icon": "\ud83e\uded8", "daysToHarvest": 60, "basePoints": 50, "season": "Outono/Inverno", "type": "Gr\u00e3o", "stratum": "M\u00e9dio", "succession": "Placenta", "difficulty": "f\u00e1cil", "lifecycle": "Anual", "carbonSequestration": 7.5, "benefits": ["Fixa nitrog\u00eanio", "Prote\u00edna", "Doce"], "sintropicNotes": "Leguminosa que melhora o solo para pr\u00f3ximas culturas.", "notes": "Pode ser congelada para conserva\u00e7\u00e3o.", "companions": ["Cenoura", "Milho"], "waterFrequency": 2},
+    {"id": "corn", "name": "Milho", "icon": "\ud83c\udf3d", "daysToHarvest": 90, "basePoints": 75, "season": "Primavera/Ver\u00e3o", "type": "Gr\u00e3o", "stratum": "Alto", "succession": "Placenta", "difficulty": "m\u00e9dio", "lifecycle": "Anual", "carbonSequestration": 12.0, "benefits": ["Base alimentar", "Estrutura", "Energia"], "sintropicNotes": "Planta estruturante que suporta feij\u00e3o e ab\u00f3bora (Milpa).", "notes": "Necessita de muito espa\u00e7o.", "companions": ["Feij\u00e3o", "Ab\u00f3bora"], "waterFrequency": 2},
+    {"id": "basil", "name": "Manjeric\u00e3o", "icon": "\ud83c\udf3f", "daysToHarvest": 30, "basePoints": 30, "season": "Primavera/Ver\u00e3o", "type": "Folha", "stratum": "Baixo", "succession": "Placenta", "difficulty": "f\u00e1cil", "lifecycle": "Anual", "carbonSequestration": 1.2, "benefits": ["Aroma", "Medicinal", "Repele insetos"], "sintropicNotes": "Companheira ideal para tomate e outras hortali\u00e7as.", "notes": "Colha regularmente para estimular crescimento.", "companions": ["Tomate", "Piment\u00e3o"], "waterFrequency": 2},
+    {"id": "sunflower_alt", "name": "Girassol Gigante", "icon": "\ud83c\udf3b", "daysToHarvest": 120, "basePoints": 100, "season": "Primavera/Ver\u00e3o", "type": "Flor", "stratum": "Emergente", "succession": "Placenta", "difficulty": "f\u00e1cil", "lifecycle": "Anual", "carbonSequestration": 18.0, "benefits": ["Fitorremedia\u00e7\u00e3o", "Sementes", "Beleza"], "sintropicNotes": "Descompacta solo profundamente e atrai polinizadores.", "notes": "Pode atingir 2-3 metros de altura.", "companions": ["Milho", "Feij\u00e3o"], "waterFrequency": 2},
+    {"id": "lavender", "name": "Lavanda", "icon": "\ud83d\udc9c", "daysToHarvest": 90, "basePoints": 45, "season": "Primavera/Ver\u00e3o", "type": "Flor", "stratum": "M\u00e9dio", "succession": "Secund\u00e1ria", "difficulty": "f\u00e1cil", "lifecycle": "Perene", "carbonSequestration": 5.0, "benefits": ["Aroma", "Medicinal", "Atrai abelhas"], "sintropicNotes": "Planta r\u00fastica que melhora biodiversidade.", "notes": "Resiste bem \u00e0 seca.", "companions": ["Alecrim", "S\u00e1lvia"], "waterFrequency": 1},
+    {"id": "chamomile", "name": "Camomila", "icon": "\ud83c\udf3c", "daysToHarvest": 60, "basePoints": 35, "season": "Primavera/Ver\u00e3o", "type": "Flor", "stratum": "Baixo", "succession": "Placenta", "difficulty": "f\u00e1cil", "lifecycle": "Anual", "carbonSequestration": 1.5, "benefits": ["Ch\u00e1 calmante", "Medicinal", "Repele pragas"], "sintropicNotes": "Companheira que melhora sa\u00fade de plantas vizinhas.", "notes": "Auto-semeia facilmente.", "companions": ["Hortali\u00e7as em geral"], "waterFrequency": 2},
+    {"id": "nasturtium", "name": "Capuchinha", "icon": "\ud83c\udf3a", "daysToHarvest": 45, "basePoints": 40, "season": "Primavera/Ver\u00e3o", "type": "Flor", "stratum": "Rasteiro", "succession": "Placenta", "difficulty": "f\u00e1cil", "lifecycle": "Anual", "carbonSequestration": 2.0, "benefits": ["Comest\u00edvel", "Atrai af\u00eddeos", "Ornamental"], "sintropicNotes": "Planta armadilha que protege outras plantas de pragas.", "notes": "Flores e folhas s\u00e3o comest\u00edveis.", "companions": ["Tomate", "Ab\u00f3bora"], "waterFrequency": 2},
+    {"id": "cedar", "name": "Cedro", "icon": "\ud83c\udf32", "daysToHarvest": 2555, "basePoints": 800, "season": "Primavera", "type": "Madeira", "stratum": "Alto", "succession": "Cl\u00edmax", "difficulty": "dif\u00edcil", "lifecycle": "Perene", "carbonSequestration": 120.0, "benefits": ["Madeira nobre", "Longevidade", "Aroma"], "sintropicNotes": "\u00c1rvore de longo prazo que estrutura o sistema.", "notes": "Crescimento lento mas muito valioso.", "companions": ["Nativas"], "waterFrequency": 1},
+    {"id": "ipe", "name": "Ip\u00ea", "icon": "\ud83c\udf33", "daysToHarvest": 3650, "basePoints": 1200, "season": "Primavera", "type": "Madeira", "stratum": "Alto", "succession": "Cl\u00edmax", "difficulty": "dif\u00edcil", "lifecycle": "Perene", "carbonSequestration": 160.0, "benefits": ["Madeira extremamente dura", "Preserva\u00e7\u00e3o", "Longevidade"], "sintropicNotes": "Uma das \u00e1rvores mais valiosas da Mata Atl\u00e2ntica.", "notes": "Crescimento muito lento.", "companions": ["Nativas da Mata Atl\u00e2ntica"], "waterFrequency": 1},
+    {"id": "seringa", "name": "Seringueira", "icon": "\ud83c\udf33", "daysToHarvest": 1825, "basePoints": 500, "season": "Ano Todo", "type": "L\u00e1tex", "stratum": "Alto", "succession": "Secund\u00e1ria", "difficulty": "m\u00e9dio", "lifecycle": "Perene", "carbonSequestration": 80.0, "benefits": ["Produ\u00e7\u00e3o de borracha", "Valor comercial", "Sombra"], "sintropicNotes": "Planta de grande valor econ\u00f4mico em sistemas agroflorestais.", "notes": "Exige clima tropical.", "companions": ["Cacau", "Banana"], "waterFrequency": 2},
+    {"id": "moringa", "name": "Moringa", "icon": "\ud83c\udf3f", "daysToHarvest": 180, "basePoints": 150, "season": "Ano Todo", "type": "Folha", "stratum": "M\u00e9dio", "succession": "Secund\u00e1ria", "difficulty": "f\u00e1cil", "lifecycle": "Perene", "carbonSequestration": 35.0, "benefits": ["Superalimento", "R\u00e1pido crescimento", "M\u00faltiplos usos"], "sintropicNotes": "\u00c1rvore milagrosa com folhas altamente nutritivas.", "notes": "Resiste bem \u00e0 seca.", "companions": ["Hortali\u00e7as"], "waterFrequency": 1},
+    {"id": "mulberry", "name": "Amora", "icon": "\ud83e\uded0", "daysToHarvest": 730, "basePoints": 200, "season": "Ver\u00e3o", "type": "Fruto", "stratum": "M\u00e9dio", "succession": "Secund\u00e1ria", "difficulty": "f\u00e1cil", "lifecycle": "Perene", "carbonSequestration": 45.0, "benefits": ["Fruto saboroso", "Folhas para ra\u00e7\u00e3o", "R\u00e1pido crescimento"], "sintropicNotes": "\u00c1rvore vers\u00e1til que fornece alimento e ra\u00e7\u00e3o animal.", "notes": "Pode ser podada drasticamente.", "companions": ["Hortali\u00e7as", "Leguminosas"], "waterFrequency": 2},
+    {"id": "fig", "name": "Figueira", "icon": "\ud83e\uded0", "daysToHarvest": 730, "basePoints": 180, "season": "Ver\u00e3o", "type": "Fruto", "stratum": "M\u00e9dio", "succession": "Secund\u00e1ria", "difficulty": "f\u00e1cil", "lifecycle": "Perene", "carbonSequestration": 40.0, "benefits": ["Fruto nutritivo", "R\u00fastica", "Longa vida"], "sintropicNotes": "\u00c1rvore muito resistente que vive s\u00e9culos.", "notes": "Gosta de solo bem drenado.", "companions": ["Citros", "Goiaba"], "waterFrequency": 1},
+    {"id": "papaw", "name": "Ata/Graviola", "icon": "\ud83c\udf43", "daysToHarvest": 730, "basePoints": 220, "season": "Ver\u00e3o", "type": "Fruto", "stratum": "M\u00e9dio", "succession": "Secund\u00e1ria", "difficulty": "m\u00e9dio", "lifecycle": "Perene", "carbonSequestration": 50.0, "benefits": ["Fruto medicinal", "Propriedades curativas", "Valor comercial"], "sintropicNotes": "\u00c1rvore tropical com frutos muito valorizados.", "notes": "Sens\u00edvel ao frio.", "companions": ["Manga", "Abacate"], "waterFrequency": 2},
+    {"id": "mimosa", "name": "Mimosa", "icon": "\ud83c\udf3c", "daysToHarvest": 1095, "basePoints": 250, "season": "Primavera", "type": "Flor", "stratum": "Alto", "succession": "Secund\u00e1ria", "difficulty": "f\u00e1cil", "lifecycle": "Perene", "carbonSequestration": 60.0, "benefits": ["Fixa\u00e7\u00e3o de nitrog\u00eanio", "Flores amarelas", "R\u00e1pido crescimento"], "sintropicNotes": "Leguminosa arb\u00f3rea que recupera solos degradados.", "notes": "Pode ser invasora em alguns locais.", "companions": ["Nativas"], "waterFrequency": 1},
+    {"id": "albizia", "name": "Albizia", "icon": "\ud83c\udf33", "daysToHarvest": 1095, "basePoints": 280, "season": "Primavera", "type": "Folha", "stratum": "Alto", "succession": "Secund\u00e1ria", "difficulty": "f\u00e1cil", "lifecycle": "Perene", "carbonSequestration": 70.0, "benefits": ["Fixa\u00e7\u00e3o de nitrog\u00eanio", "Sombra rala", "Biomassa"], "sintropicNotes": "\u00c1rvore de sombra rala ideal para sistemas agroflorestais.", "notes": "Folhas caem facilmente, deixando o solo coberto.", "companions": ["Caf\u00e9", "Cacau"], "waterFrequency": 1},
+    {"id": "kale", "name": "Couve Crespa", "icon": "\ud83e\udd6c", "daysToHarvest": 60, "basePoints": 65, "season": "Outono/Inverno", "type": "Folha", "stratum": "M\u00e9dio", "succession": "Placenta", "difficulty": "f\u00e1cil", "lifecycle": "Anual", "carbonSequestration": 5.0, "benefits": ["Superalimento", "Resistente ao frio", "Longa produ\u00e7\u00e3o"], "sintropicNotes": "Planta muito nutritiva que resiste a geadas.", "notes": "Colha as folhas externas primeiro.", "companions": ["Cebola", "Alho"], "waterFrequency": 2},
+    {"id": "chard", "name": "Acelga", "icon": "\ud83e\udd6c", "daysToHarvest": 55, "basePoints": 50, "season": "Outono/Inverno", "type": "Folha", "stratum": "Baixo", "succession": "Placenta", "difficulty": "f\u00e1cil", "lifecycle": "Anual", "carbonSequestration": 3.0, "benefits": ["Folhas coloridas", "Nutritiva", "Produ\u00e7\u00e3o longa"], "sintropicNotes": "Planta vers\u00e1til com folhas e talos comest\u00edveis.", "notes": "Gosta de solo \u00famido.", "companions": ["Beterraba", "Cenoura"], "waterFrequency": 3},
+    {"id": "okra", "name": "Quiabo", "icon": "\ud83c\udf3f", "daysToHarvest": 60, "basePoints": 55, "season": "Primavera/Ver\u00e3o", "type": "Fruto", "stratum": "M\u00e9dio", "succession": "Placenta", "difficulty": "f\u00e1cil", "lifecycle": "Anual", "carbonSequestration": 4.0, "benefits": ["Mucilagem", "Nutritivo", "F\u00e1cil cultivo"], "sintropicNotes": "Planta tropical que gosta de calor.", "notes": "Colha quando ainda tenro.", "companions": ["Milho", "Feij\u00e3o"], "waterFrequency": 3},
+    {"id": "mint", "name": "Hortel\u00e3", "icon": "\ud83c\udf3f", "daysToHarvest": 30, "basePoints": 25, "season": "Ano Todo", "type": "Folha", "stratum": "Baixo", "succession": "Placenta", "difficulty": "f\u00e1cil", "lifecycle": "Perene", "carbonSequestration": 2.0, "benefits": ["Aroma", "Medicinal", "Repele insetos"], "sintropicNotes": "Planta invasora que pode ser controlada em vasos.", "notes": "Cresce rapidamente.", "companions": ["Hortali\u00e7as em geral"], "waterFrequency": 2},
+    {"id": "parsley", "name": "Salsa", "icon": "\ud83c\udf3f", "daysToHarvest": 70, "basePoints": 30, "season": "Ano Todo", "type": "Folha", "stratum": "Baixo", "succession": "Placenta", "difficulty": "f\u00e1cil", "lifecycle": "Bienal", "carbonSequestration": 1.5, "benefits": ["Tempero", "Vitaminas", "Atrai insetos ben\u00e9ficos"], "sintropicNotes": "Companheira que atrai insetos polinizadores.", "notes": "Demora para germinar.", "companions": ["Tomate", "Cenoura"], "waterFrequency": 2},
+    {"id": "dill", "name": "Endro", "icon": "\ud83c\udf3f", "daysToHarvest": 40, "basePoints": 25, "season": "Primavera/Outono", "type": "Folha", "stratum": "M\u00e9dio", "succession": "Placenta", "difficulty": "f\u00e1cil", "lifecycle": "Anual", "carbonSequestration": 1.2, "benefits": ["Tempero", "Medicinal", "Atrai polinizadores"], "sintropicNotes": "Erva que atrai insetos ben\u00e9ficos para o sistema.", "notes": "Auto-semeia facilmente.", "companions": ["Hortali\u00e7as em geral"], "waterFrequency": 2},
+    {"id": "turnip", "name": "Nabo", "icon": "\ud83d\udfe4", "daysToHarvest": 60, "basePoints": 40, "season": "Outono/Inverno", "type": "Raiz", "stratum": "Baixo", "succession": "Placenta", "difficulty": "f\u00e1cil", "lifecycle": "Anual", "carbonSequestration": 2.5, "benefits": ["Raiz nutritiva", "Folhas comest\u00edveis", "R\u00fastico"], "sintropicNotes": "Planta que aproveita bem o espa\u00e7o vertical.", "notes": "Gosta de clima frio.", "companions": ["Cenoura", "Alface"], "waterFrequency": 2},
+    {"id": "potato", "name": "Batata", "icon": "\ud83e\udd54", "daysToHarvest": 90, "basePoints": 85, "season": "Outono/Inverno", "type": "Raiz", "stratum": "Baixo", "succession": "Placenta", "difficulty": "m\u00e9dio", "lifecycle": "Anual", "carbonSequestration": 8.0, "benefits": ["Alimento b\u00e1sico", "Alto rendimento", "Vers\u00e1til"], "sintropicNotes": "Planta que melhora estrutura do solo.", "notes": "Necessita de solo bem solto.", "companions": ["Milho", "Feij\u00e3o"], "waterFrequency": 2},
+    {"id": "ginger", "name": "Gengibre", "icon": "\ud83d\udfe4", "daysToHarvest": 270, "basePoints": 120, "season": "Ano Todo", "type": "Raiz", "stratum": "Baixo", "succession": "Placenta", "difficulty": "m\u00e9dio", "lifecycle": "Perene", "carbonSequestration": 5.0, "benefits": ["Medicinal", "Tempero", "Valor comercial"], "sintropicNotes": "Planta tropical que aprecia sombra parcial.", "notes": "Colheita ap\u00f3s 8-10 meses.", "companions": ["Banana", "Coco"], "waterFrequency": 2},
+    {"id": "turmeric", "name": "C\u00farcuma", "icon": "\ud83d\udfe1", "daysToHarvest": 240, "basePoints": 130, "season": "Ano Todo", "type": "Raiz", "stratum": "Baixo", "succession": "Placenta", "difficulty": "m\u00e9dio", "lifecycle": "Perene", "carbonSequestration": 6.0, "benefits": ["Anti-inflamat\u00f3ria", "Tempero", "Medicinal"], "sintropicNotes": "Planta tropical que melhora com sombra parcial.", "notes": "Colheita ap\u00f3s 7-10 meses.", "companions": ["Gengibre", "Banana"], "waterFrequency": 2}
 ];
     
     if (!items) return;
@@ -2901,5 +3011,113 @@ window.onload = () => {
 };
 </script>
 
+
+    <!-- Modal de Detalhes da Planta -->
+    <div id="plantModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="plantDetails"></div>
+        </div>
+    </div>
+    
+    <!-- Botão de Tema -->
+    <button class="theme-toggle" id="themeToggle" title="Alternar tema">🌙</button>
+    
+    <!-- Script para funcionalidades avançadas -->
+    <script>
+        // Tema Dark/Light
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+        
+        // Carregar tema salvo
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        if (savedTheme === 'dark') {
+            htmlElement.classList.add('dark');
+            themeToggle.textContent = '☀️';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            const isDark = htmlElement.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            themeToggle.textContent = isDark ? '☀️' : '🌙';
+        });
+        
+        // Modal de Detalhes
+        const modal = document.getElementById('plantModal');
+        const closeModal = document.querySelector('.close-modal');
+        
+        function showPlantDetails(plant) {
+            const detailsHTML = `
+                <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">${plant.icon}</div>
+                    <h2 style="margin: 0.5rem 0; font-size: 1.75rem;">${plant.name}</h2>
+                    <p style="margin: 0.25rem 0; color: #6b7280;">${plant.type} • ${plant.stratum}</p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div style="background: #f0fdf4; padding: 1rem; border-radius: 0.5rem; text-align: center;">
+                        <div style="font-size: 0.875rem; color: #6b7280;">Dias para Colheita</div>
+                        <div style="font-size: 1.5rem; font-weight: bold; color: #22c55e;">${plant.daysToHarvest}</div>
+                    </div>
+                    <div style="background: #f0fdf4; padding: 1rem; border-radius: 0.5rem; text-align: center;">
+                        <div style="font-size: 0.875rem; color: #6b7280;">Sequestro de Carbono</div>
+                        <div style="font-size: 1.5rem; font-weight: bold; color: #22c55e;">${plant.carbonSequestration} kg</div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="margin-top: 0; margin-bottom: 0.5rem;">Benefícios</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        ${plant.benefits.map(b => `<span style="background: #dbeafe; color: #1e40af; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem;">${b}</span>`).join('')}
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="margin-top: 0; margin-bottom: 0.5rem;">Notas Sintrópicas</h3>
+                    <p style="margin: 0; color: #6b7280; font-size: 0.875rem;">${plant.sintropicNotes}</p>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="margin-top: 0; margin-bottom: 0.5rem;">Plantas Companheiras</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        ${plant.companions.map(c => `<span style="background: #fef3c7; color: #92400e; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.875rem;">${c}</span>`).join('')}
+                    </div>
+                </div>
+                
+                <div style="background: #f3f4f6; padding: 1rem; border-radius: 0.5rem; font-size: 0.875rem; color: #6b7280;">
+                    <strong>Observações:</strong> ${plant.notes}
+                </div>
+            `;
+            
+            document.getElementById('plantDetails').innerHTML = detailsHTML;
+            modal.classList.add('show');
+        }
+        
+        closeModal.addEventListener('click', () => {
+            modal.classList.remove('show');
+        });
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('show');
+            }
+        });
+        
+        // Adicionar event listeners aos cards de plantas
+        document.addEventListener('DOMContentLoaded', () => {
+            const plantCards = document.querySelectorAll('[data-plant-id]');
+            plantCards.forEach(card => {
+                card.style.cursor = 'pointer';
+                card.addEventListener('click', () => {
+                    const plantId = card.getAttribute('data-plant-id');
+                    const plant = plantCatalog.find(p => p.id === plantId);
+                    if (plant) {
+                        showPlantDetails(plant);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
