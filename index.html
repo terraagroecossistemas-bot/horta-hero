@@ -369,6 +369,395 @@
             transform: scale(1.1);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
+
+        /* ===== PLANEJADOR DE HORTA ===== */
+        .garden-planner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .garden-canvas {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border: 2px dashed #22c55e;
+            border-radius: 1rem;
+            padding: 1rem;
+            min-height: 400px;
+            position: relative;
+            overflow: auto;
+        }
+        .dark .garden-canvas {
+            background: linear-gradient(135deg, #064e3b, #047857);
+            border-color: #10b981;
+        }
+        .plant-slot {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            margin: 0.5rem;
+            padding: 0.5rem;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            text-align: center;
+            cursor: grab;
+            transition: all 0.3s ease;
+        }
+        .plant-slot:hover {
+            border-color: #22c55e;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+        }
+        .plant-slot.active {
+            background: #f0fdf4;
+            border-color: #22c55e;
+        }
+        
+        /* ===== CALENDÁRIO DE PLANTIO ===== */
+        .planting-calendar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .season-box {
+            padding: 1rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .season-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .season-spring { background: linear-gradient(135deg, #dcfce7, #86efac); color: #166534; border-color: #22c55e; }
+        .season-summer { background: linear-gradient(135deg, #fef3c7, #fcd34d); color: #92400e; border-color: #f59e0b; }
+        .season-autumn { background: linear-gradient(135deg, #fed7aa, #fb923c); color: #92400e; border-color: #f97316; }
+        .season-winter { background: linear-gradient(135deg, #dbeafe, #93c5fd); color: #1e40af; border-color: #3b82f6; }
+        
+        /* ===== GUIA DE CONSÓRCIOS ===== */
+        .consortium-network {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .consortium-card {
+            background: linear-gradient(135deg, #f0fdf4, #dbeafe);
+            border: 2px solid #22c55e;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .consortium-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(34, 197, 94, 0.3);
+        }
+        .consortium-badge {
+            display: inline-block;
+            background: #22c55e;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin: 0.25rem;
+        }
+        
+        /* ===== RECEITAS ===== */
+        .recipes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .recipe-card {
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .dark .recipe-card {
+            background: #374151;
+        }
+        .recipe-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        .recipe-header {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        .recipe-body {
+            padding: 1rem;
+        }
+        .recipe-ingredients {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+        .recipe-nutrition {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+        }
+        
+        /* ===== COMPARADOR ===== */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .dark .comparison-table {
+            background: #374151;
+        }
+        .comparison-table th, .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .dark .comparison-table th, .dark .comparison-table td {
+            border-bottom-color: #6b7280;
+        }
+        .comparison-table th {
+            background: #f3f4f6;
+            font-weight: 600;
+        }
+        .dark .comparison-table th {
+            background: #4b5563;
+        }
+        
+        /* ===== ACHIEVEMENTS ===== */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .achievement-badge {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .dark .achievement-badge {
+            background: #4b5563;
+            border-color: #6b7280;
+        }
+        .achievement-badge.unlocked {
+            background: linear-gradient(135deg, #fef3c7, #fbbf24);
+            border-color: #f59e0b;
+            transform: scale(1.05);
+        }
+        .achievement-badge:hover {
+            transform: scale(1.1);
+        }
+        .achievement-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .achievement-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #6b7280;
+        }
+        .achievement-badge.unlocked .achievement-name {
+            color: #92400e;
+        }
+        
+        /* ===== DASHBOARD ===== */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .dashboard-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border-left: 4px solid #22c55e;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .dark .dashboard-card {
+            background: #374151;
+        }
+        .dashboard-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #22c55e;
+            margin: 0.5rem 0;
+        }
+        .dashboard-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        /* ===== NOTIFICAÇÕES ===== */
+        .notification {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            animation: slideInUp 0.3s ease-out;
+            z-index: 1001;
+            max-width: 300px;
+        }
+        .dark .notification {
+            background: #374151;
+            color: #e5e7eb;
+        }
+        @keyframes slideInUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .notification.success {
+            border-left: 4px solid #22c55e;
+        }
+        .notification.warning {
+            border-left: 4px solid #f59e0b;
+        }
+        .notification.info {
+            border-left: 4px solid #3b82f6;
+        }
+        
+        /* ===== RANKING ===== */
+        .ranking-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .ranking-row {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: 50px 1fr 100px;
+            gap: 1rem;
+            align-items: center;
+        }
+        .dark .ranking-row {
+            border-bottom-color: #6b7280;
+        }
+        .ranking-position {
+            font-weight: bold;
+            font-size: 1.25rem;
+            text-align: center;
+        }
+        .ranking-position.first { color: #fbbf24; }
+        .ranking-position.second { color: #a8a29e; }
+        .ranking-position.third { color: #d97706; }
+        .ranking-points {
+            font-weight: 600;
+            color: #22c55e;
+        }
+        
+        /* ===== ANIMAÇÕES AVANÇADAS ===== */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(34, 197, 94, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.8); }
+        }
+        .pulse { animation: pulse 2s infinite; }
+        .bounce { animation: bounce 1s infinite; }
+        .glow { animation: glow 2s infinite; }
+        
+        /* ===== TABS ===== */
+        .tabs-container {
+            margin-top: 1rem;
+        }
+        .tabs-nav {
+            display: flex;
+            gap: 0.5rem;
+            border-bottom: 2px solid #e5e7eb;
+            overflow-x: auto;
+        }
+        .dark .tabs-nav {
+            border-bottom-color: #6b7280;
+        }
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: #6b7280;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .tab-button:hover {
+            color: #22c55e;
+        }
+        .tab-button.active {
+            color: #22c55e;
+            border-bottom-color: #22c55e;
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* ===== LOJA ===== */
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .shop-item {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .dark .shop-item {
+            background: #374151;
+            border-color: #6b7280;
+        }
+        .shop-item:hover {
+            border-color: #22c55e;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+        }
+        .shop-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .shop-price {
+            color: #22c55e;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
 </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -3116,6 +3505,224 @@ window.onload = () => {
                         showPlantDetails(plant);
                     }
                 });
+            });
+        });
+    </script>
+
+    <!-- MEGA SCRIPT COM TODAS AS FUNCIONALIDADES -->
+    <script>
+        // ===== SISTEMA DE DADOS GLOBAL =====
+        const userProfile = {
+            name: 'Jardineiro Hero',
+            level: 1,
+            points: 0,
+            coins: 100,
+            garden: [],
+            recipes: [],
+            achievements: [],
+            plantingHistory: [],
+            notifications: []
+        };
+        
+        // ===== ACHIEVEMENTS DATABASE =====
+        const achievementsDB = [
+            { id: 'first_plant', name: 'Primeiro Plantio', icon: '🌱', description: 'Plante sua primeira planta', points: 50 },
+            { id: 'five_plants', name: 'Colecionador', icon: '🌿', description: 'Plante 5 plantas diferentes', points: 100 },
+            { id: 'perfect_consortium', name: 'Consórcio Perfeito', icon: '🤝', description: 'Crie um consórcio ideal', points: 150 },
+            { id: 'harvest_100kg', name: 'Colheita Abundante', icon: '🎯', description: 'Colha 100kg de alimentos', points: 200 },
+            { id: 'native_lover', name: 'Amigo das Nativas', icon: '🌳', description: 'Plante 5 plantas nativas', points: 150 },
+            { id: 'carbon_hero', name: 'Herói do Carbono', icon: '♻️', description: 'Sequestre 1 tonelada de CO2', points: 250 },
+            { id: 'recipe_master', name: 'Mestre Culinário', icon: '👨‍🍳', description: 'Prepare 10 receitas', points: 120 },
+            { id: 'community_star', name: 'Estrela da Comunidade', icon: '⭐', description: 'Compartilhe 5 planos', points: 100 }
+        ];
+        
+        // ===== RECEITAS DATABASE =====
+        const recipesDB = [
+            { id: 'salada_verde', name: 'Salada Verde Fresca', plants: ['Alface', 'Espinafre', 'Tomate'], nutrition: { proteina: 3, carboidrato: 8, gordura: 1 }, prepTime: 10 },
+            { id: 'sopa_legumes', name: 'Sopa de Legumes', plants: ['Cenoura', 'Cebola', 'Tomate', 'Abóbora'], nutrition: { proteina: 5, carboidrato: 15, gordura: 2 }, prepTime: 45 },
+            { id: 'suco_verde', name: 'Suco Verde Detox', plants: ['Espinafre', 'Cenoura', 'Gengibre'], nutrition: { proteina: 2, carboidrato: 12, gordura: 0 }, prepTime: 5 },
+            { id: 'chá_ervas', name: 'Chá de Ervas', plants: ['Hortelã', 'Camomila', 'Alecrim'], nutrition: { proteina: 0, carboidrato: 1, gordura: 0 }, prepTime: 10 }
+        ];
+        
+        // ===== PRAGAS DATABASE =====
+        const pestsDB = [
+            { id: 'afideos', name: 'Afídeos', plants: ['Tomate', 'Pimentão'], solutions: ['Spray de água', 'Óleo de neem', 'Joaninhas'], organic: true },
+            { id: 'lagarta_couve', name: 'Lagarta da Couve', plants: ['Repolho', 'Couve'], solutions: ['Bacillus thuringiensis', 'Remoção manual'], organic: true },
+            { id: 'mosca_frutas', name: 'Mosca das Frutas', plants: ['Manga', 'Goiaba'], solutions: ['Armadilhas', 'Rede de proteção'], organic: true }
+        ];
+        
+        // ===== FUNÇÕES DE NOTIFICAÇÃO =====
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideInUp 0.3s ease-out reverse';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+        
+        // ===== FUNÇÕES DE ACHIEVEMENTS =====
+        function unlockAchievement(achievementId) {
+            const achievement = achievementsDB.find(a => a.id === achievementId);
+            if (achievement && !userProfile.achievements.includes(achievementId)) {
+                userProfile.achievements.push(achievementId);
+                userProfile.points += achievement.points;
+                showNotification(`🏆 Desbloqueado: ${achievement.name}! +${achievement.points} pontos`, 'success');
+            }
+        }
+        
+        // ===== FUNÇÕES DO PLANEJADOR =====
+        function addPlantToGarden(plantId) {
+            const plant = plantCatalog.find(p => p.id === plantId);
+            if (plant) {
+                userProfile.garden.push(plant);
+                userProfile.points += 10;
+                showNotification(`✅ ${plant.name} adicionada ao seu jardim!`, 'success');
+                unlockAchievement('first_plant');
+            }
+        }
+        
+        // ===== FUNÇÕES DE RECEITAS =====
+        function prepareRecipe(recipeId) {
+            const recipe = recipesDB.find(r => r.id === recipeId);
+            if (recipe) {
+                userProfile.recipes.push(recipeId);
+                userProfile.points += 25;
+                showNotification(`👨‍🍳 Receita preparada: ${recipe.name}! +25 pontos`, 'success');
+                unlockAchievement('recipe_master');
+            }
+        }
+        
+        // ===== FUNÇÕES DE COMPARAÇÃO =====
+        function comparePlants(plantIds) {
+            const plants = plantIds.map(id => plantCatalog.find(p => p.id === id)).filter(p => p);
+            return plants;
+        }
+        
+        // ===== SISTEMA DE PONTOS EXPANDIDO =====
+        function addPoints(amount, reason) {
+            userProfile.points += amount;
+            showNotification(`+${amount} pontos - ${reason}`, 'success');
+        }
+        
+        function spendCoins(amount, item) {
+            if (userProfile.coins >= amount) {
+                userProfile.coins -= amount;
+                showNotification(`💰 Comprado: ${item}`, 'success');
+                return true;
+            } else {
+                showNotification('💸 Moedas insuficientes!', 'warning');
+                return false;
+            }
+        }
+        
+        // ===== CALENDÁRIO INTELIGENTE =====
+        function getPlantingSchedule(plantId) {
+            const plant = plantCatalog.find(p => p.id === plantId);
+            if (plant) {
+                return {
+                    plant: plant.name,
+                    season: plant.season,
+                    daysToHarvest: plant.daysToHarvest,
+                    waterFrequency: plant.waterFrequency
+                };
+            }
+        }
+        
+        // ===== CALCULADORA DE RENDIMENTO =====
+        function calculateYield(plantId, quantity) {
+            const plant = plantCatalog.find(p => p.id === plantId);
+            if (plant) {
+                const estimatedYield = quantity * (plant.basePoints / 10);
+                const estimatedCO2 = quantity * plant.carbonSequestration;
+                return {
+                    plant: plant.name,
+                    estimatedYield: estimatedYield.toFixed(2),
+                    estimatedCO2: estimatedCO2.toFixed(2),
+                    roi: ((estimatedYield * 5) - 50).toFixed(2)
+                };
+            }
+        }
+        
+        // ===== DASHBOARD DE PRODUTIVIDADE =====
+        function getDashboardStats() {
+            const totalCO2 = userProfile.garden.reduce((sum, p) => sum + p.carbonSequestration, 0);
+            const totalPoints = userProfile.points;
+            const plantCount = userProfile.garden.length;
+            const achievementCount = userProfile.achievements.length;
+            
+            return {
+                totalCO2: totalCO2.toFixed(2),
+                totalPoints: totalPoints,
+                plantCount: plantCount,
+                achievementCount: achievementCount,
+                level: Math.floor(totalPoints / 500) + 1
+            };
+        }
+        
+        // ===== SISTEMA DE NOTIFICAÇÕES =====
+        function scheduleNotification(message, delayMinutes) {
+            setTimeout(() => {
+                showNotification(message, 'info');
+            }, delayMinutes * 60 * 1000);
+        }
+        
+        // ===== GUIA DE CONSÓRCIOS =====
+        function getConsortiumRecommendations(plantId) {
+            const plant = plantCatalog.find(p => p.id === plantId);
+            if (plant && plant.companions) {
+                return plant.companions.map(name => 
+                    plantCatalog.find(p => p.name === name)
+                ).filter(p => p);
+            }
+            return [];
+        }
+        
+        // ===== INTEGRAÇÃO COM CLIMA =====
+        function getWeatherRecommendations(season) {
+            const recommendations = {
+                'Primavera/Verão': ['Tomate', 'Pimentão', 'Abobrinha', 'Pepino'],
+                'Outono/Inverno': ['Alface', 'Espinafre', 'Brócolis', 'Couve'],
+                'Ano Todo': ['Cenoura', 'Cebola', 'Alho', 'Batata Doce']
+            };
+            return recommendations[season] || [];
+        }
+        
+        // ===== RANKING GLOBAL =====
+        const globalRanking = [
+            { position: 1, name: 'João Silva', points: 5000, plants: 45 },
+            { position: 2, name: 'Maria Santos', points: 4800, plants: 42 },
+            { position: 3, name: 'Pedro Costa', points: 4600, plants: 40 },
+            { position: 4, name: 'Ana Oliveira', points: 4400, plants: 38 },
+            { position: 5, name: 'Carlos Mendes', points: 4200, plants: 36 }
+        ];
+        
+        // ===== LOJA DE ITENS =====
+        const shopItems = [
+            { id: 'seed_pack', name: 'Pacote de Sementes', icon: '🌱', price: 50, description: 'Sementes premium' },
+            { id: 'fertilizer', name: 'Fertilizante Orgânico', icon: '🥕', price: 75, description: 'Adubo natural' },
+            { id: 'tools', name: 'Kit de Ferramentas', icon: '🛠️', price: 100, description: 'Ferramentas de jardim' },
+            { id: 'greenhouse', name: 'Mini Estufa', icon: '🏠', price: 200, description: 'Proteção para mudas' },
+            { id: 'irrigation', name: 'Sistema de Rega', icon: '💧', price: 150, description: 'Rega automática' }
+        ];
+        
+        // ===== INICIALIZAÇÃO =====
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('✅ Sistema Horta Hero v2.0 carregado com sucesso!');
+            console.log('📊 Funcionalidades ativas:', {
+                'Planejador de Horta': true,
+                'Calendário Inteligente': true,
+                'Guia de Consórcios': true,
+                'Receitas': true,
+                'Achievements': true,
+                'Dashboard': true,
+                'Ranking': true,
+                'Loja': true,
+                'Notificações': true,
+                'Clima': true
             });
         });
     </script>
