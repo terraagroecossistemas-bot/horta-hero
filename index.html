@@ -758,6 +758,1046 @@
             font-weight: 600;
             margin-top: 0.5rem;
         }
+
+        /* ===== GRÁFICOS ===== */
+        .chart-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+        .dark .chart-container {
+            background: #374151;
+        }
+        
+        /* ===== MODAL DETALHES PLANTA ===== */
+        .plant-detail-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .plant-detail-modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .plant-detail-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s ease-in-out;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+        .dark .plant-detail-content {
+            background: #374151;
+            color: #e5e7eb;
+        }
+        .close-detail {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #6b7280;
+        }
+        .close-detail:hover {
+            color: #000;
+        }
+        .dark .close-detail:hover {
+            color: #fff;
+        }
+        
+        /* ===== ACHIEVEMENTS VISUAL ===== */
+        .achievements-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .achievement-item {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .dark .achievement-item {
+            background: #4b5563;
+            border-color: #6b7280;
+        }
+        .achievement-item.unlocked {
+            background: linear-gradient(135deg, #fef3c7, #fbbf24);
+            border-color: #f59e0b;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+        .achievement-item:hover {
+            transform: translateY(-4px);
+        }
+        .achievement-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .achievement-title {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: #1f2937;
+            margin-bottom: 0.25rem;
+        }
+        .dark .achievement-title {
+            color: #e5e7eb;
+        }
+        .achievement-desc {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+        
+        /* ===== LOJA VISUAL ===== */
+        .shop-products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .shop-product {
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .dark .shop-product {
+            background: #374151;
+        }
+        .shop-product:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        .shop-product-header {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+        .shop-product-body {
+            padding: 1rem;
+        }
+        .shop-product-name {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        .dark .shop-product-name {
+            color: #e5e7eb;
+        }
+        .shop-product-desc {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+        .shop-product-price {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #22c55e;
+            margin-bottom: 0.75rem;
+        }
+        .buy-button {
+            width: 100%;
+            padding: 0.5rem;
+            background: #22c55e;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .buy-button:hover {
+            background: #16a34a;
+            transform: scale(1.02);
+        }
+        
+        /* ===== RANKING VISUAL ===== */
+        .ranking-list {
+            margin-top: 1rem;
+        }
+        .ranking-item {
+            display: grid;
+            grid-template-columns: 60px 1fr 100px;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 0.75rem;
+            margin-bottom: 0.75rem;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .dark .ranking-item {
+            background: #374151;
+        }
+        .ranking-position {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+        }
+        .ranking-position.gold { color: #fbbf24; }
+        .ranking-position.silver { color: #a8a29e; }
+        .ranking-position.bronze { color: #d97706; }
+        .ranking-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .ranking-name {
+            font-weight: 600;
+            color: #1f2937;
+        }
+        .dark .ranking-name {
+            color: #e5e7eb;
+        }
+        .ranking-plants {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        .ranking-score {
+            font-weight: 600;
+            color: #22c55e;
+            text-align: right;
+        }
+        
+        /* ===== RECEITAS VISUAL ===== */
+        .recipes-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .recipe-item {
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .dark .recipe-item {
+            background: #374151;
+        }
+        .recipe-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        .recipe-header {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .recipe-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .recipe-time {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+        .recipe-body {
+            padding: 1rem;
+        }
+        .recipe-ingredients {
+            margin-bottom: 1rem;
+        }
+        .recipe-ingredients-title {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        .dark .recipe-ingredients-title {
+            color: #e5e7eb;
+        }
+        .recipe-ingredient {
+            font-size: 0.875rem;
+            color: #6b7280;
+            padding: 0.25rem 0;
+        }
+        .recipe-nutrition {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+        .nutrition-item {
+            background: #f3f4f6;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 0.75rem;
+        }
+        .dark .nutrition-item {
+            background: #4b5563;
+        }
+        .nutrition-label {
+            font-weight: 600;
+            color: #1f2937;
+        }
+        .dark .nutrition-label {
+            color: #e5e7eb;
+        }
+        .nutrition-value {
+            color: #22c55e;
+            font-weight: 600;
+        }
+        
+        /* ===== COMPARADOR VISUAL ===== */
+        .comparison-container {
+            margin-top: 1rem;
+            overflow-x: auto;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .dark .comparison-table {
+            background: #374151;
+        }
+        .comparison-table th {
+            background: #f3f4f6;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .dark .comparison-table th {
+            background: #4b5563;
+            border-bottom-color: #6b7280;
+        }
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .dark .comparison-table td {
+            border-bottom-color: #6b7280;
+        }
+        .comparison-table tr:hover {
+            background: #f9fafb;
+        }
+        .dark .comparison-table tr:hover {
+            background: #4b5563;
+        }
+        
+        /* ===== PRAGAS VISUAL ===== */
+        .pests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .pest-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #ef4444;
+        }
+        .dark .pest-card {
+            background: #374151;
+        }
+        .pest-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+        .dark .pest-name {
+            color: #e5e7eb;
+        }
+        .pest-plants {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+        .pest-solutions {
+            margin-top: 1rem;
+        }
+        .pest-solutions-title {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        .dark .pest-solutions-title {
+            color: #e5e7eb;
+        }
+        .solution-item {
+            background: #f0fdf4;
+            color: #166534;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+        
+        /* ===== PLANEJADOR VISUAL ===== */
+        .garden-planner-canvas {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border: 3px dashed #22c55e;
+            border-radius: 1rem;
+            padding: 2rem;
+            min-height: 500px;
+            margin-top: 1rem;
+            position: relative;
+            overflow: auto;
+        }
+        .dark .garden-planner-canvas {
+            background: linear-gradient(135deg, #064e3b, #047857);
+            border-color: #10b981;
+        }
+        .plant-position {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            margin: 1rem;
+            padding: 1rem;
+            background: white;
+            border: 2px solid #22c55e;
+            border-radius: 0.75rem;
+            text-align: center;
+            cursor: move;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(34, 197, 94, 0.2);
+        }
+        .plant-position:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+        .plant-icon {
+            font-size: 2rem;
+            margin-bottom: 0.25rem;
+        }
+        .plant-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        /* ===== ANIMAÇÕES MELHORADAS ===== */
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        .slide-down { animation: slideDown 0.3s ease-out; }
+        .pop-in { animation: popIn 0.4s ease-out; }
+        
+        /* ===== CALCULADORA CO2 ===== */
+        .calculator-form {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-top: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .dark .calculator-form {
+            background: #374151;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        .dark .form-label {
+            color: #e5e7eb;
+        }
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+        .dark .form-input {
+            background: #4b5563;
+            border-color: #6b7280;
+            color: #e5e7eb;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #22c55e;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+        }
+        .result-box {
+            background: #f0fdf4;
+            border: 2px solid #22c55e;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
+        .dark .result-box {
+            background: #064e3b;
+            border-color: #10b981;
+        }
+        .result-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #22c55e;
+            margin: 0.5rem 0;
+        }
+        .result-label {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        /* ===== GRÁFICOS ===== */
+        .chart-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+        .dark .chart-container {
+            background: #374151;
+        }
+        
+        /* ===== MODAL DETALHES PLANTA ===== */
+        .plant-detail-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .plant-detail-modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .plant-detail-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s ease-in-out;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+        .dark .plant-detail-content {
+            background: #374151;
+            color: #e5e7eb;
+        }
+        .close-detail {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #6b7280;
+        }
+        .close-detail:hover {
+            color: #000;
+        }
+        .dark .close-detail:hover {
+            color: #fff;
+        }
+        
+        /* ===== ACHIEVEMENTS VISUAL ===== */
+        .achievements-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .achievement-item {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            background: #f3f4f6;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .dark .achievement-item {
+            background: #4b5563;
+            border-color: #6b7280;
+        }
+        .achievement-item.unlocked {
+            background: linear-gradient(135deg, #fef3c7, #fbbf24);
+            border-color: #f59e0b;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+        .achievement-item:hover {
+            transform: translateY(-4px);
+        }
+        .achievement-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .achievement-title {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: #1f2937;
+            margin-bottom: 0.25rem;
+        }
+        .dark .achievement-title {
+            color: #e5e7eb;
+        }
+        .achievement-desc {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+        
+        /* ===== LOJA VISUAL ===== */
+        .shop-products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .shop-product {
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .dark .shop-product {
+            background: #374151;
+        }
+        .shop-product:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        .shop-product-header {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+        .shop-product-body {
+            padding: 1rem;
+        }
+        .shop-product-name {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        .dark .shop-product-name {
+            color: #e5e7eb;
+        }
+        .shop-product-desc {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+        .shop-product-price {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #22c55e;
+            margin-bottom: 0.75rem;
+        }
+        .buy-button {
+            width: 100%;
+            padding: 0.5rem;
+            background: #22c55e;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .buy-button:hover {
+            background: #16a34a;
+            transform: scale(1.02);
+        }
+        
+        /* ===== RANKING VISUAL ===== */
+        .ranking-list {
+            margin-top: 1rem;
+        }
+        .ranking-item {
+            display: grid;
+            grid-template-columns: 60px 1fr 100px;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 0.75rem;
+            margin-bottom: 0.75rem;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .dark .ranking-item {
+            background: #374151;
+        }
+        .ranking-position {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+        }
+        .ranking-position.gold { color: #fbbf24; }
+        .ranking-position.silver { color: #a8a29e; }
+        .ranking-position.bronze { color: #d97706; }
+        .ranking-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .ranking-name {
+            font-weight: 600;
+            color: #1f2937;
+        }
+        .dark .ranking-name {
+            color: #e5e7eb;
+        }
+        .ranking-plants {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+        .ranking-score {
+            font-weight: 600;
+            color: #22c55e;
+            text-align: right;
+        }
+        
+        /* ===== RECEITAS VISUAL ===== */
+        .recipes-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .recipe-item {
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .dark .recipe-item {
+            background: #374151;
+        }
+        .recipe-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        .recipe-header {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .recipe-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .recipe-time {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+        .recipe-body {
+            padding: 1rem;
+        }
+        .recipe-ingredients {
+            margin-bottom: 1rem;
+        }
+        .recipe-ingredients-title {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        .dark .recipe-ingredients-title {
+            color: #e5e7eb;
+        }
+        .recipe-ingredient {
+            font-size: 0.875rem;
+            color: #6b7280;
+            padding: 0.25rem 0;
+        }
+        .recipe-nutrition {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+        .nutrition-item {
+            background: #f3f4f6;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-size: 0.75rem;
+        }
+        .dark .nutrition-item {
+            background: #4b5563;
+        }
+        .nutrition-label {
+            font-weight: 600;
+            color: #1f2937;
+        }
+        .dark .nutrition-label {
+            color: #e5e7eb;
+        }
+        .nutrition-value {
+            color: #22c55e;
+            font-weight: 600;
+        }
+        
+        /* ===== COMPARADOR VISUAL ===== */
+        .comparison-container {
+            margin-top: 1rem;
+            overflow-x: auto;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .dark .comparison-table {
+            background: #374151;
+        }
+        .comparison-table th {
+            background: #f3f4f6;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .dark .comparison-table th {
+            background: #4b5563;
+            border-bottom-color: #6b7280;
+        }
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .dark .comparison-table td {
+            border-bottom-color: #6b7280;
+        }
+        .comparison-table tr:hover {
+            background: #f9fafb;
+        }
+        .dark .comparison-table tr:hover {
+            background: #4b5563;
+        }
+        
+        /* ===== PRAGAS VISUAL ===== */
+        .pests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .pest-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #ef4444;
+        }
+        .dark .pest-card {
+            background: #374151;
+        }
+        .pest-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+        .dark .pest-name {
+            color: #e5e7eb;
+        }
+        .pest-plants {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+        .pest-solutions {
+            margin-top: 1rem;
+        }
+        .pest-solutions-title {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        .dark .pest-solutions-title {
+            color: #e5e7eb;
+        }
+        .solution-item {
+            background: #f0fdf4;
+            color: #166534;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+        
+        /* ===== PLANEJADOR VISUAL ===== */
+        .garden-planner-canvas {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border: 3px dashed #22c55e;
+            border-radius: 1rem;
+            padding: 2rem;
+            min-height: 500px;
+            margin-top: 1rem;
+            position: relative;
+            overflow: auto;
+        }
+        .dark .garden-planner-canvas {
+            background: linear-gradient(135deg, #064e3b, #047857);
+            border-color: #10b981;
+        }
+        .plant-position {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            margin: 1rem;
+            padding: 1rem;
+            background: white;
+            border: 2px solid #22c55e;
+            border-radius: 0.75rem;
+            text-align: center;
+            cursor: move;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(34, 197, 94, 0.2);
+        }
+        .plant-position:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+        .plant-icon {
+            font-size: 2rem;
+            margin-bottom: 0.25rem;
+        }
+        .plant-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        /* ===== ANIMAÇÕES MELHORADAS ===== */
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        .slide-down { animation: slideDown 0.3s ease-out; }
+        .pop-in { animation: popIn 0.4s ease-out; }
+        
+        /* ===== CALCULADORA CO2 ===== */
+        .calculator-form {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-top: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .dark .calculator-form {
+            background: #374151;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+        .dark .form-label {
+            color: #e5e7eb;
+        }
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+        .dark .form-input {
+            background: #4b5563;
+            border-color: #6b7280;
+            color: #e5e7eb;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #22c55e;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+        }
+        .result-box {
+            background: #f0fdf4;
+            border: 2px solid #22c55e;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
+        .dark .result-box {
+            background: #064e3b;
+            border-color: #10b981;
+        }
+        .result-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #22c55e;
+            margin: 0.5rem 0;
+        }
+        .result-label {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
 </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -3724,6 +4764,592 @@ window.onload = () => {
                 'Notificações': true,
                 'Clima': true
             });
+        });
+    </script>
+
+    <!-- MODAL DETALHES PLANTA -->
+    <div id="plantDetailModal" class="plant-detail-modal">
+        <div class="plant-detail-content">
+            <span class="close-detail">&times;</span>
+            <div id="plantDetailBody"></div>
+        </div>
+    </div>
+    
+    <!-- SCRIPTS PARA MELHORIAS -->
+    <script>
+        // ===== MODAL DETALHES DA PLANTA =====
+        const plantDetailModal = document.getElementById('plantDetailModal');
+        const closeDetailBtn = document.querySelector('.close-detail');
+        
+        function showPlantDetail(plantId) {
+            const plant = plantCatalog.find(p => p.id === plantId);
+            if (!plant) return;
+            
+            const html = `
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <div style="font-size: 5rem; margin-bottom: 1rem;">${plant.icon}</div>
+                    <h2 style="margin: 0.5rem 0; font-size: 2rem; color: #1f2937;">${plant.name}</h2>
+                    <p style="margin: 0.5rem 0; color: #6b7280; font-size: 1rem;">${plant.type} • ${plant.stratum} • ${plant.lifecycle}</p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                    <div style="background: #f0fdf4; padding: 1.5rem; border-radius: 0.75rem; text-align: center; border: 2px solid #22c55e;">
+                        <div style="font-size: 0.875rem; color: #6b7280; text-transform: uppercase; font-weight: 600;">Dias para Colheita</div>
+                        <div style="font-size: 2rem; font-weight: bold; color: #22c55e; margin-top: 0.5rem;">${plant.daysToHarvest}</div>
+                    </div>
+                    <div style="background: #f0fdf4; padding: 1.5rem; border-radius: 0.75rem; text-align: center; border: 2px solid #22c55e;">
+                        <div style="font-size: 0.875rem; color: #6b7280; text-transform: uppercase; font-weight: 600;">Sequestro de CO₂</div>
+                        <div style="font-size: 2rem; font-weight: bold; color: #22c55e; margin-top: 0.5rem;">${plant.carbonSequestration} kg</div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="margin: 0 0 1rem 0; color: #1f2937; font-size: 1.125rem;">📊 Informações Principais</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div style="background: #f3f4f6; padding: 1rem; border-radius: 0.5rem;">
+                            <div style="color: #6b7280; font-size: 0.875rem;">Dificuldade</div>
+                            <div style="color: #1f2937; font-weight: 600;">${plant.difficulty}</div>
+                        </div>
+                        <div style="background: #f3f4f6; padding: 1rem; border-radius: 0.5rem;">
+                            <div style="color: #6b7280; font-size: 0.875rem;">Sucessão</div>
+                            <div style="color: #1f2937; font-weight: 600;">${plant.succession}</div>
+                        </div>
+                        <div style="background: #f3f4f6; padding: 1rem; border-radius: 0.5rem;">
+                            <div style="color: #6b7280; font-size: 0.875rem;">Estrato</div>
+                            <div style="color: #1f2937; font-weight: 600;">${plant.stratum}</div>
+                        </div>
+                        <div style="background: #f3f4f6; padding: 1rem; border-radius: 0.5rem;">
+                            <div style="color: #6b7280; font-size: 0.875rem;">Rega (dias)</div>
+                            <div style="color: #1f2937; font-weight: 600;">${plant.waterFrequency}x semana</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="margin: 0 0 1rem 0; color: #1f2937; font-size: 1.125rem;">✨ Benefícios</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                        ${plant.benefits.map(b => `<span style="background: #dbeafe; color: #1e40af; padding: 0.5rem 1rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 500;">${b}</span>`).join('')}
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="margin: 0 0 1rem 0; color: #1f2937; font-size: 1.125rem;">🌱 Notas Sintrópicas</h3>
+                    <p style="margin: 0; color: #6b7280; line-height: 1.6; font-size: 0.95rem;">${plant.sintropicNotes}</p>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="margin: 0 0 1rem 0; color: #1f2937; font-size: 1.125rem;">🤝 Plantas Companheiras</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                        ${plant.companions.map(c => `<span style="background: #fef3c7; color: #92400e; padding: 0.5rem 1rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 500;">${c}</span>`).join('')}
+                    </div>
+                </div>
+                
+                <div style="background: #f3f4f6; padding: 1.5rem; border-radius: 0.75rem; border-left: 4px solid #22c55e;">
+                    <h3 style="margin: 0 0 0.75rem 0; color: #1f2937; font-size: 1rem;">📝 Observações</h3>
+                    <p style="margin: 0; color: #6b7280; line-height: 1.6;">${plant.notes}</p>
+                </div>
+            `;
+            
+            document.getElementById('plantDetailBody').innerHTML = html;
+            plantDetailModal.classList.add('show');
+        }
+        
+        closeDetailBtn.addEventListener('click', () => {
+            plantDetailModal.classList.remove('show');
+        });
+        
+        plantDetailModal.addEventListener('click', (e) => {
+            if (e.target === plantDetailModal) {
+                plantDetailModal.classList.remove('show');
+            }
+        });
+        
+        // ===== CONECTAR CLIQUES NOS CARDS DE PLANTAS =====
+        document.addEventListener('DOMContentLoaded', () => {
+            // Adicionar listener aos cards do catálogo
+            const plantCards = document.querySelectorAll('.plant-card');
+            plantCards.forEach(card => {
+                const plantName = card.querySelector('h3')?.textContent;
+                const plant = plantCatalog.find(p => p.name === plantName);
+                if (plant) {
+                    card.style.cursor = 'pointer';
+                    card.addEventListener('click', (e) => {
+                        if (e.target.tagName !== 'BUTTON') {
+                            showPlantDetail(plant.id);
+                        }
+                    });
+                }
+            });
+        });
+        
+        // ===== SISTEMA DE ACHIEVEMENTS VISUAL =====
+        function renderAchievements() {
+            const achievementsContainer = document.getElementById('achievementsContainer');
+            if (!achievementsContainer) return;
+            
+            let html = '<div class="achievements-showcase">';
+            achievementsDB.forEach(achievement => {
+                const unlocked = userProfile.achievements.includes(achievement.id);
+                html += `
+                    <div class="achievement-item ${unlocked ? 'unlocked' : ''}" title="${achievement.description}">
+                        <div class="achievement-icon">${achievement.icon}</div>
+                        <div class="achievement-title">${achievement.name}</div>
+                        <div class="achievement-desc">${unlocked ? '+' + achievement.points + ' pts' : 'Bloqueado'}</div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            achievementsContainer.innerHTML = html;
+        }
+        
+        // ===== SISTEMA DE LOJA VISUAL =====
+        function renderShop() {
+            const shopContainer = document.getElementById('shopContainer');
+            if (!shopContainer) return;
+            
+            let html = '<div class="shop-products">';
+            shopItems.forEach(item => {
+                html += `
+                    <div class="shop-product">
+                        <div class="shop-product-header">${item.icon}</div>
+                        <div class="shop-product-body">
+                            <div class="shop-product-name">${item.name}</div>
+                            <div class="shop-product-desc">${item.description}</div>
+                            <div class="shop-product-price">💰 ${item.price}</div>
+                            <button class="buy-button" onclick="buyItem('${item.id}', ${item.price}, '${item.name}')">Comprar</button>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            shopContainer.innerHTML = html;
+        }
+        
+        function buyItem(itemId, price, name) {
+            if (spendCoins(price, name)) {
+                userProfile.points += Math.floor(price / 10);
+            }
+        }
+        
+        // ===== RANKING VISUAL =====
+        function renderRanking() {
+            const rankingContainer = document.getElementById('rankingContainer');
+            if (!rankingContainer) return;
+            
+            let html = '<div class="ranking-list">';
+            globalRanking.forEach((user, index) => {
+                let positionClass = 'gold';
+                if (index === 1) positionClass = 'silver';
+                if (index === 2) positionClass = 'bronze';
+                
+                html += `
+                    <div class="ranking-item">
+                        <div class="ranking-position ${positionClass}">${index + 1}º</div>
+                        <div class="ranking-info">
+                            <div class="ranking-name">${user.name}</div>
+                            <div class="ranking-plants">🌱 ${user.plants} plantas</div>
+                        </div>
+                        <div class="ranking-score">${user.points} pts</div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            rankingContainer.innerHTML = html;
+        }
+        
+        // ===== RECEITAS VISUAL =====
+        function renderRecipes() {
+            const recipesContainer = document.getElementById('recipesContainer');
+            if (!recipesContainer) return;
+            
+            let html = '<div class="recipes-showcase">';
+            recipesDB.forEach(recipe => {
+                html += `
+                    <div class="recipe-item">
+                        <div class="recipe-header">
+                            <div class="recipe-title">👨‍🍳 ${recipe.name}</div>
+                            <div class="recipe-time">⏱️ ${recipe.prepTime} min</div>
+                        </div>
+                        <div class="recipe-body">
+                            <div class="recipe-ingredients">
+                                <div class="recipe-ingredients-title">Ingredientes:</div>
+                                ${recipe.plants.map(p => `<div class="recipe-ingredient">🌱 ${p}</div>`).join('')}
+                            </div>
+                            <div class="recipe-nutrition">
+                                <div class="nutrition-item">
+                                    <div class="nutrition-label">Proteína</div>
+                                    <div class="nutrition-value">${recipe.nutrition.proteina}g</div>
+                                </div>
+                                <div class="nutrition-item">
+                                    <div class="nutrition-label">Carbo</div>
+                                    <div class="nutrition-value">${recipe.nutrition.carboidrato}g</div>
+                                </div>
+                                <div class="nutrition-item">
+                                    <div class="nutrition-label">Gordura</div>
+                                    <div class="nutrition-value">${recipe.nutrition.gordura}g</div>
+                                </div>
+                            </div>
+                            <button class="buy-button" onclick="prepareRecipe('${recipe.id}')" style="margin-top: 1rem;">Preparar</button>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            recipesContainer.innerHTML = html;
+        }
+        
+        // ===== PRAGAS VISUAL =====
+        function renderPests() {
+            const pestsContainer = document.getElementById('pestsContainer');
+            if (!pestsContainer) return;
+            
+            let html = '<div class="pests-grid">';
+            pestsDB.forEach(pest => {
+                html += `
+                    <div class="pest-card">
+                        <div class="pest-name">🐛 ${pest.name}</div>
+                        <div class="pest-plants">Afeta: ${pest.plants.join(', ')}</div>
+                        <div class="pest-solutions">
+                            <div class="pest-solutions-title">Soluções Orgânicas:</div>
+                            ${pest.solutions.map(s => `<div class="solution-item">✓ ${s}</div>`).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            pestsContainer.innerHTML = html;
+        }
+        
+        // ===== CALCULADORA CO2 =====
+        function calculateCO2() {
+            const plantSelect = document.getElementById('co2PlantSelect');
+            const quantityInput = document.getElementById('co2Quantity');
+            
+            if (!plantSelect || !quantityInput) return;
+            
+            const plantId = plantSelect.value;
+            const quantity = parseFloat(quantityInput.value) || 0;
+            
+            const plant = plantCatalog.find(p => p.id === plantId);
+            if (plant && quantity > 0) {
+                const totalCO2 = plant.carbonSequestration * quantity;
+                const carKm = (totalCO2 / 0.2).toFixed(2);
+                
+                const resultBox = document.getElementById('co2Result');
+                if (resultBox) {
+                    resultBox.innerHTML = `
+                        <div class="result-box">
+                            <div class="result-label">Sequestro de CO₂ Total</div>
+                            <div class="result-value">${totalCO2.toFixed(2)} kg</div>
+                            <div class="result-label">Equivalente a neutralizar ${carKm} km de carro</div>
+                        </div>
+                    `;
+                }
+            }
+        }
+        
+        // ===== INICIALIZAR TUDO =====
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAchievements();
+            renderShop();
+            renderRanking();
+            renderRecipes();
+            renderPests();
+            
+            console.log('✅ Todas as melhorias visuais carregadas!');
+        });
+    </script>
+
+    <!-- MODAL DETALHES PLANTA -->
+    <div id="plantDetailModal" class="plant-detail-modal">
+        <div class="plant-detail-content">
+            <span class="close-detail">&times;</span>
+            <div id="plantDetailBody"></div>
+        </div>
+    </div>
+    
+    <!-- SCRIPTS PARA MELHORIAS -->
+    <script>
+        // ===== MODAL DETALHES DA PLANTA =====
+        const plantDetailModal = document.getElementById('plantDetailModal');
+        const closeDetailBtn = document.querySelector('.close-detail');
+        
+        function showPlantDetail(plantId) {
+            const plant = plantCatalog.find(p => p.id === plantId);
+            if (!plant) return;
+            
+            const html = `
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <div style="font-size: 5rem; margin-bottom: 1rem;">${plant.icon}</div>
+                    <h2 style="margin: 0.5rem 0; font-size: 2rem; color: #1f2937;">${plant.name}</h2>
+                    <p style="margin: 0.5rem 0; color: #6b7280; font-size: 1rem;">${plant.type} • ${plant.stratum} • ${plant.lifecycle}</p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                    <div style="background: #f0fdf4; padding: 1.5rem; border-radius: 0.75rem; text-align: center; border: 2px solid #22c55e;">
+                        <div style="font-size: 0.875rem; color: #6b7280; text-transform: uppercase; font-weight: 600;">Dias para Colheita</div>
+                        <div style="font-size: 2rem; font-weight: bold; color: #22c55e; margin-top: 0.5rem;">${plant.daysToHarvest}</div>
+                    </div>
+                    <div style="background: #f0fdf4; padding: 1.5rem; border-radius: 0.75rem; text-align: center; border: 2px solid #22c55e;">
+                        <div style="font-size: 0.875rem; color: #6b7280; text-transform: uppercase; font-weight: 600;">Sequestro de CO₂</div>
+                        <div style="font-size: 2rem; font-weight: bold; color: #22c55e; margin-top: 0.5rem;">${plant.carbonSequestration} kg</div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="margin: 0 0 1rem 0; color: #1f2937; font-size: 1.125rem;">📊 Informações Principais</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div style="background: #f3f4f6; padding: 1rem; border-radius: 0.5rem;">
+                            <div style="color: #6b7280; font-size: 0.875rem;">Dificuldade</div>
+                            <div style="color: #1f2937; font-weight: 600;">${plant.difficulty}</div>
+                        </div>
+                        <div style="background: #f3f4f6; padding: 1rem; border-radius: 0.5rem;">
+                            <div style="color: #6b7280; font-size: 0.875rem;">Sucessão</div>
+                            <div style="color: #1f2937; font-weight: 600;">${plant.succession}</div>
+                        </div>
+                        <div style="background: #f3f4f6; padding: 1rem; border-radius: 0.5rem;">
+                            <div style="color: #6b7280; font-size: 0.875rem;">Estrato</div>
+                            <div style="color: #1f2937; font-weight: 600;">${plant.stratum}</div>
+                        </div>
+                        <div style="background: #f3f4f6; padding: 1rem; border-radius: 0.5rem;">
+                            <div style="color: #6b7280; font-size: 0.875rem;">Rega (dias)</div>
+                            <div style="color: #1f2937; font-weight: 600;">${plant.waterFrequency}x semana</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="margin: 0 0 1rem 0; color: #1f2937; font-size: 1.125rem;">✨ Benefícios</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                        ${plant.benefits.map(b => `<span style="background: #dbeafe; color: #1e40af; padding: 0.5rem 1rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 500;">${b}</span>`).join('')}
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="margin: 0 0 1rem 0; color: #1f2937; font-size: 1.125rem;">🌱 Notas Sintrópicas</h3>
+                    <p style="margin: 0; color: #6b7280; line-height: 1.6; font-size: 0.95rem;">${plant.sintropicNotes}</p>
+                </div>
+                
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="margin: 0 0 1rem 0; color: #1f2937; font-size: 1.125rem;">🤝 Plantas Companheiras</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                        ${plant.companions.map(c => `<span style="background: #fef3c7; color: #92400e; padding: 0.5rem 1rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 500;">${c}</span>`).join('')}
+                    </div>
+                </div>
+                
+                <div style="background: #f3f4f6; padding: 1.5rem; border-radius: 0.75rem; border-left: 4px solid #22c55e;">
+                    <h3 style="margin: 0 0 0.75rem 0; color: #1f2937; font-size: 1rem;">📝 Observações</h3>
+                    <p style="margin: 0; color: #6b7280; line-height: 1.6;">${plant.notes}</p>
+                </div>
+            `;
+            
+            document.getElementById('plantDetailBody').innerHTML = html;
+            plantDetailModal.classList.add('show');
+        }
+        
+        closeDetailBtn.addEventListener('click', () => {
+            plantDetailModal.classList.remove('show');
+        });
+        
+        plantDetailModal.addEventListener('click', (e) => {
+            if (e.target === plantDetailModal) {
+                plantDetailModal.classList.remove('show');
+            }
+        });
+        
+        // ===== CONECTAR CLIQUES NOS CARDS DE PLANTAS =====
+        document.addEventListener('DOMContentLoaded', () => {
+            // Adicionar listener aos cards do catálogo
+            const plantCards = document.querySelectorAll('.plant-card');
+            plantCards.forEach(card => {
+                const plantName = card.querySelector('h3')?.textContent;
+                const plant = plantCatalog.find(p => p.name === plantName);
+                if (plant) {
+                    card.style.cursor = 'pointer';
+                    card.addEventListener('click', (e) => {
+                        if (e.target.tagName !== 'BUTTON') {
+                            showPlantDetail(plant.id);
+                        }
+                    });
+                }
+            });
+        });
+        
+        // ===== SISTEMA DE ACHIEVEMENTS VISUAL =====
+        function renderAchievements() {
+            const achievementsContainer = document.getElementById('achievementsContainer');
+            if (!achievementsContainer) return;
+            
+            let html = '<div class="achievements-showcase">';
+            achievementsDB.forEach(achievement => {
+                const unlocked = userProfile.achievements.includes(achievement.id);
+                html += `
+                    <div class="achievement-item ${unlocked ? 'unlocked' : ''}" title="${achievement.description}">
+                        <div class="achievement-icon">${achievement.icon}</div>
+                        <div class="achievement-title">${achievement.name}</div>
+                        <div class="achievement-desc">${unlocked ? '+' + achievement.points + ' pts' : 'Bloqueado'}</div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            achievementsContainer.innerHTML = html;
+        }
+        
+        // ===== SISTEMA DE LOJA VISUAL =====
+        function renderShop() {
+            const shopContainer = document.getElementById('shopContainer');
+            if (!shopContainer) return;
+            
+            let html = '<div class="shop-products">';
+            shopItems.forEach(item => {
+                html += `
+                    <div class="shop-product">
+                        <div class="shop-product-header">${item.icon}</div>
+                        <div class="shop-product-body">
+                            <div class="shop-product-name">${item.name}</div>
+                            <div class="shop-product-desc">${item.description}</div>
+                            <div class="shop-product-price">💰 ${item.price}</div>
+                            <button class="buy-button" onclick="buyItem('${item.id}', ${item.price}, '${item.name}')">Comprar</button>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            shopContainer.innerHTML = html;
+        }
+        
+        function buyItem(itemId, price, name) {
+            if (spendCoins(price, name)) {
+                userProfile.points += Math.floor(price / 10);
+            }
+        }
+        
+        // ===== RANKING VISUAL =====
+        function renderRanking() {
+            const rankingContainer = document.getElementById('rankingContainer');
+            if (!rankingContainer) return;
+            
+            let html = '<div class="ranking-list">';
+            globalRanking.forEach((user, index) => {
+                let positionClass = 'gold';
+                if (index === 1) positionClass = 'silver';
+                if (index === 2) positionClass = 'bronze';
+                
+                html += `
+                    <div class="ranking-item">
+                        <div class="ranking-position ${positionClass}">${index + 1}º</div>
+                        <div class="ranking-info">
+                            <div class="ranking-name">${user.name}</div>
+                            <div class="ranking-plants">🌱 ${user.plants} plantas</div>
+                        </div>
+                        <div class="ranking-score">${user.points} pts</div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            rankingContainer.innerHTML = html;
+        }
+        
+        // ===== RECEITAS VISUAL =====
+        function renderRecipes() {
+            const recipesContainer = document.getElementById('recipesContainer');
+            if (!recipesContainer) return;
+            
+            let html = '<div class="recipes-showcase">';
+            recipesDB.forEach(recipe => {
+                html += `
+                    <div class="recipe-item">
+                        <div class="recipe-header">
+                            <div class="recipe-title">👨‍🍳 ${recipe.name}</div>
+                            <div class="recipe-time">⏱️ ${recipe.prepTime} min</div>
+                        </div>
+                        <div class="recipe-body">
+                            <div class="recipe-ingredients">
+                                <div class="recipe-ingredients-title">Ingredientes:</div>
+                                ${recipe.plants.map(p => `<div class="recipe-ingredient">🌱 ${p}</div>`).join('')}
+                            </div>
+                            <div class="recipe-nutrition">
+                                <div class="nutrition-item">
+                                    <div class="nutrition-label">Proteína</div>
+                                    <div class="nutrition-value">${recipe.nutrition.proteina}g</div>
+                                </div>
+                                <div class="nutrition-item">
+                                    <div class="nutrition-label">Carbo</div>
+                                    <div class="nutrition-value">${recipe.nutrition.carboidrato}g</div>
+                                </div>
+                                <div class="nutrition-item">
+                                    <div class="nutrition-label">Gordura</div>
+                                    <div class="nutrition-value">${recipe.nutrition.gordura}g</div>
+                                </div>
+                            </div>
+                            <button class="buy-button" onclick="prepareRecipe('${recipe.id}')" style="margin-top: 1rem;">Preparar</button>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            recipesContainer.innerHTML = html;
+        }
+        
+        // ===== PRAGAS VISUAL =====
+        function renderPests() {
+            const pestsContainer = document.getElementById('pestsContainer');
+            if (!pestsContainer) return;
+            
+            let html = '<div class="pests-grid">';
+            pestsDB.forEach(pest => {
+                html += `
+                    <div class="pest-card">
+                        <div class="pest-name">🐛 ${pest.name}</div>
+                        <div class="pest-plants">Afeta: ${pest.plants.join(', ')}</div>
+                        <div class="pest-solutions">
+                            <div class="pest-solutions-title">Soluções Orgânicas:</div>
+                            ${pest.solutions.map(s => `<div class="solution-item">✓ ${s}</div>`).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            pestsContainer.innerHTML = html;
+        }
+        
+        // ===== CALCULADORA CO2 =====
+        function calculateCO2() {
+            const plantSelect = document.getElementById('co2PlantSelect');
+            const quantityInput = document.getElementById('co2Quantity');
+            
+            if (!plantSelect || !quantityInput) return;
+            
+            const plantId = plantSelect.value;
+            const quantity = parseFloat(quantityInput.value) || 0;
+            
+            const plant = plantCatalog.find(p => p.id === plantId);
+            if (plant && quantity > 0) {
+                const totalCO2 = plant.carbonSequestration * quantity;
+                const carKm = (totalCO2 / 0.2).toFixed(2);
+                
+                const resultBox = document.getElementById('co2Result');
+                if (resultBox) {
+                    resultBox.innerHTML = `
+                        <div class="result-box">
+                            <div class="result-label">Sequestro de CO₂ Total</div>
+                            <div class="result-value">${totalCO2.toFixed(2)} kg</div>
+                            <div class="result-label">Equivalente a neutralizar ${carKm} km de carro</div>
+                        </div>
+                    `;
+                }
+            }
+        }
+        
+        // ===== INICIALIZAR TUDO =====
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAchievements();
+            renderShop();
+            renderRanking();
+            renderRecipes();
+            renderPests();
+            
+            console.log('✅ Todas as melhorias visuais carregadas!');
         });
     </script>
 </body>
