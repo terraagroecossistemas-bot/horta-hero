@@ -379,7 +379,7 @@
         </div>
 
         <!-- Seção de Estatísticas Expandida -->
-        <div class="grid grid-cols-2 md:grid-cols-6 gap-4 mb-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-6">
             <div class="bg-white dark:bg-gray-700 p-4 rounded-xl shadow-md text-center">
                 <h3 class="text-sm font-semibold text-green-700 dark:text-green-300">Pontuação Verde</h3>
                 <div class="flex items-center justify-center space-x-2 mt-2">
@@ -429,28 +429,28 @@
             </div>
         </div>
 
-        <div class="mb-6 border-b border-gray-200 dark:border-gray-600">
-            <nav class="flex space-x-4" aria-label="Tabs">
-                <button onclick="changeTab('dashboard')" class="tab-btn tab-dashboard tab-active py-2 px-4 text-sm font-medium text-center text-gray-500 dark:text-gray-300 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500">
-                    <i class="fa-solid fa-home mr-1"></i>Dashboard
+        <div class="mb-6 border-b border-gray-200 dark:border-gray-600 overflow-x-auto">
+            <nav class="flex space-x-2 sm:space-x-4 min-w-max pb-1" aria-label="Tabs">
+                <button onclick="changeTab('dashboard')" class="tab-btn tab-dashboard tab-active py-2 px-2 sm:px-4 text-xs sm:text-sm font-medium text-center text-gray-500 dark:text-gray-300 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500">
+                    <i class="fa-solid fa-home mr-1"></i><span class="hidden sm:inline">Dashboard</span><span class="sm:hidden">Dash</span>
                 </button>
-                <button onclick="changeTab('garden')" class="tab-btn tab-garden py-2 px-4 text-sm font-medium text-center text-gray-500 dark:text-gray-300 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500">
-                    <i class="fa-solid fa-seedling mr-1"></i>Minha Horta
+                <button onclick="changeTab('garden')" class="tab-btn tab-garden py-2 px-2 sm:px-4 text-xs sm:text-sm font-medium text-center text-gray-500 dark:text-gray-300 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500">
+                    <i class="fa-solid fa-seedling mr-1"></i><span class="hidden sm:inline">Minha Horta</span><span class="sm:hidden">Horta</span>
                 </button>
-                <button onclick="changeTab('catalog')" class="tab-btn tab-catalog py-2 px-4 text-sm font-medium text-center text-gray-500 dark:text-gray-300 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500">
-                    <i class="fa-solid fa-book mr-1"></i>Catálogo
+                <button onclick="changeTab('catalog')" class="tab-btn tab-catalog py-2 px-2 sm:px-4 text-xs sm:text-sm font-medium text-center text-gray-500 dark:text-gray-300 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500">
+                    <i class="fa-solid fa-book mr-1"></i><span class="hidden sm:inline">Catálogo</span><span class="sm:hidden">Cat</span>
                 </button>
-                <button onclick="changeTab('carbon')" class="tab-btn tab-carbon py-2 px-4 text-sm font-medium text-center text-gray-500 dark:text-gray-300 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500">
-                    <i class="fa-solid fa-calculator mr-1"></i>Calculadora CO₂
+                <button onclick="changeTab('carbon')" class="tab-btn tab-carbon py-2 px-2 sm:px-4 text-xs sm:text-sm font-medium text-center text-gray-500 dark:text-gray-300 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500">
+                    <i class="fa-solid fa-calculator mr-1"></i><span class="hidden sm:inline">Calculadora CO₂</span><span class="sm:hidden">CO₂</span>
                 </button>
-                <button onclick="changeTab('shop')" class="tab-btn tab-shop py-2 px-4 text-sm font-medium text-center text-gray-500 dark:text-gray-300 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500">
-                    <i class="fa-solid fa-store mr-1"></i>Loja Verde
+                <button onclick="changeTab('shop')" class="tab-btn tab-shop py-2 px-2 sm:px-4 text-xs sm:text-sm font-medium text-center text-gray-500 dark:text-gray-300 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500">
+                    <i class="fa-solid fa-store mr-1"></i><span class="hidden sm:inline">Loja Verde</span><span class="sm:hidden">Loja</span>
                 </button>
-                <button onclick="changeTab('achievements')" class="tab-btn tab-achievements py-2 px-4 text-sm font-medium text-center text-gray-500 dark:text-gray-300 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500">
-                    <i class="fa-solid fa-trophy mr-1"></i>Conquistas
+                <button onclick="changeTab('achievements')" class="tab-btn tab-achievements py-2 px-2 sm:px-4 text-xs sm:text-sm font-medium text-center text-gray-500 dark:text-gray-300 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500">
+                    <i class="fa-solid fa-trophy mr-1"></i><span class="hidden sm:inline">Conquistas</span><span class="sm:hidden">Conq</span>
                 </button>
-                <button onclick="changeTab('community')" class="tab-btn tab-community py-2 px-4 text-sm font-medium text-center text-gray-500 dark:text-gray-300 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500">
-                    <i class="fa-solid fa-users mr-1"></i>Comunidade
+                <button onclick="changeTab('community')" class="tab-btn tab-community py-2 px-2 sm:px-4 text-xs sm:text-sm font-medium text-center text-gray-500 dark:text-gray-300 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500">
+                    <i class="fa-solid fa-users mr-1"></i><span class="hidden sm:inline">Comunidade</span><span class="sm:hidden">Comun</span>
                 </button>
             </nav>
         </div>
