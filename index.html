@@ -239,6 +239,89 @@
             opacity: 0.9;
         }
         
+        /* ===== DESIGN PREMIUM ===== */
+        :root {
+            --primary-green: #2d5016;
+            --primary-light: #3d6b1f;
+            --accent-green: #7ec850;
+            --bg-light: #f5f5f0;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 8px 32px rgba(45, 80, 22, 0.15);
+            --shadow-lg: 0 12px 40px rgba(45, 80, 22, 0.3);
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f5f0 0%, #e8f5e9 100%) !important;
+            background-attachment: fixed !important;
+        }
+
+        /* Glassmorphism para cards */
+        .bg-white {
+            background: var(--card-bg) !important;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(45, 80, 22, 0.1) !important;
+            box-shadow: var(--shadow-md) !important;
+        }
+
+        .bg-gray-50 {
+            background: rgba(249, 250, 251, 0.9) !important;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(45, 80, 22, 0.05) !important;
+        }
+
+        /* Botões premium */
+        .bg-green-600, .bg-green-500, .bg-green-700 {
+            background: linear-gradient(135deg, #2d5016 0%, #3d6b1f 100%) !important;
+            box-shadow: 0 4px 15px rgba(45, 80, 22, 0.2) !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .bg-green-600:hover, .bg-green-500:hover, .bg-green-700:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(45, 80, 22, 0.3) !important;
+        }
+
+        .bg-green-600:active, .bg-green-500:active, .bg-green-700:active {
+            transform: translateY(0);
+        }
+
+        /* Progresso visual melhorado */
+        .progress-bar-bg {
+            background: rgba(0, 0, 0, 0.1) !important;
+            border-radius: 10px !important;
+            height: 10px !important;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #7ec850, #9fd96f) !important;
+            border-radius: 10px !important;
+            height: 100% !important;
+        }
+
+        /* Avatar premium */
+        .hero-avatar {
+            box-shadow: 0 4px 15px rgba(45, 80, 22, 0.2) !important;
+            border: 3px solid white !important;
+        }
+
+        /* Badges com sombra */
+        .activity-badge, .method-badge, .stratum-badge, .succession-badge, .difficulty-badge {
+            border-radius: 8px !important;
+            font-weight: 600 !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+        }
+
+        /* Transições suaves */
+        * {
+            transition: all 0.3s ease;
+        }
+
+        /* Scroll suave */
+        html {
+            scroll-behavior: smooth;
+        }
+
         /* Responsividade Mobile Radical */
         html, body {
             max-width: 100vw;
