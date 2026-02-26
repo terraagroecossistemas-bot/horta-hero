@@ -239,86 +239,65 @@
             opacity: 0.9;
         }
         
-        /* Responsividade Mobile */
-        @media (max-width: 768px) {
-            body { overflow-x: hidden; }
-            #app { max-w-full; padding: 0.5rem; }
-            header h1 { font-size: 1.5rem; }
-            header .text-sm { font-size: 0.65rem; padding: 0.25rem 0.5rem; }
-            .flex.justify-center.items-center.space-x-4 { flex-direction: column; gap: 0.5rem; }
-            .bg-gradient-to-r.from-green-400 { padding: 1rem; }
-            .flex.items-center.justify-between { flex-direction: column; gap: 1rem; }
-            .hero-avatar { width: 60px; height: 60px; font-size: 1.5rem; }
-            .grid.grid-cols-5 { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
-            .grid.grid-cols-3 { grid-template-columns: 1fr; gap: 0.5rem; }
-            .grid.grid-cols-2 { grid-template-columns: 1fr; }
-            .flex.space-x-2 { flex-wrap: wrap; gap: 0.5rem; }
-            .text-4xl { font-size: 1.875rem; }
-            .text-2xl { font-size: 1.25rem; }
-            .text-lg { font-size: 1rem; }
-            .text-sm { font-size: 0.875rem; }
-            .text-xs { font-size: 0.75rem; }
-            .px-4 { padding-left: 0.5rem; padding-right: 0.5rem; }
-            .py-2 { padding-top: 0.375rem; padding-bottom: 0.375rem; }
-            .p-6 { padding: 1rem; }
-            .p-4 { padding: 0.75rem; }
-            .mb-6 { margin-bottom: 1rem; }
-            .mt-4 { margin-top: 0.75rem; }
-            .space-x-4 { gap: 0.5rem; }
-            .space-y-4 { gap: 0.75rem; }
-            .rounded-xl { border-radius: 0.5rem; }
-            .rounded-lg { border-radius: 0.375rem; }
-            .shadow-lg { box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
-            .max-w-sm { max-width: 100%; }
-            .max-w-md { max-width: 100%; }
-            .max-w-lg { max-width: 100%; }
-            .max-w-2xl { max-width: 100%; }
-            .max-w-4xl { max-width: 100%; }
-            .max-w-6xl { max-width: 100%; }
-            .overflow-x-auto { overflow-x: hidden; }
-            table { font-size: 0.75rem; }
-            th, td { padding: 0.375rem; }
-            .modal-compact { max-height: 85vh; }
-            .tab-active { border-bottom-width: 2px; }
-            .progress-bar-fill { height: 6px; }
-            .tooltip .tooltiptext { width: 150px; margin-left: -75px; font-size: 0.65rem; }
+        /* Responsividade Mobile Radical */
+        html, body {
+            max-width: 100vw;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
         }
-        
+        #app {
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+            padding: 1rem;
+        }
+        @media (max-width: 768px) {
+            #app { padding: 0.5rem; }
+            .grid { width: 100% !important; max-width: 100% !important; }
+            .flex { max-width: 100% !important; }
+            header h1 { font-size: 1.5rem !important; }
+            .hero-avatar { width: 60px !important; height: 60px !important; font-size: 1.5rem !important; }
+            .text-4xl { font-size: 1.75rem !important; }
+            .text-3xl { font-size: 1.5rem !important; }
+            .text-2xl { font-size: 1.25rem !important; }
+            .p-6 { padding: 1rem !important; }
+            .p-4 { padding: 0.75rem !important; }
+            .max-w-6xl, .max-w-4xl, .max-w-2xl, .max-w-lg, .max-w-md, .max-w-sm {
+                max-width: 100% !important;
+            }
+            /* Forçar cards de estatísticas a caberem */
+            .grid-cols-6, .grid-cols-5, .grid-cols-4, .grid-cols-3 {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 0.5rem !important;
+            }
+            /* Forçar tabelas e modais */
+            .overflow-x-auto {
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch;
+            }
+            table { width: 100% !important; min-width: 0 !important; }
+        }
         @media (max-width: 480px) {
-            #app { padding: 0.25rem; }
-            header h1 { font-size: 1.25rem; }
-            header .text-sm { font-size: 0.55rem; padding: 0.125rem 0.25rem; }
-            .bg-gradient-to-r.from-green-400 { padding: 0.75rem; }
-            .hero-avatar { width: 50px; height: 50px; font-size: 1.25rem; }
-            .grid.grid-cols-5 { grid-template-columns: repeat(2, 1fr); gap: 0.25rem; }
-            .grid.grid-cols-3 { grid-template-columns: 1fr; gap: 0.25rem; }
-            .text-4xl { font-size: 1.5rem; }
-            .text-2xl { font-size: 1.125rem; }
-            .text-lg { font-size: 0.875rem; }
-            .text-sm { font-size: 0.75rem; }
-            .text-xs { font-size: 0.625rem; }
-            .px-4 { padding-left: 0.375rem; padding-right: 0.375rem; }
-            .py-2 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
-            .p-6 { padding: 0.75rem; }
-            .p-4 { padding: 0.5rem; }
-            .mb-6 { margin-bottom: 0.75rem; }
-            .mt-4 { margin-top: 0.5rem; }
-            .space-x-4 { gap: 0.25rem; }
-            .space-y-4 { gap: 0.5rem; }
-            .rounded-xl { border-radius: 0.375rem; }
-            .rounded-lg { border-radius: 0.25rem; }
-            .shadow-lg { box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
-            .modal-compact { max-height: 80vh; }
-            .tooltip .tooltiptext { width: 120px; margin-left: -60px; font-size: 0.6rem; }
-            .activity-badge { padding: 0.125rem 0.25rem; font-size: 0.65rem; }
-            .method-badge { padding: 0.125rem 0.25rem; font-size: 0.65rem; }
-            .water-status { padding: 0.125rem 0.25rem; font-size: 0.65rem; }
+            .grid-cols-6, .grid-cols-5, .grid-cols-4, .grid-cols-3, .grid-cols-2 {
+                grid-template-columns: 1fr !important;
+            }
+            .hero-avatar { width: 50px !important; height: 50px !important; }
+            .text-sm { font-size: 0.75rem !important; }
+            .text-xs { font-size: 0.65rem !important; }
+            .px-4 { padding-left: 0.5rem !important; padding-right: 0.5rem !important; }
+            /* Ajuste específico para o dashboard do herói */
+            .hero-glow .flex.items-center.justify-between {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 1rem;
+            }
         }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <div id="app" class="max-w-6xl mx-auto p-4 md:p-6">
+    <div id="app" class="mx-auto">
 
         <header class="text-center mb-6">
             <h1 class="text-4xl font-bold text-green-700 dark:text-green-300">
@@ -379,7 +358,7 @@
         </div>
 
         <!-- Seção de Estatísticas Expandida -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-6">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-6 w-full">
             <div class="bg-white dark:bg-gray-700 p-4 rounded-xl shadow-md text-center">
                 <h3 class="text-sm font-semibold text-green-700 dark:text-green-300">Pontuação Verde</h3>
                 <div class="flex items-center justify-center space-x-2 mt-2">
@@ -429,8 +408,8 @@
             </div>
         </div>
 
-        <div class="mb-6 border-b border-gray-200 dark:border-gray-600 overflow-x-auto">
-            <nav class="flex space-x-2 sm:space-x-4 min-w-max pb-1" aria-label="Tabs">
+        <div class="mb-6 border-b border-gray-200 dark:border-gray-600 overflow-x-auto w-full">
+            <nav class="flex space-x-2 sm:space-x-4 pb-1" aria-label="Tabs" style="min-width: fit-content;">
                 <button onclick="changeTab('dashboard')" class="tab-btn tab-dashboard tab-active py-2 px-2 sm:px-4 text-xs sm:text-sm font-medium text-center text-gray-500 dark:text-gray-300 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-100 hover:border-gray-300 dark:hover:border-gray-500">
                     <i class="fa-solid fa-home mr-1"></i><span class="hidden sm:inline">Dashboard</span><span class="sm:hidden">Dash</span>
                 </button>
