@@ -773,55 +773,836 @@ let state = {
 
 // Catálogo de plantas expandido com dificuldade e ciclo de vida
 const plantCatalog = [
-    { 
-        id: 'lettuce', name: 'Alface', icon: '🥬', daysToHarvest: 45, basePoints: 30, 
-        season: 'Ano Todo', type: 'Folha', stratum: 'Baixo', succession: 'Placenta', 
-        difficulty: 'fácil', lifecycle: 'Anual', carbonSequestration: 2.1,
-        benefits: ['Crescimento rápido', 'Pouco espaço', 'Rica em vitaminas'],
-        sintropicNotes: 'Colheita rápida, ocupa pouco espaço e se beneficia da sombra parcial de plantas maiores.',
-        notes: 'Prefere climas mais amenos.', 
-        companions: ['Cenoura', 'Morango', 'Rabanete', 'Beterraba'],
-        waterFrequency: 2
+    {
+        "id": "watermelon",
+        "name": "Melancia",
+        "icon": "🍉",
+        "daysToHarvest": 90,
+        "basePoints": 45,
+        "season": "Primavera/Verão",
+        "type": "Fruto",
+        "stratum": "Baixo",
+        "succession": "Placenta",
+        "difficulty": "médio",
+        "lifecycle": "Anual",
+        "carbonSequestration": 3.5,
+        "benefits": [
+            "Hidratação",
+            "Rica em licopeno",
+            "Crescimento rasteiro"
+        ],
+        "sintropicNotes": "Ocupa o estrato rasteiro, protegendo o solo com suas folhas largas.",
+        "notes": "Necessita de bastante sol e espaço.",
+        "companions": [
+            "Milho",
+            "Girassol"
+        ],
+        "waterFrequency": 3
     },
-    { 
-        id: 'tomato', name: 'Tomate', icon: '🍅', daysToHarvest: 70, basePoints: 50, 
-        season: 'Primavera/Verão', type: 'Fruto', stratum: 'Médio', succession: 'Secundária', 
-        difficulty: 'médio', lifecycle: 'Anual', carbonSequestration: 7.5,
-        benefits: ['Alto valor nutricional', 'Produção abundante', 'Versátil na culinária'],
-        sintropicNotes: 'Precisa de poda e manejo para não sombrear demais as plantas vizinhas.',
-        notes: 'Precisa de suporte (estacas ou gaiolas) para crescer.', 
-        companions: ['Manjericão', 'Cenoura', 'Calêndula'],
-        waterFrequency: 2
+    {
+        "id": "pumpkin",
+        "name": "Abóbora",
+        "icon": "🎃",
+        "daysToHarvest": 120,
+        "basePoints": 55,
+        "season": "Ano Todo",
+        "type": "Fruto",
+        "stratum": "Baixo",
+        "succession": "Placenta",
+        "difficulty": "fácil",
+        "lifecycle": "Anual",
+        "carbonSequestration": 5.2,
+        "benefits": [
+            "Cobertura de solo",
+            "Rica em vitamina A",
+            "Versátil"
+        ],
+        "sintropicNotes": "Excelente para cobrir o solo rapidamente e manter a umidade.",
+        "notes": "Pode ser consorciada com milho e feijão (Milpa).",
+        "companions": [
+            "Milho",
+            "Feijão"
+        ],
+        "waterFrequency": 2
     },
-    { 
-        id: 'carrot', name: 'Cenoura', icon: '🥕', daysToHarvest: 80, basePoints: 60, 
-        season: 'Outono/Inverno', type: 'Raiz', stratum: 'Baixo', succession: 'Placenta', 
-        difficulty: 'médio', lifecycle: 'Anual', carbonSequestration: 3.8,
-        benefits: ['Rica em betacaroteno', 'Melhora o solo', 'Longa conservação'],
-        sintropicNotes: 'Suas raízes profundas ajudam a aerar o solo para outras culturas.',
-        notes: 'O solo deve ser fofo e sem pedras.', 
-        companions: ['Alface', 'Rabanete', 'Alecrim'],
-        waterFrequency: 3
+    {
+        "id": "pepper",
+        "name": "Pimentão",
+        "icon": "🫑",
+        "daysToHarvest": 120,
+        "basePoints": 50,
+        "season": "Primavera/Verão",
+        "type": "Fruto",
+        "stratum": "Médio",
+        "succession": "Placenta",
+        "difficulty": "médio",
+        "lifecycle": "Anual",
+        "carbonSequestration": 2.8,
+        "benefits": [
+            "Vitamina C",
+            "Antioxidante",
+            "Produção contínua"
+        ],
+        "sintropicNotes": "Beneficia-se de solo rico em matéria orgânica e sombreamento parcial.",
+        "notes": "Sensível a geadas.",
+        "companions": [
+            "Manjericão",
+            "Cebola"
+        ],
+        "waterFrequency": 2
     },
-    { 
-        id: 'basil', name: 'Manjericão', icon: '🌿', daysToHarvest: 30, basePoints: 25, 
-        season: 'Primavera/Verão', type: 'Folha', stratum: 'Baixo', succession: 'Placenta', 
-        difficulty: 'fácil', lifecycle: 'Anual', carbonSequestration: 1.8,
-        benefits: ['Repele pragas', 'Atrai polinizadores', 'Uso culinário e medicinal'],
-        sintropicNotes: 'Atrai polinizadores e repele pragas. Excelente para as bordas do canteiro.',
-        notes: 'Repele alguns insetos e atrai polinizadores.', 
-        companions: ['Tomate', 'Pimentão'],
-        waterFrequency: 2
+    {
+        "id": "broccoli",
+        "name": "Brócolis",
+        "icon": "🥦",
+        "daysToHarvest": 100,
+        "basePoints": 65,
+        "season": "Outono/Inverno",
+        "type": "Flor",
+        "stratum": "Médio",
+        "succession": "Placenta",
+        "difficulty": "médio",
+        "lifecycle": "Anual",
+        "carbonSequestration": 3.2,
+        "benefits": [
+            "Superalimento",
+            "Rico em ferro",
+            "Melhora o solo"
+        ],
+        "sintropicNotes": "Exige solo bem adubado e clima ameno.",
+        "notes": "Colha antes das flores abrirem.",
+        "companions": [
+            "Alecrim",
+            "Sálvia"
+        ],
+        "waterFrequency": 2
     },
-    { 
-        id: 'corn', name: 'Milho', icon: '🌽', daysToHarvest: 90, basePoints: 85, 
-        season: 'Primavera/Verão', type: 'Fruto', stratum: 'Médio', succession: 'Placenta', 
-        difficulty: 'médio', lifecycle: 'Anual', carbonSequestration: 8.7,
-        benefits: ['Alto sequestro de carbono', 'Fornece estrutura', 'Alimento energético'],
-        sintropicNotes: 'Forma um microclima, fornecendo sombra para plantas do estrato baixo.',
-        notes: 'Plante em blocos para garantir uma boa polinização.', 
-        companions: ['Feijão', 'Abóbora'],
-        waterFrequency: 3
+    {
+        "id": "pigeon_pea",
+        "name": "Feijão Guandu",
+        "icon": "🌿",
+        "daysToHarvest": 180,
+        "basePoints": 70,
+        "season": "Ano Todo",
+        "type": "Grão",
+        "stratum": "Médio",
+        "succession": "Secundária",
+        "difficulty": "fácil",
+        "lifecycle": "Perene",
+        "carbonSequestration": 12.5,
+        "benefits": [
+            "Fixação de nitrogênio",
+            "Quebra-vento",
+            "Ração animal"
+        ],
+        "sintropicNotes": "Planta fundamental para recuperação de solos e fornecimento de biomassa.",
+        "notes": "Pode ser podado drasticamente para fornecer cobertura morta.",
+        "companions": [
+            "Milho",
+            "Mandioca"
+        ],
+        "waterFrequency": 1
+    },
+    {
+        "id": "crotalaria",
+        "name": "Crotalária",
+        "icon": "🌼",
+        "daysToHarvest": 90,
+        "basePoints": 40,
+        "season": "Ano Todo",
+        "type": "Flor",
+        "stratum": "Médio",
+        "succession": "Placenta",
+        "difficulty": "fácil",
+        "lifecycle": "Anual",
+        "carbonSequestration": 8.0,
+        "benefits": [
+            "Fixação de nitrogênio",
+            "Controle de nematoides",
+            "Atrai polinizadores"
+        ],
+        "sintropicNotes": "Usada como adubação verde para preparar o solo para culturas exigentes.",
+        "notes": "Deve ser manejada antes da semente deitar.",
+        "companions": [
+            "Café",
+            "Citros"
+        ],
+        "waterFrequency": 2
+    },
+    {
+        "id": "banana",
+        "name": "Banana",
+        "icon": "🍌",
+        "daysToHarvest": 365,
+        "basePoints": 120,
+        "season": "Ano Todo",
+        "type": "Fruto",
+        "stratum": "Alto",
+        "succession": "Secundária",
+        "difficulty": "fácil",
+        "lifecycle": "Perene",
+        "carbonSequestration": 25.0,
+        "benefits": [
+            "Produção de biomassa",
+            "Retenção de água",
+            "Alimento energético"
+        ],
+        "sintropicNotes": "O 'tanque de água' da agrofloresta. Essencial para manter a umidade do sistema.",
+        "notes": "Exige muita matéria orgânica e potássio.",
+        "companions": [
+            "Café",
+            "Cacau"
+        ],
+        "waterFrequency": 3
+    },
+    {
+        "id": "papaya",
+        "name": "Mamão",
+        "icon": "🥭",
+        "daysToHarvest": 270,
+        "basePoints": 90,
+        "season": "Ano Todo",
+        "type": "Fruto",
+        "stratum": "Emergente",
+        "succession": "Secundária",
+        "difficulty": "médio",
+        "lifecycle": "Perene",
+        "carbonSequestration": 15.0,
+        "benefits": [
+            "Crescimento rápido",
+            "Rico em enzimas",
+            "Ocupa pouco espaço horizontal"
+        ],
+        "sintropicNotes": "Planta de ciclo curto que ocupa o estrato emergente temporariamente.",
+        "notes": "Sensível ao excesso de água nas raízes.",
+        "companions": [
+            "Banana",
+            "Café"
+        ],
+        "waterFrequency": 2
+    },
+    {
+        "id": "mango",
+        "name": "Manga",
+        "icon": "🥭",
+        "daysToHarvest": 1095,
+        "basePoints": 300,
+        "season": "Verão",
+        "type": "Fruto",
+        "stratum": "Alto",
+        "succession": "Clímax",
+        "difficulty": "médio",
+        "lifecycle": "Perene",
+        "carbonSequestration": 85.0,
+        "benefits": [
+            "Sombra densa",
+            "Longevidade",
+            "Fruto valorizado"
+        ],
+        "sintropicNotes": "Árvore de grande porte que define a estrutura final do sistema.",
+        "notes": "Necessita de podas de formação nos primeiros anos.",
+        "companions": [
+            "Citros",
+            "Goiaba"
+        ],
+        "waterFrequency": 1
+    },
+    {
+        "id": "jabuticaba",
+        "name": "Jabuticaba",
+        "icon": "🟣",
+        "daysToHarvest": 1825,
+        "basePoints": 500,
+        "season": "Primavera",
+        "type": "Fruto",
+        "stratum": "Baixo",
+        "succession": "Clímax",
+        "difficulty": "difícil",
+        "lifecycle": "Perene",
+        "carbonSequestration": 45.0,
+        "benefits": [
+            "Nativa",
+            "Altamente nutritiva",
+            "Ornamental"
+        ],
+        "sintropicNotes": "Planta de sub-bosque que aprecia sombra parcial e solo muito úmido.",
+        "notes": "Crescimento lento, mas muito recompensador.",
+        "companions": [
+            "Café",
+            "Samambaias"
+        ],
+        "waterFrequency": 4
+    },
+    {
+        "id": "citrus",
+        "name": "Limão",
+        "icon": "🍋",
+        "daysToHarvest": 730,
+        "basePoints": 150,
+        "season": "Ano Todo",
+        "type": "Fruto",
+        "stratum": "Médio",
+        "succession": "Secundária",
+        "difficulty": "médio",
+        "lifecycle": "Perene",
+        "carbonSequestration": 35.0,
+        "benefits": [
+            "Vitamina C",
+            "Repelente natural",
+            "Produção constante"
+        ],
+        "sintropicNotes": "Ocupa o estrato médio e beneficia-se da poda de árvores maiores.",
+        "notes": "Vulnerável a pulgões se o solo estiver desequilibrado.",
+        "companions": [
+            "Goiaba",
+            "Manjericão"
+        ],
+        "waterFrequency": 2
+    },
+    {
+        "id": "avocado",
+        "name": "Abacate",
+        "icon": "🥑",
+        "daysToHarvest": 1095,
+        "basePoints": 250,
+        "season": "Inverno/Primavera",
+        "type": "Fruto",
+        "stratum": "Alto",
+        "succession": "Secundária",
+        "difficulty": "médio",
+        "lifecycle": "Perene",
+        "carbonSequestration": 70.0,
+        "benefits": [
+            "Gorduras saudáveis",
+            "Grande produção de biomassa",
+            "Sombra"
+        ],
+        "sintropicNotes": "Fornece grande quantidade de folhas para cobertura de solo.",
+        "notes": "Precisa de boa drenagem.",
+        "companions": [
+            "Café",
+            "Banana"
+        ],
+        "waterFrequency": 2
+    },
+    {
+        "id": "jacaranda",
+        "name": "Jacarandá",
+        "icon": "🌳",
+        "daysToHarvest": 3650,
+        "basePoints": 1000,
+        "season": "Primavera",
+        "type": "Madeira",
+        "stratum": "Alto",
+        "succession": "Clímax",
+        "difficulty": "difícil",
+        "lifecycle": "Perene",
+        "carbonSequestration": 150.0,
+        "benefits": [
+            "Madeira nobre",
+            "Beleza cênica",
+            "Preservação"
+        ],
+        "sintropicNotes": "Árvore de longo prazo que traz estabilidade e biodiversidade ao sistema.",
+        "notes": "Espécie protegida e de alto valor ecológico.",
+        "companions": [
+            "Nativas da Mata Atlântica"
+        ],
+        "waterFrequency": 1
+    },
+    {
+        "id": "embauba",
+        "name": "Embaúba",
+        "icon": "🍃",
+        "daysToHarvest": 1825,
+        "basePoints": 200,
+        "season": "Ano Todo",
+        "type": "Nativa",
+        "stratum": "Emergente",
+        "succession": "Secundária",
+        "difficulty": "fácil",
+        "lifecycle": "Perene",
+        "carbonSequestration": 40.0,
+        "benefits": [
+            "Atrai fauna",
+            "Crescimento rápido",
+            "Recuperação de áreas"
+        ],
+        "sintropicNotes": "Planta pioneira que 'abre caminho' para as espécies de clímax.",
+        "notes": "Suas folhas são excelente adubo.",
+        "companions": [
+            "Ingá",
+            "Sangra d'água"
+        ],
+        "waterFrequency": 2
+    },
+    {
+        "id": "inga",
+        "name": "Ingá",
+        "icon": "🌱",
+        "daysToHarvest": 730,
+        "basePoints": 180,
+        "season": "Verão",
+        "type": "Fruto",
+        "stratum": "Alto",
+        "succession": "Secundária",
+        "difficulty": "fácil",
+        "lifecycle": "Perene",
+        "carbonSequestration": 55.0,
+        "benefits": [
+            "Fixação de nitrogênio",
+            "Fruto comestível",
+            "Sombra rala"
+        ],
+        "sintropicNotes": "Leguminosa arbórea excelente para sombreamento de café e cacau.",
+        "notes": "Atrai muitas abelhas e pássaros.",
+        "companions": [
+            "Café",
+            "Cacau"
+        ],
+        "waterFrequency": 2
+    },
+    {
+        "id": "marigold",
+        "name": "Calêndula",
+        "icon": "🌼",
+        "daysToHarvest": 60,
+        "basePoints": 35,
+        "season": "Ano Todo",
+        "type": "Flor",
+        "stratum": "Baixo",
+        "succession": "Placenta",
+        "difficulty": "fácil",
+        "lifecycle": "Anual",
+        "carbonSequestration": 1.5,
+        "benefits": [
+            "Medicinal",
+            "Repele pragas",
+            "Ornamental"
+        ],
+        "sintropicNotes": "Planta companheira essencial para o controle biológico na horta.",
+        "notes": "As pétalas são comestíveis.",
+        "companions": [
+            "Tomate",
+            "Hortaliças"
+        ],
+        "waterFrequency": 2
+    },
+    {
+        "id": "sunflower",
+        "name": "Girassol",
+        "icon": "🌻",
+        "daysToHarvest": 90,
+        "basePoints": 50,
+        "season": "Primavera/Verão",
+        "type": "Flor",
+        "stratum": "Alto",
+        "succession": "Placenta",
+        "difficulty": "fácil",
+        "lifecycle": "Anual",
+        "carbonSequestration": 10.0,
+        "benefits": [
+            "Atrai polinizadores",
+            "Produção de óleo/sementes",
+            "Descompacta o solo"
+        ],
+        "sintropicNotes": "Sua raiz profunda ajuda a estruturar o solo para as próximas culturas.",
+        "notes": "Siga o sol!",
+        "companions": [
+            "Milho",
+            "Feijão"
+        ],
+        "waterFrequency": 3
+    },
+    {
+        "id": "rosemary",
+        "name": "Alecrim",
+        "icon": "🌿",
+        "daysToHarvest": 120,
+        "basePoints": 40,
+        "season": "Ano Todo",
+        "type": "Folha",
+        "stratum": "Médio",
+        "succession": "Secundária",
+        "difficulty": "médio",
+        "lifecycle": "Perene",
+        "carbonSequestration": 4.5,
+        "benefits": [
+            "Temperos",
+            "Medicinal",
+            "Resistente"
+        ],
+        "sintropicNotes": "Planta rústica que ajuda a repelir insetos indesejados com seu aroma forte.",
+        "notes": "Não gosta de solo encharcado.",
+        "companions": [
+            "Sálvia",
+            "Cenoura"
+        ],
+        "waterFrequency": 1
+    },
+    {
+        "id": "strawberry",
+        "name": "Morango",
+        "icon": "🍓",
+        "daysToHarvest": 90,
+        "basePoints": 55,
+        "season": "Inverno/Primavera",
+        "type": "Fruto",
+        "stratum": "Rasteiro",
+        "succession": "Placenta",
+        "difficulty": "médio",
+        "lifecycle": "Perene",
+        "carbonSequestration": 1.2,
+        "benefits": [
+            "Antioxidante",
+            "Ocupa pouco espaço",
+            "Saboroso"
+        ],
+        "sintropicNotes": "Ocupa o estrato rasteiro sob a sombra de plantas maiores.",
+        "notes": "Gosta de solo rico em matéria orgânica.",
+        "companions": [
+            "Alface",
+            "Espinafre"
+        ],
+        "waterFrequency": 3
+    },
+    {
+        "id": "garlic",
+        "name": "Alho",
+        "icon": "🧄",
+        "daysToHarvest": 150,
+        "basePoints": 60,
+        "season": "Outono/Inverno",
+        "type": "Raiz",
+        "stratum": "Baixo",
+        "succession": "Placenta",
+        "difficulty": "médio",
+        "lifecycle": "Anual",
+        "carbonSequestration": 2.0,
+        "benefits": [
+            "Antibiótico natural",
+            "Repele pragas",
+            "Longa conservação"
+        ],
+        "sintropicNotes": "Excelente para bordaduras de canteiros para proteção fitossanitária.",
+        "notes": "Precisa de frio para formar o bulbo.",
+        "companions": [
+            "Tomate",
+            "Rosa"
+        ],
+        "waterFrequency": 1
+    },
+    {
+        "id": "onion",
+        "name": "Cebola",
+        "icon": "🧅",
+        "daysToHarvest": 140,
+        "basePoints": 50,
+        "season": "Outono/Inverno",
+        "type": "Raiz",
+        "stratum": "Baixo",
+        "succession": "Placenta",
+        "difficulty": "médio",
+        "lifecycle": "Anual",
+        "carbonSequestration": 2.2,
+        "benefits": [
+            "Base culinária",
+            "Anti-inflamatória",
+            "Fácil armazenamento"
+        ],
+        "sintropicNotes": "Ajuda a afastar insetos com seu odor característico.",
+        "notes": "Não plante perto de feijões.",
+        "companions": [
+            "Cenoura",
+            "Beterraba"
+        ],
+        "waterFrequency": 2
+    },
+    {
+        "id": "beet",
+        "name": "Beterraba",
+        "icon": "🟣",
+        "daysToHarvest": 70,
+        "basePoints": 45,
+        "season": "Ano Todo",
+        "type": "Raiz",
+        "stratum": "Baixo",
+        "succession": "Placenta",
+        "difficulty": "fácil",
+        "lifecycle": "Anual",
+        "carbonSequestration": 3.0,
+        "benefits": [
+            "Rica em ferro",
+            "Folhas comestíveis",
+            "Crescimento rápido"
+        ],
+        "sintropicNotes": "Pode ser plantada densamente entre plantas de ciclo mais longo.",
+        "notes": "Gosta de solos leves.",
+        "companions": [
+            "Cebola",
+            "Alface"
+        ],
+        "waterFrequency": 2
+    },
+    {
+        "id": "cabbage",
+        "name": "Repolho",
+        "icon": "🥬",
+        "daysToHarvest": 90,
+        "basePoints": 50,
+        "season": "Outono/Inverno",
+        "type": "Folha",
+        "stratum": "Médio",
+        "succession": "Placenta",
+        "difficulty": "médio",
+        "lifecycle": "Anual",
+        "carbonSequestration": 4.0,
+        "benefits": [
+            "Rico em fibras",
+            "Resistente ao frio",
+            "Grande volume"
+        ],
+        "sintropicNotes": "Exige muito nitrogênio, bom após leguminosas.",
+        "notes": "Cuidado com a lagarta-da-couve.",
+        "companions": [
+            "Alecrim",
+            "Hortelã"
+        ],
+        "waterFrequency": 3
+    },
+    {
+        "id": "eggplant",
+        "name": "Berinjela",
+        "icon": "🍆",
+        "daysToHarvest": 110,
+        "basePoints": 55,
+        "season": "Primavera/Verão",
+        "type": "Fruto",
+        "stratum": "Médio",
+        "succession": "Placenta",
+        "difficulty": "médio",
+        "lifecycle": "Anual",
+        "carbonSequestration": 3.5,
+        "benefits": [
+            "Saúde do coração",
+            "Baixa caloria",
+            "Produtiva"
+        ],
+        "sintropicNotes": "Necessita de calor e sol pleno para produzir bem.",
+        "notes": "Pode precisar de tutoramento.",
+        "companions": [
+            "Feijão",
+            "Pimentão"
+        ],
+        "waterFrequency": 3
+    },
+    {
+        "id": "sweet_potato",
+        "name": "Batata Doce",
+        "icon": "🍠",
+        "daysToHarvest": 150,
+        "basePoints": 70,
+        "season": "Ano Todo",
+        "type": "Raiz",
+        "stratum": "Rasteiro",
+        "succession": "Placenta",
+        "difficulty": "fácil",
+        "lifecycle": "Perene",
+        "carbonSequestration": 15.0,
+        "benefits": [
+            "Energia sustentada",
+            "Excelente cobertura de solo",
+            "Rústica"
+        ],
+        "sintropicNotes": "Uma das melhores plantas para cobrir o solo e suprimir ervas espontâneas.",
+        "notes": "As folhas também são comestíveis e nutritivas.",
+        "companions": [
+            "Milho",
+            "Mandioca"
+        ],
+        "waterFrequency": 2
+    },
+    {
+        "id": "cassava",
+        "name": "Mandioca",
+        "icon": "🌿",
+        "daysToHarvest": 300,
+        "basePoints": 100,
+        "season": "Ano Todo",
+        "type": "Raiz",
+        "stratum": "Alto",
+        "succession": "Secundária",
+        "difficulty": "fácil",
+        "lifecycle": "Perene",
+        "carbonSequestration": 20.0,
+        "benefits": [
+            "Segurança alimentar",
+            "Resistente à seca",
+            "Biomassa"
+        ],
+        "sintropicNotes": "Planta estruturante da roça, fornece sombra leve para o estrato baixo.",
+        "notes": "Pode ser colhida de 8 a 18 meses.",
+        "companions": [
+            "Feijão",
+            "Milho"
+        ],
+        "waterFrequency": 1
+    },
+    {
+        "id": "coffee",
+        "name": "Café",
+        "icon": "☕",
+        "daysToHarvest": 1095,
+        "basePoints": 400,
+        "season": "Inverno",
+        "type": "Fruto",
+        "stratum": "Baixo",
+        "succession": "Clímax",
+        "difficulty": "difícil",
+        "lifecycle": "Perene",
+        "carbonSequestration": 30.0,
+        "benefits": [
+            "Valor comercial",
+            "Aprecia sombra",
+            "Nativa de sub-bosque"
+        ],
+        "sintropicNotes": "Planta clássica de sistemas agroflorestais, produz melhor sob sombra rala.",
+        "notes": "Necessita de solo rico em matéria orgânica.",
+        "companions": [
+            "Banana",
+            "Ingá"
+        ],
+        "waterFrequency": 2
+    },
+    {
+        "id": "cocoa",
+        "name": "Cacau",
+        "icon": "🍫",
+        "daysToHarvest": 1460,
+        "basePoints": 450,
+        "season": "Ano Todo",
+        "type": "Fruto",
+        "stratum": "Baixo",
+        "succession": "Clímax",
+        "difficulty": "difícil",
+        "lifecycle": "Perene",
+        "carbonSequestration": 35.0,
+        "benefits": [
+            "Antioxidante",
+            "Valor agregado",
+            "Preservação de florestas"
+        ],
+        "sintropicNotes": "Cresce naturalmente sob a copa das árvores da Mata Atlântica (Cabruca).",
+        "notes": "Sensível a ventos fortes e sol direto.",
+        "companions": [
+            "Banana",
+            "Seringueira"
+        ],
+        "waterFrequency": 3
+    },
+    {
+        "id": "guava",
+        "name": "Goiaba",
+        "icon": "🍐",
+        "daysToHarvest": 730,
+        "basePoints": 180,
+        "season": "Verão",
+        "type": "Fruto",
+        "stratum": "Médio",
+        "succession": "Secundária",
+        "difficulty": "fácil",
+        "lifecycle": "Perene",
+        "carbonSequestration": 40.0,
+        "benefits": [
+            "Rica em vitamina C",
+            "Rústica",
+            "Atrai pássaros"
+        ],
+        "sintropicNotes": "Árvore muito adaptável que fornece frutos e lenha de poda.",
+        "notes": "Cuidado com a mosca-das-frutas.",
+        "companions": [
+            "Citros",
+            "Manga"
+        ],
+        "waterFrequency": 2
+    },
+    {
+        "id": "acerola",
+        "name": "Acerola",
+        "icon": "🍒",
+        "daysToHarvest": 365,
+        "basePoints": 150,
+        "season": "Ano Todo",
+        "type": "Fruto",
+        "stratum": "Médio",
+        "succession": "Secundária",
+        "difficulty": "fácil",
+        "lifecycle": "Perene",
+        "carbonSequestration": 25.0,
+        "benefits": [
+            "Vitamina C extrema",
+            "Produção rápida",
+            "Ornamental"
+        ],
+        "sintropicNotes": "Arbusto produtivo que se encaixa bem em bordas e espaços médios.",
+        "notes": "Gosta de sol e regas regulares.",
+        "companions": [
+            "Pitanga",
+            "Goiaba"
+        ],
+        "waterFrequency": 3
+    },
+    {
+        "id": "pitanga",
+        "name": "Pitanga",
+        "icon": "🍒",
+        "daysToHarvest": 730,
+        "basePoints": 200,
+        "season": "Primavera",
+        "type": "Fruto",
+        "stratum": "Médio",
+        "succession": "Secundária",
+        "difficulty": "fácil",
+        "lifecycle": "Perene",
+        "carbonSequestration": 30.0,
+        "benefits": [
+            "Nativa",
+            "Fruto saboroso",
+            "Folhas medicinais"
+        ],
+        "sintropicNotes": "Excelente para atrair a fauna nativa e compor o estrato médio.",
+        "notes": "Resistente e de fácil manejo.",
+        "companions": [
+            "Acerola",
+            "Jabuticaba"
+        ],
+        "waterFrequency": 2
+    },
+    {
+        "id": "passion_fruit",
+        "name": "Maracujá",
+        "icon": "🍇",
+        "daysToHarvest": 240,
+        "basePoints": 80,
+        "season": "Ano Todo",
+        "type": "Fruto",
+        "stratum": "Alto",
+        "succession": "Secundária",
+        "difficulty": "médio",
+        "lifecycle": "Perene",
+        "carbonSequestration": 12.0,
+        "benefits": [
+            "Calmante natural",
+            "Crescimento rápido",
+            "Polinização por mamangavas"
+        ],
+        "sintropicNotes": "Trepadeira que utiliza as árvores maiores como suporte.",
+        "notes": "Necessita de polinização manual se houver poucos insetos.",
+        "companions": [
+            "Milho",
+            "Cerca viva"
+        ],
+        "waterFrequency": 3
     },
     { 
         id: 'bean', name: 'Feijão', icon: '🌱', daysToHarvest: 65, basePoints: 45, 
@@ -1886,7 +2667,35 @@ function renderCarbon() {
 
 function renderShop() {
     const shopContent = document.getElementById('shop-content');
-    const items = greenShop[state.currentShopSection];
+    const items = greenShop[state.currentShopSection,
+    {"id": "cassava", "name": "Mandioca", "icon": "\ud83c\udf3f", "daysToHarvest": 300, "basePoints": 100, "season": "Ano Todo", "type": "Raiz", "stratum": "Alto", "succession": "Secund\u00e1ria", "difficulty": "f\u00e1cil", "lifecycle": "Perene", "carbonSequestration": 20.0, "benefits": ["Seguran\u00e7a alimentar", "Resistente \u00e0 seca", "Biomassa"], "sintropicNotes": "Planta estruturante da ro\u00e7a, fornece sombra leve para o estrato baixo.", "notes": "Pode ser colhida de 8 a 18 meses.", "companions": ["Feij\u00e3o", "Milho"], "waterFrequency": 1},
+    {"id": "coffee", "name": "Caf\u00e9", "icon": "\u2615", "daysToHarvest": 1095, "basePoints": 400, "season": "Inverno", "type": "Fruto", "stratum": "Baixo", "succession": "Cl\u00edmax", "difficulty": "dif\u00edcil", "lifecycle": "Perene", "carbonSequestration": 30.0, "benefits": ["Valor comercial", "Aprecia sombra", "Nativa de sub-bosque"], "sintropicNotes": "Planta cl\u00e1ssica de sistemas agroflorestais, produz melhor sob sombra rala.", "notes": "Necessita de solo rico em mat\u00e9ria org\u00e2nica.", "companions": ["Banana", "Ing\u00e1"], "waterFrequency": 2},
+    {"id": "cocoa", "name": "Cacau", "icon": "\ud83c\udf6b", "daysToHarvest": 1460, "basePoints": 450, "season": "Ano Todo", "type": "Fruto", "stratum": "Baixo", "succession": "Cl\u00edmax", "difficulty": "dif\u00edcil", "lifecycle": "Perene", "carbonSequestration": 35.0, "benefits": ["Antioxidante", "Valor agregado", "Preserva\u00e7\u00e3o de florestas"], "sintropicNotes": "Cresce naturalmente sob a copa das \u00e1rvores da Mata Atl\u00e2ntica (Cabruca).", "notes": "Sens\u00edvel a ventos fortes e sol direto.", "companions": ["Banana", "Seringueira"], "waterFrequency": 3},
+    {"id": "guava", "name": "Goiaba", "icon": "\ud83c\udf50", "daysToHarvest": 730, "basePoints": 180, "season": "Ver\u00e3o", "type": "Fruto", "stratum": "M\u00e9dio", "succession": "Secund\u00e1ria", "difficulty": "f\u00e1cil", "lifecycle": "Perene", "carbonSequestration": 40.0, "benefits": ["Rica em vitamina C", "R\u00fastica", "Atrai p\u00e1ssaros"], "sintropicNotes": "\u00c1rvore muito adapt\u00e1vel que fornece frutos e lenha de poda.", "notes": "Cuidado com a mosca-das-frutas.", "companions": ["Citros", "Manga"], "waterFrequency": 2},
+    {"id": "acerola", "name": "Acerola", "icon": "\ud83c\udf52", "daysToHarvest": 365, "basePoints": 150, "season": "Ano Todo", "type": "Fruto", "stratum": "M\u00e9dio", "succession": "Secund\u00e1ria", "difficulty": "f\u00e1cil", "lifecycle": "Perene", "carbonSequestration": 25.0, "benefits": ["Vitamina C extrema", "Produ\u00e7\u00e3o r\u00e1pida", "Ornamental"], "sintropicNotes": "Arbusto produtivo que se encaixa bem em bordas e espa\u00e7os m\u00e9dios.", "notes": "Gosta de sol e regas regulares.", "companions": ["Pitanga", "Goiaba"], "waterFrequency": 3},
+    {"id": "pitanga", "name": "Pitanga", "icon": "\ud83c\udf52", "daysToHarvest": 730, "basePoints": 200, "season": "Primavera", "type": "Fruto", "stratum": "M\u00e9dio", "succession": "Secund\u00e1ria", "difficulty": "f\u00e1cil", "lifecycle": "Perene", "carbonSequestration": 30.0, "benefits": ["Nativa", "Fruto saboroso", "Folhas medicinais"], "sintropicNotes": "Excelente para atrair a fauna nativa e compor o estrato m\u00e9dio.", "notes": "Resistente e de f\u00e1cil manejo.", "companions": ["Acerola", "Jabuticaba"], "waterFrequency": 2},
+    {"id": "passion_fruit", "name": "Maracuj\u00e1", "icon": "\ud83c\udf47", "daysToHarvest": 240, "basePoints": 80, "season": "Ano Todo", "type": "Fruto", "stratum": "Alto", "succession": "Secund\u00e1ria", "difficulty": "m\u00e9dio", "lifecycle": "Perene", "carbonSequestration": 12.0, "benefits": ["Calmante natural", "Crescimento r\u00e1pido", "Poliniza\u00e7\u00e3o por mamangavas"], "sintropicNotes": "Trepadeira que utiliza as \u00e1rvores maiores como suporte.", "notes": "Necessita de poliniza\u00e7\u00e3o manual se houver poucos insetos.", "companions": ["Milho", "Cerca viva"], "waterFrequency": 3},
+    {"id": "sweet_potato", "name": "Batata Doce", "icon": "\ud83c\udf60", "daysToHarvest": 150, "basePoints": 70, "season": "Ano Todo", "type": "Raiz", "stratum": "Rasteiro", "succession": "Placenta", "difficulty": "f\u00e1cil", "lifecycle": "Perene", "carbonSequestration": 15.0, "benefits": ["Energia sustentada", "Excelente cobertura de solo", "R\u00fastica"], "sintropicNotes": "Uma das melhores plantas para cobrir o solo e suprimir ervas espont\u00e2neas.", "notes": "As folhas tamb\u00e9m s\u00e3o comest\u00edveis e nutritivas.", "companions": ["Milho", "Mandioca"], "waterFrequency": 2},
+    {"id": "eggplant", "name": "Berinjela", "icon": "\ud83c\udf46", "daysToHarvest": 110, "basePoints": 55, "season": "Primavera/Ver\u00e3o", "type": "Fruto", "stratum": "M\u00e9dio", "succession": "Placenta", "difficulty": "m\u00e9dio", "lifecycle": "Anual", "carbonSequestration": 3.5, "benefits": ["Sa\u00fade do cora\u00e7\u00e3o", "Baixa caloria", "Produtiva"], "sintropicNotes": "Necessita de calor e sol pleno para produzir bem.", "notes": "Pode precisar de tutoramento.", "companions": ["Feij\u00e3o", "Piment\u00e3o"], "waterFrequency": 3},
+    {"id": "cabbage", "name": "Repolho", "icon": "\ud83e\udd6c", "daysToHarvest": 90, "basePoints": 50, "season": "Outono/Inverno", "type": "Folha", "stratum": "M\u00e9dio", "succession": "Placenta", "difficulty": "m\u00e9dio", "lifecycle": "Anual", "carbonSequestration": 4.0, "benefits": ["Rico em fibras", "Resistente ao frio", "Grande volume"], "sintropicNotes": "Exige muito nitrog\u00eanio, bom ap\u00f3s leguminosas.", "notes": "Cuidado com a lagarta-da-couve.", "companions": ["Alecrim", "Hortel\u00e3"], "waterFrequency": 3},
+    {"id": "beet", "name": "Beterraba", "icon": "\ud83d\udfe3", "daysToHarvest": 70, "basePoints": 45, "season": "Ano Todo", "type": "Raiz", "stratum": "Baixo", "succession": "Placenta", "difficulty": "f\u00e1cil", "lifecycle": "Anual", "carbonSequestration": 3.0, "benefits": ["Rica em ferro", "Folhas comest\u00edveis", "Crescimento r\u00e1pido"], "sintropicNotes": "Pode ser plantada densamente entre plantas de ciclo mais longo.", "notes": "Gosta de solos leves.", "companions": ["Cebola", "Alface"], "waterFrequency": 2},
+    {"id": "onion", "name": "Cebola", "icon": "\ud83e\uddc5", "daysToHarvest": 140, "basePoints": 50, "season": "Outono/Inverno", "type": "Raiz", "stratum": "Baixo", "succession": "Placenta", "difficulty": "m\u00e9dio", "lifecycle": "Anual", "carbonSequestration": 2.2, "benefits": ["Base culin\u00e1ria", "Anti-inflamat\u00f3ria", "F\u00e1cil armazenamento"], "sintropicNotes": "Ajuda a afastar insetos com seu odor caracter\u00edstico.", "notes": "N\u00e3o plante perto de feij\u00f5es.", "companions": ["Cenoura", "Beterraba"], "waterFrequency": 2},
+    {"id": "garlic", "name": "Alho", "icon": "\ud83e\uddc4", "daysToHarvest": 150, "basePoints": 60, "season": "Outono/Inverno", "type": "Raiz", "stratum": "Baixo", "succession": "Placenta", "difficulty": "m\u00e9dio", "lifecycle": "Anual", "carbonSequestration": 2.0, "benefits": ["Antibi\u00f3tico natural", "Repele pragas", "Longa conserva\u00e7\u00e3o"], "sintropicNotes": "Excelente para bordaduras de canteiros para prote\u00e7\u00e3o fitossanit\u00e1ria.", "notes": "Precisa de frio para formar o bulbo.", "companions": ["Tomate", "Rosa"], "waterFrequency": 1},
+    {"id": "strawberry", "name": "Morango", "icon": "\ud83c\udf53", "daysToHarvest": 90, "basePoints": 55, "season": "Inverno/Primavera", "type": "Fruto", "stratum": "Rasteiro", "succession": "Placenta", "difficulty": "m\u00e9dio", "lifecycle": "Perene", "carbonSequestration": 1.2, "benefits": ["Antioxidante", "Ocupa pouco espa\u00e7o", "Saboroso"], "sintropicNotes": "Ocupa o estrato rasteiro sob a sombra de plantas maiores.", "notes": "Gosta de solo rico em mat\u00e9ria org\u00e2nica.", "companions": ["Alface", "Espinafre"], "waterFrequency": 3},
+    {"id": "rosemary", "name": "Alecrim", "icon": "\ud83c\udf3f", "daysToHarvest": 120, "basePoints": 40, "season": "Ano Todo", "type": "Folha", "stratum": "M\u00e9dio", "succession": "Secund\u00e1ria", "difficulty": "m\u00e9dio", "lifecycle": "Perene", "carbonSequestration": 4.5, "benefits": ["Temperos", "Medicinal", "Resistente"], "sintropicNotes": "Planta r\u00fastica que ajuda a repelir insetos indesejados com seu aroma forte.", "notes": "N\u00e3o gosta de solo encharcado.", "companions": ["S\u00e1lvia", "Cenoura"], "waterFrequency": 1},
+    {"id": "sunflower_new", "name": "Girassol", "icon": "\ud83c\udf3b", "daysToHarvest": 90, "basePoints": 50, "season": "Primavera/Ver\u00e3o", "type": "Flor", "stratum": "Alto", "succession": "Placenta", "difficulty": "f\u00e1cil", "lifecycle": "Anual", "carbonSequestration": 10.0, "benefits": ["Atrai polinizadores", "Produ\u00e7\u00e3o de \u00f3leo/sementes", "Descompacta o solo"], "sintropicNotes": "Sua raiz profunda ajuda a estruturar o solo para as pr\u00f3ximas culturas.", "notes": "Siga o sol!", "companions": ["Milho", "Feij\u00e3o"], "waterFrequency": 3},
+    {"id": "marigold", "name": "Cal\u00eandula", "icon": "\ud83c\udf3c", "daysToHarvest": 60, "basePoints": 35, "season": "Ano Todo", "type": "Flor", "stratum": "Baixo", "succession": "Placenta", "difficulty": "f\u00e1cil", "lifecycle": "Anual", "carbonSequestration": 1.5, "benefits": ["Medicinal", "Repele pragas", "Ornamental"], "sintropicNotes": "Planta companheira essencial para o controle biol\u00f3gico na horta.", "notes": "As p\u00e9talas s\u00e3o comest\u00edveis.", "companions": ["Tomate", "Hortali\u00e7as"], "waterFrequency": 2},
+    {"id": "crotalaria_new", "name": "Crotal\u00e1ria", "icon": "\ud83c\udf3c", "daysToHarvest": 90, "basePoints": 40, "season": "Ano Todo", "type": "Flor", "stratum": "M\u00e9dio", "succession": "Placenta", "difficulty": "f\u00e1cil", "lifecycle": "Anual", "carbonSequestration": 8.0, "benefits": ["Fixa\u00e7\u00e3o de nitrog\u00eanio", "Controle de nematoides", "Atrai polinizadores"], "sintropicNotes": "Usada como aduba\u00e7\u00e3o verde para preparar o solo para culturas exigentes.", "notes": "Deve ser manejada antes da semente deitar.", "companions": ["Caf\u00e9", "Citros"], "waterFrequency": 2},
+    {"id": "inga", "name": "Ing\u00e1", "icon": "\ud83c\udf31", "daysToHarvest": 730, "basePoints": 180, "season": "Ver\u00e3o", "type": "Fruto", "stratum": "Alto", "succession": "Secund\u00e1ria", "difficulty": "f\u00e1cil", "lifecycle": "Perene", "carbonSequestration": 55.0, "benefits": ["Fixa\u00e7\u00e3o de nitrog\u00eanio", "Fruto comest\u00edvel", "Sombra rala"], "sintropicNotes": "Leguminosa arb\u00f3rea excelente para sombreamento de caf\u00e9 e cacau.", "notes": "Atrai muitas abelhas e p\u00e1ssaros.", "companions": ["Caf\u00e9", "Cacau"], "waterFrequency": 2},
+    {"id": "embauba", "name": "Emba\u00faba", "icon": "\ud83c\udf43", "daysToHarvest": 1825, "basePoints": 200, "season": "Ano Todo", "type": "Nativa", "stratum": "Emergente", "succession": "Secund\u00e1ria", "difficulty": "f\u00e1cil", "lifecycle": "Perene", "carbonSequestration": 40.0, "benefits": ["Atrai fauna", "Crescimento r\u00e1pido", "Recupera\u00e7\u00e3o de \u00e1reas"], "sintropicNotes": "Planta pioneira que 'abre caminho' para as esp\u00e9cies de cl\u00edmax.", "notes": "Suas folhas s\u00e3o excelente adubo.", "companions": ["Ing\u00e1", "Sangra d'\u00e1gua"], "waterFrequency": 2},
+    {"id": "jacaranda", "name": "Jacarand\u00e1", "icon": "\ud83c\udf33", "daysToHarvest": 3650, "basePoints": 1000, "season": "Primavera", "type": "Madeira", "stratum": "Alto", "succession": "Cl\u00edmax", "difficulty": "dif\u00edcil", "lifecycle": "Perene", "carbonSequestration": 150.0, "benefits": ["Madeira nobre", "Beleza c\u00eanica", "Preserva\u00e7\u00e3o"], "sintropicNotes": "\u00c1rvore de longo prazo que traz estabilidade e biodiversidade ao sistema.", "notes": "Esp\u00e9cie protegida e de alto valor ecol\u00f3gico.", "companions": ["Nativas da Mata Atl\u00e2ntica"], "waterFrequency": 1},
+    {"id": "avocado", "name": "Abacate", "icon": "\ud83e\udd51", "daysToHarvest": 1095, "basePoints": 250, "season": "Inverno/Primavera", "type": "Fruto", "stratum": "Alto", "succession": "Secund\u00e1ria", "difficulty": "m\u00e9dio", "lifecycle": "Perene", "carbonSequestration": 70.0, "benefits": ["Gorduras saud\u00e1veis", "Grande produ\u00e7\u00e3o de biomassa", "Sombra"], "sintropicNotes": "Fornece grande quantidade de folhas para cobertura de solo.", "notes": "Precisa de boa drenagem.", "companions": ["Caf\u00e9", "Banana"], "waterFrequency": 2},
+    {"id": "citrus", "name": "Lim\u00e3o", "icon": "\ud83c\udf4b", "daysToHarvest": 730, "basePoints": 150, "season": "Ano Todo", "type": "Fruto", "stratum": "M\u00e9dio", "succession": "Secund\u00e1ria", "difficulty": "m\u00e9dio", "lifecycle": "Perene", "carbonSequestration": 35.0, "benefits": ["Vitamina C", "Repelente natural", "Produ\u00e7\u00e3o constante"], "sintropicNotes": "Ocupa o estrato m\u00e9dio e beneficia-se da poda de \u00e1rvores maiores.", "notes": "Vulner\u00e1vel a pulg\u00f5es se o solo estiver desequilibrado.", "companions": ["Goiaba", "Manjeric\u00e3o"], "waterFrequency": 2},
+    {"id": "mango", "name": "Manga", "icon": "\ud83e\udd6d", "daysToHarvest": 1095, "basePoints": 300, "season": "Ver\u00e3o", "type": "Fruto", "stratum": "Alto", "succession": "Cl\u00edmax", "difficulty": "m\u00e9dio", "lifecycle": "Perene", "carbonSequestration": 85.0, "benefits": ["Sombra densa", "Longevidade", "Fruto valorizado"], "sintropicNotes": "\u00c1rvore de grande porte que define a estrutura final do sistema.", "notes": "Necessita de podas de forma\u00e7\u00e3o nos primeiros anos.", "companions": ["Citros", "Goiaba"], "waterFrequency": 1},
+    {"id": "jabuticaba", "name": "Jabuticaba", "icon": "\ud83d\udfe3", "daysToHarvest": 1825, "basePoints": 500, "season": "Primavera", "type": "Fruto", "stratum": "Baixo", "succession": "Cl\u00edmax", "difficulty": "dif\u00edcil", "lifecycle": "Perene", "carbonSequestration": 45.0, "benefits": ["Nativa", "Altamente nutritiva", "Ornamental"], "sintropicNotes": "Planta de sub-bosque que aprecia sombra parcial e solo muito \u00famido.", "notes": "Crescimento lento, mas muito recompensador.", "companions": ["Caf\u00e9", "Samambaias"], "waterFrequency": 4},
+    {"id": "papaya", "name": "Mam\u00e3o", "icon": "\ud83e\udd6d", "daysToHarvest": 270, "basePoints": 90, "season": "Ano Todo", "type": "Fruto", "stratum": "Emergente", "succession": "Secund\u00e1ria", "difficulty": "m\u00e9dio", "lifecycle": "Perene", "carbonSequestration": 15.0, "benefits": ["Crescimento r\u00e1pido", "Rico em enzimas", "Ocupa pouco espa\u00e7o horizontal"], "sintropicNotes": "Planta de ciclo curto que ocupa o estrato emergente temporariamente.", "notes": "Sens\u00edvel ao excesso de \u00e1gua nas ra\u00edzes.", "companions": ["Banana", "Caf\u00e9"], "waterFrequency": 2},
+    {"id": "banana", "name": "Banana", "icon": "\ud83c\udf4c", "daysToHarvest": 365, "basePoints": 120, "season": "Ano Todo", "type": "Fruto", "stratum": "Alto", "succession": "Secund\u00e1ria", "difficulty": "f\u00e1cil", "lifecycle": "Perene", "carbonSequestration": 25.0, "benefits": ["Produ\u00e7\u00e3o de biomassa", "Reten\u00e7\u00e3o de \u00e1gua", "Alimento energ\u00e9tico"], "sintropicNotes": "O 'tanque de \u00e1gua' da agrofloresta. Essencial para manter a umidade do sistema.", "notes": "Exige muita mat\u00e9ria org\u00e2nica e pot\u00e1ssio.", "companions": ["Caf\u00e9", "Cacau"], "waterFrequency": 3}
+];
     
     if (!items) return;
     
