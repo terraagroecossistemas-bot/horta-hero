@@ -238,6 +238,82 @@
         .dark .biodynamic-fruto, .dark .biodynamic-raiz, .dark .biodynamic-folha, .dark .biodynamic-flor, .dark .biodynamic-desfavoravel {
             opacity: 0.9;
         }
+        
+        /* Responsividade Mobile */
+        @media (max-width: 768px) {
+            body { overflow-x: hidden; }
+            #app { max-w-full; padding: 0.5rem; }
+            header h1 { font-size: 1.5rem; }
+            header .text-sm { font-size: 0.65rem; padding: 0.25rem 0.5rem; }
+            .flex.justify-center.items-center.space-x-4 { flex-direction: column; gap: 0.5rem; }
+            .bg-gradient-to-r.from-green-400 { padding: 1rem; }
+            .flex.items-center.justify-between { flex-direction: column; gap: 1rem; }
+            .hero-avatar { width: 60px; height: 60px; font-size: 1.5rem; }
+            .grid.grid-cols-5 { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+            .grid.grid-cols-3 { grid-template-columns: 1fr; gap: 0.5rem; }
+            .grid.grid-cols-2 { grid-template-columns: 1fr; }
+            .flex.space-x-2 { flex-wrap: wrap; gap: 0.5rem; }
+            .text-4xl { font-size: 1.875rem; }
+            .text-2xl { font-size: 1.25rem; }
+            .text-lg { font-size: 1rem; }
+            .text-sm { font-size: 0.875rem; }
+            .text-xs { font-size: 0.75rem; }
+            .px-4 { padding-left: 0.5rem; padding-right: 0.5rem; }
+            .py-2 { padding-top: 0.375rem; padding-bottom: 0.375rem; }
+            .p-6 { padding: 1rem; }
+            .p-4 { padding: 0.75rem; }
+            .mb-6 { margin-bottom: 1rem; }
+            .mt-4 { margin-top: 0.75rem; }
+            .space-x-4 { gap: 0.5rem; }
+            .space-y-4 { gap: 0.75rem; }
+            .rounded-xl { border-radius: 0.5rem; }
+            .rounded-lg { border-radius: 0.375rem; }
+            .shadow-lg { box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+            .max-w-sm { max-width: 100%; }
+            .max-w-md { max-width: 100%; }
+            .max-w-lg { max-width: 100%; }
+            .max-w-2xl { max-width: 100%; }
+            .max-w-4xl { max-width: 100%; }
+            .max-w-6xl { max-width: 100%; }
+            .overflow-x-auto { overflow-x: hidden; }
+            table { font-size: 0.75rem; }
+            th, td { padding: 0.375rem; }
+            .modal-compact { max-height: 85vh; }
+            .tab-active { border-bottom-width: 2px; }
+            .progress-bar-fill { height: 6px; }
+            .tooltip .tooltiptext { width: 150px; margin-left: -75px; font-size: 0.65rem; }
+        }
+        
+        @media (max-width: 480px) {
+            #app { padding: 0.25rem; }
+            header h1 { font-size: 1.25rem; }
+            header .text-sm { font-size: 0.55rem; padding: 0.125rem 0.25rem; }
+            .bg-gradient-to-r.from-green-400 { padding: 0.75rem; }
+            .hero-avatar { width: 50px; height: 50px; font-size: 1.25rem; }
+            .grid.grid-cols-5 { grid-template-columns: repeat(2, 1fr); gap: 0.25rem; }
+            .grid.grid-cols-3 { grid-template-columns: 1fr; gap: 0.25rem; }
+            .text-4xl { font-size: 1.5rem; }
+            .text-2xl { font-size: 1.125rem; }
+            .text-lg { font-size: 0.875rem; }
+            .text-sm { font-size: 0.75rem; }
+            .text-xs { font-size: 0.625rem; }
+            .px-4 { padding-left: 0.375rem; padding-right: 0.375rem; }
+            .py-2 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+            .p-6 { padding: 0.75rem; }
+            .p-4 { padding: 0.5rem; }
+            .mb-6 { margin-bottom: 0.75rem; }
+            .mt-4 { margin-top: 0.5rem; }
+            .space-x-4 { gap: 0.25rem; }
+            .space-y-4 { gap: 0.5rem; }
+            .rounded-xl { border-radius: 0.375rem; }
+            .rounded-lg { border-radius: 0.25rem; }
+            .shadow-lg { box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
+            .modal-compact { max-height: 80vh; }
+            .tooltip .tooltiptext { width: 120px; margin-left: -60px; font-size: 0.6rem; }
+            .activity-badge { padding: 0.125rem 0.25rem; font-size: 0.65rem; }
+            .method-badge { padding: 0.125rem 0.25rem; font-size: 0.65rem; }
+            .water-status { padding: 0.125rem 0.25rem; font-size: 0.65rem; }
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
