@@ -2128,9 +2128,29 @@
                 <div class="bg-white dark:bg-gray-700 p-8 rounded-xl shadow-md">
                     <h2 class="text-2xl font-bold mb-6 text-center text-gray-800 dark:text-gray-200">
                         <i class="fa-solid fa-calculator mr-2 text-green-600"></i>
-                        Calculadora de Carbono
+                        Calculadora de Créditos de Carbono
                     </h2>
                     
+                    <!-- Abas de Educação -->
+                    <div class="mb-6 border-b border-gray-200 dark:border-gray-600">
+                        <nav class="flex space-x-4 flex-wrap">
+                            <button onclick="changeCarbonTab('overview')" class="carbon-tab-btn carbon-tab-active py-2 px-4 text-sm font-medium border-b-2 border-green-500 text-green-600">
+                                <i class="fa-solid fa-chart-line mr-1"></i>Visão Geral
+                            </button>
+                            <button onclick="changeCarbonTab('education')" class="carbon-tab-btn py-2 px-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+                                <i class="fa-solid fa-graduation-cap mr-1"></i>O que é Crédito de Carbono?
+                            </button>
+                            <button onclick="changeCarbonTab('methodology')" class="carbon-tab-btn py-2 px-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+                                <i class="fa-solid fa-flask mr-1"></i>Metodologia
+                            </button>
+                            <button onclick="changeCarbonTab('certification')" class="carbon-tab-btn py-2 px-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700">
+                                <i class="fa-solid fa-certificate mr-1"></i>Certificação
+                            </button>
+                        </nav>
+                    </div>
+                    
+                    <!-- Conteúdo de Visão Geral -->
+                    <div id="carbon-overview" class="carbon-content">
                     <!-- Resumo do Impacto -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         <div class="bg-green-50 dark:bg-green-900 p-6 rounded-lg text-center">
@@ -2153,6 +2173,216 @@
                     <!-- Detalhamento por Planta -->
                     <div id="carbon-breakdown" class="space-y-4">
                         <!-- Detalhamento será inserido aqui -->
+                    </div>
+                    </div>
+                    
+                    <!-- Conteúdo de Educação -->
+                    <div id="carbon-education" class="carbon-content hidden">
+                        <div class="space-y-6">
+                            <div class="bg-blue-50 dark:bg-blue-900 p-6 rounded-lg border-l-4 border-blue-500">
+                                <h3 class="text-xl font-bold text-blue-900 dark:text-blue-100 mb-3">
+                                    <i class="fa-solid fa-leaf mr-2"></i>O que é um Crédito de Carbono?
+                                </h3>
+                                <p class="text-gray-700 dark:text-gray-300 mb-4">
+                                    Um crédito de carbono é uma unidade que representa uma tonelada de CO₂ equivalente (CO₂e) removida ou evitada da atmosfera. É um instrumento de mercado que incentiva ações de redução de emissões e captura de carbono.
+                                </p>
+                                <div class="bg-white dark:bg-gray-700 p-4 rounded mt-4">
+                                    <h4 class="font-bold text-gray-800 dark:text-gray-200 mb-2">Como funciona:</h4>
+                                    <ol class="list-decimal list-inside space-y-2 text-gray-700 dark:text-gray-300">
+                                        <li>Você realiza uma ação regenerativa (plantar, compostar, etc)</li>
+                                        <li>O sistema calcula o CO₂ sequestrado</li>
+                                        <li>Você ganha créditos de carbono</li>
+                                        <li>Empresas podem comprar seus créditos para compensar emissões</li>
+                                        <li>O dinheiro financia mais ações regenerativas</li>
+                                    </ol>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-green-50 dark:bg-green-900 p-6 rounded-lg border-l-4 border-green-500">
+                                <h3 class="text-xl font-bold text-green-900 dark:text-green-100 mb-3">
+                                    <i class="fa-solid fa-earth-americas mr-2"></i>Por que são importantes?
+                                </h3>
+                                <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+                                    <li>✅ <strong>Combate mudanças climáticas:</strong> Reduz CO₂ na atmosfera</li>
+                                    <li>✅ <strong>Incentiva ações:</strong> Gamificação e recompensas</li>
+                                    <li>✅ <strong>Impacto real:</strong> Verificável e rastreável</li>
+                                    <li>✅ <strong>Renda para agricultores:</strong> Monetiza impacto ambiental</li>
+                                    <li>✅ <strong>Alinha com ONU:</strong> Agenda 2030 para clima</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-yellow-50 dark:bg-yellow-900 p-6 rounded-lg border-l-4 border-yellow-500">
+                                <h3 class="text-xl font-bold text-yellow-900 dark:text-yellow-100 mb-3">
+                                    <i class="fa-solid fa-coins mr-2"></i>Mercado de Carbono
+                                </h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="bg-white dark:bg-gray-700 p-4 rounded">
+                                        <h4 class="font-bold text-gray-800 dark:text-gray-200 mb-2">Mercado Voluntário</h4>
+                                        <p class="text-sm text-gray-700 dark:text-gray-300">Empresas compram voluntariamente para compensar emissões. Preço: $10-30/crédito</p>
+                                    </div>
+                                    <div class="bg-white dark:bg-gray-700 p-4 rounded">
+                                        <h4 class="font-bold text-gray-800 dark:text-gray-200 mb-2">Mercado Regulado</h4>
+                                        <p class="text-sm text-gray-700 dark:text-gray-300">Governos exigem redução de emissões. Preço: $50-150/crédito</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Conteúdo de Metodologia -->
+                    <div id="carbon-methodology" class="carbon-content hidden">
+                        <div class="space-y-6">
+                            <div class="bg-purple-50 dark:bg-purple-900 p-6 rounded-lg border-l-4 border-purple-500">
+                                <h3 class="text-xl font-bold text-purple-900 dark:text-purple-100 mb-3">
+                                    <i class="fa-solid fa-flask mr-2"></i>Como Calculamos o Carbono?
+                                </h3>
+                                <div class="bg-white dark:bg-gray-700 p-4 rounded space-y-3">
+                                    <div>
+                                        <h4 class="font-bold text-gray-800 dark:text-gray-200">Fórmula Base:</h4>
+                                        <p class="text-sm text-gray-700 dark:text-gray-300 font-mono bg-gray-100 dark:bg-gray-600 p-2 rounded mt-1">
+                                            CO₂ = Sequestro × Área × Multiplicadores × Bônus
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800 dark:text-gray-200">Componentes:</h4>
+                                        <ul class="text-sm text-gray-700 dark:text-gray-300 space-y-1 mt-1">
+                                            <li><strong>Sequestro:</strong> kg CO₂/planta/ano (baseado em estudos científicos)</li>
+                                            <li><strong>Área:</strong> m² plantada</li>
+                                            <li><strong>Multiplicadores:</strong> Método de plantio, práticas regenerativas</li>
+                                            <li><strong>Bônus:</strong> Dia biodinâmico ideal, consórcio, biodiversidade</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-indigo-50 dark:bg-indigo-900 p-6 rounded-lg border-l-4 border-indigo-500">
+                                <h3 class="text-xl font-bold text-indigo-900 dark:text-indigo-100 mb-3">
+                                    <i class="fa-solid fa-leaf mr-2"></i>Sequestro por Planta
+                                </h3>
+                                <div class="text-sm text-gray-700 dark:text-gray-300">
+                                    <p class="mb-3">Valores baseados em estudos científicos de agroflorestas regenerativas:</p>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                        <div class="bg-white dark:bg-gray-700 p-2 rounded">
+                                            <strong>Árvores Nativas:</strong> 3-8 kg CO₂/ano
+                                        </div>
+                                        <div class="bg-white dark:bg-gray-700 p-2 rounded">
+                                            <strong>Árvores Frutíferas:</strong> 2-5 kg CO₂/ano
+                                        </div>
+                                        <div class="bg-white dark:bg-gray-700 p-2 rounded">
+                                            <strong>Hortaliças:</strong> 0.5-1.5 kg CO₂/ano
+                                        </div>
+                                        <div class="bg-white dark:bg-gray-700 p-2 rounded">
+                                            <strong>Leguminosas:</strong> 1-3 kg CO₂/ano
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-teal-50 dark:bg-teal-900 p-6 rounded-lg border-l-4 border-teal-500">
+                                <h3 class="text-xl font-bold text-teal-900 dark:text-teal-100 mb-3">
+                                    <i class="fa-solid fa-percent mr-2"></i>Multiplicadores de Impacto
+                                </h3>
+                                <div class="text-sm text-gray-700 dark:text-gray-300 space-y-2">
+                                    <div class="bg-white dark:bg-gray-700 p-3 rounded">
+                                        <strong>Método de Plantio:</strong>
+                                        <ul class="list-disc list-inside mt-1 text-xs">
+                                            <li>Semente: 1.0x</li>
+                                            <li>Muda: 1.2x</li>
+                                            <li>Transplante: 1.1x</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-white dark:bg-gray-700 p-3 rounded">
+                                        <strong>Práticas Regenerativas:</strong>
+                                        <ul class="list-disc list-inside mt-1 text-xs">
+                                            <li>Compostagem: +10%</li>
+                                            <li>Solo coberto: +20%</li>
+                                            <li>Consórcio: +15%</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Conteúdo de Certificação -->
+                    <div id="carbon-certification" class="carbon-content hidden">
+                        <div class="space-y-6">
+                            <div class="bg-green-50 dark:bg-green-900 p-6 rounded-lg border-l-4 border-green-500">
+                                <h3 class="text-xl font-bold text-green-900 dark:text-green-100 mb-3">
+                                    <i class="fa-solid fa-certificate mr-2"></i>Padrões de Certificação
+                                </h3>
+                                <div class="space-y-4">
+                                    <div class="bg-white dark:bg-gray-700 p-4 rounded border-l-4 border-green-600">
+                                        <h4 class="font-bold text-gray-800 dark:text-gray-200">VCS (Verra)</h4>
+                                        <p class="text-sm text-gray-700 dark:text-gray-300 mt-2">
+                                            Padrão mais rigoroso. Requer verificação anual e auditoria independente. Reconhecido globalmente.
+                                        </p>
+                                        <p class="text-xs text-gray-600 dark:text-gray-400 mt-2">Preço: $50-150/crédito</p>
+                                    </div>
+                                    <div class="bg-white dark:bg-gray-700 p-4 rounded border-l-4 border-blue-600">
+                                        <h4 class="font-bold text-gray-800 dark:text-gray-200">Gold Standard</h4>
+                                        <p class="text-sm text-gray-700 dark:text-gray-300 mt-2">
+                                            Foco em ODS ONU. Verifica impacto social e ambiental. Muito reconhecido.
+                                        </p>
+                                        <p class="text-xs text-gray-600 dark:text-gray-400 mt-2">Preço: $50-150/crédito</p>
+                                    </div>
+                                    <div class="bg-white dark:bg-gray-700 p-4 rounded border-l-4 border-purple-600">
+                                        <h4 class="font-bold text-gray-800 dark:text-gray-200">Mercado Voluntário</h4>
+                                        <p class="text-sm text-gray-700 dark:text-gray-300 mt-2">
+                                            Sem certificação formal. Impacto estimado. Ideal para começar.
+                                        </p>
+                                        <p class="text-xs text-gray-600 dark:text-gray-400 mt-2">Preço: $10-30/crédito</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-blue-50 dark:bg-blue-900 p-6 rounded-lg border-l-4 border-blue-500">
+                                <h3 class="text-xl font-bold text-blue-900 dark:text-blue-100 mb-3">
+                                    <i class="fa-solid fa-roadmap mr-2"></i>Roadmap de Certificação
+                                </h3>
+                                <div class="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+                                    <div class="flex items-start">
+                                        <span class="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">✓</span>
+                                        <div>
+                                            <strong>Fase 1 (Agora):</strong> Impacto estimado com metodologia transparente
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <span class="bg-yellow-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">2</span>
+                                        <div>
+                                            <strong>Fase 2 (6-12 meses):</strong> Validação científica com universidades
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <span class="bg-yellow-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">3</span>
+                                        <div>
+                                            <strong>Fase 3 (12-18 meses):</strong> Certificação VCS ou Gold Standard
+                                        </div>
+                                    </div>
+                                    <div class="flex items-start">
+                                        <span class="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-3 flex-shrink-0">4</span>
+                                        <div>
+                                            <strong>Fase 4 (18+ meses):</strong> Marketplace de créditos operacional
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-yellow-50 dark:bg-yellow-900 p-6 rounded-lg border-l-4 border-yellow-500">
+                                <h3 class="text-xl font-bold text-yellow-900 dark:text-yellow-100 mb-3">
+                                    <i class="fa-solid fa-exclamation-triangle mr-2"></i>Transparência
+                                </h3>
+                                <p class="text-sm text-gray-700 dark:text-gray-300 mb-3">
+                                    Nossos créditos são <strong>"Impacto Estimado"</strong> até certificação oficial. Isso significa:
+                                </p>
+                                <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                                    <li>✓ Baseado em metodologia científica comprovada</li>
+                                    <li>✓ Rastreável e verificável no app</li>
+                                    <li>✓ Não pode ser vendido como crédito certificado ainda</li>
+                                    <li>✓ Será certificado quando atingirmos escala</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -3758,6 +3988,20 @@ function toggleTheme() {
 function changeTab(tabName) { 
     state.currentTab = tabName; 
     render(); 
+}
+
+function changeCarbonTab(tabName) {
+    document.querySelectorAll('.carbon-content').forEach(content => {
+        content.classList.add('hidden');
+    });
+    const selectedContent = document.getElementById(`carbon-${tabName}`);
+    if (selectedContent) {
+        selectedContent.classList.remove('hidden');
+    }
+    document.querySelectorAll('.carbon-tab-btn').forEach(btn => {
+        btn.classList.remove('carbon-tab-active', 'border-green-500', 'text-green-600');
+        btn.classList.add('border-transparent', 'text-gray-500');
+    });
 }
 
 function changeShopSection(section) {
