@@ -1,55 +1,237 @@
-# 🌱 Horta Hero
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Horta Hero</title>
+<link rel="manifest" href="manifest.json">
 
-Horta Hero é um aplicativo que conecta agricultura urbana, créditos de carbono e comunidade.
+<style>
+:root{
+--verde:#1B5E20;
+--verde2:#4CAF50;
+--bg:#F1F6F1;
+--card:#ffffff;
+}
 
-O projeto nasceu da jornada contada no livro **Raízes Invisíveis**, onde a ideia de uma "saca de sementes" representa todas as ideias que germinam para o futuro.
+body{
+margin:0;
+font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+background:var(--bg);
+color:#222;
+}
 
----
+header{
+background:linear-gradient(120deg,var(--verde),var(--verde2));
+color:white;
+padding:20px;
+text-align:center;
+font-size:22px;
+font-weight:600;
+}
 
-## 🚀 Objetivo
+section{
+display:none;
+padding:20px;
+padding-bottom:90px;
+}
 
-Permitir que qualquer pessoa:
+.active{display:block;}
 
-- Plante alimentos
-- Registre impacto climático
-- Ganhe créditos de carbono simbólicos
-- Desbloqueie capítulos do livro
-- Participe do ecossistema AgriEcoCoin
+.card{
+background:var(--card);
+padding:18px;
+border-radius:20px;
+margin-bottom:16px;
+box-shadow:0 8px 20px rgba(0,0,0,.06);
+}
 
----
+button{
+background:var(--verde);
+color:white;
+border:none;
+padding:14px;
+border-radius:16px;
+font-size:15px;
+cursor:pointer;
+width:100%;
+}
 
-## 📱 Funcionalidades
+select{
+padding:10px;
+border-radius:12px;
+width:100%;
+}
 
-✔ Registro de plantio  
-✔ Cálculo de carbono  
-✔ Sistema de níveis  
-✔ Desbloqueio de capítulos do livro  
-✔ Preparado para AgriEcoCoin  
+nav{
+position:fixed;
+bottom:0;
+width:100%;
+background:white;
+display:flex;
+justify-content:space-around;
+padding:10px 0;
+border-top:1px solid #ddd;
+}
 
----
+nav button{
+background:none;
+color:var(--verde);
+font-size:18px;
+width:auto;
+}
 
-## 🌍 Visão de Futuro
+.progress{
+background:#ddd;
+border-radius:12px;
+overflow:hidden;
+height:14px;
+margin-top:10px;
+}
 
-Criar uma economia regenerativa global baseada em:
+.bar{
+background:var(--verde2);
+height:100%;
+width:0%;
+transition:width .5s ease;
+}
+</style>
+</head>
 
-- Agricultura regenerativa
-- Tokenização de impacto
-- Comunidades locais
-- Tecnologia acessível
+<body>
 
----
+<header>🌱 Horta Hero</header>
 
-## 🛠 Como usar
+<section id="home" class="active">
 
-1. Acesse o site
-2. Registre um plantio
-3. Acompanhe seu impacto
-4. Desbloqueie capítulos
+<div class="card">
+<h3>🌍 Impacto Climático</h3>
+<h1><span id="carbono">0</span> kg CO₂</h1>
 
----
+<div class="progress">
+<div id="barraCarbono" class="bar"></div>
+</div>
 
-## 🤝 Contribuir
+<p>Meta mensal: 50 kg</p>
+</div>
 
-Quer ajudar o projeto?
+<div class="card">
+<h3>⭐ Nível Atual</h3>
+<h2 id="nivel">Seed</h2>
+<p id="proximoNivel">Próximo nível em 20 kg</p>
+</div>
 
-Entre em contato e plante conosco 🌱
+<div class="card">
+<h3>🏅 Conquistas</h3>
+<p id="medalhas">Nenhuma ainda</p>
+</div>
+
+<div class="card">
+<h3>📖 Progresso do Livro</h3>
+<p id="capitulo">Capítulo bloqueado</p>
+</div>
+
+<button onclick="registrarPlantio()">🌱 Registrar Plantio</button>
+
+</section>
+
+<section id="plantar">
+<div class="card">
+<h3>Registrar Planta</h3>
+<select id="tipo">
+<option value="1">Alface – 1kg CO₂</option>
+<option value="2">Tomate – 2kg CO₂</option>
+<option value="5">Árvore – 5kg CO₂</option>
+</select>
+<br><br>
+<button onclick="registrarPlantio()">Confirmar</button>
+</div>
+</section>
+
+<section id="perfil">
+<div class="card">
+<h3>Perfil</h3>
+<p>Pontos: <strong id="pontos">0</strong></p>
+</div>
+</section>
+
+<nav>
+<button onclick="trocar('home')">🏠</button>
+<button onclick="trocar('plantar')">🌿</button>
+<button onclick="trocar('perfil')">👤</button>
+</nav>
+
+<script>
+
+let carbono=0;
+let pontos=0;
+
+function salvar(){
+localStorage.setItem("carbono",carbono);
+localStorage.setItem("pontos",pontos);
+}
+
+function carregar(){
+carbono=parseInt(localStorage.getItem("carbono"))||0;
+pontos=parseInt(localStorage.getItem("pontos"))||0;
+atualizar();
+}
+
+function nivelUsuario(){
+if(carbono<20)return"Seed 🌱";
+if(carbono<50)return"Grower 🌿";
+return"Guardian 🌳";
+}
+
+function atualizar(){
+
+document.getElementById("carbono").innerText=carbono;
+document.getElementById("pontos").innerText=pontos;
+document.getElementById("nivel").innerText=nivelUsuario();
+
+let progresso=Math.min((carbono/50)*100,100);
+document.getElementById("barraCarbono").style.width=progresso+"%";
+
+let restante = carbono<20?20-carbono:
+carbono<50?50-carbono:0;
+
+document.getElementById("proximoNivel").innerText=
+restante>0?`Próximo nível em ${restante} kg`
+:"Nível máximo atingido";
+
+let medalha="";
+if(carbono>=10) medalha+="🌱 Primeira Semente\n";
+if(carbono>=30) medalha+="🌿 Agricultor Urbano\n";
+if(carbono>=50) medalha+="🌳 Guardião Verde\n";
+
+document.getElementById("medalhas").innerText=
+medalha||"Nenhuma ainda";
+
+if(carbono>=10){
+document.getElementById("capitulo").innerText="Capítulo 1 desbloqueado";
+}
+if(carbono>=30){
+document.getElementById("capitulo").innerText="Capítulo 2 desbloqueado";
+}
+}
+
+function registrarPlantio(){
+let v=document.getElementById("tipo");
+let valor=v?parseInt(v.value):1;
+carbono+=valor;
+pontos+=valor*10;
+salvar();
+atualizar();
+}
+
+function trocar(s){
+document.querySelectorAll("section").forEach(x=>x.classList.remove("active"));
+document.getElementById(s).classList.add("active");
+}
+
+window.onload=carregar;
+
+</script>
+
+</body>
+</html>
