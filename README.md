@@ -3545,9 +3545,14 @@ function closeAddPlantModal() {
 }
 
 function addPlant(e) {
-    e.preventDefault();
+    if (e && e.preventDefault) {
+        e.preventDefault();
+    }
     
-    if (!state.selectedPlant) return;
+    if (!state.selectedPlant) {
+        showNotification('Erro!', 'Selecione uma planta primeiro.', 'error');
+        return;
+    }
     
     const plantDateInput = document.getElementById('plant-date');
     const plantAreaInput = document.getElementById('plant-area');
@@ -3599,6 +3604,9 @@ function addPlant(e) {
     
     const plantingPoints = Math.round(activityPoints.plant * pointMultiplier * bonusPointMultiplier * practicePointMultiplier);
     
+    // Calcular CO₂ capturado
+    const carbonCaptured = plantData.carbonSequestration * plantArea * (carbonMultiplier * practiceCarbonMultiplier * bonusCarbonMultiplier);
+    
     const newPlant = { 
         ...plantData, 
         plantingDate, 
@@ -3610,13 +3618,15 @@ function addPlant(e) {
         usedOrganicCompost,
         soilCovered,
         companionPlanting,
-        carbonMultiplier: carbonMultiplier * practiceCarbonMultiplier * bonusCarbonMultiplier
+        carbonMultiplier: carbonMultiplier * practiceCarbonMultiplier * bonusCarbonMultiplier,
+        carbonCaptured: carbonCaptured
     };
     
     state.plants.push(newPlant);
     state.points += plantingPoints;
     state.stats.totalPlantings++;
     state.stats.totalArea += plantArea;
+    state.stats.totalCarbonSequestrated += carbonCaptured;
     
     const bonusText = isIdealDay ? ' (Dia Ideal! +20%)' : '';
     addActivity('plant', `Plantou ${plantData.name} (${plantingMethod})${bonusText} em ${plantArea} m²`, plantingPoints);
@@ -3632,6 +3642,10 @@ function addPlant(e) {
         : `${plantData.name} adicionado! +${plantingPoints} pontos`;
     
     showNotification('Sucesso!', message, 'success');
+    
+    // Resetar formulário
+    document.getElementById('add-plant-form').reset();
+    document.getElementById('plant-date').valueAsDate = new Date();
 }
 
 function harvestPlant(plantId) {
@@ -4507,7 +4521,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Configurar formulário de adicionar planta
-    document.getElementById('add-plant-form').addEventListener('submit', addPlant);
+    const addPlantForm = document.getElementById('add-plant-form');
+    if (addPlantForm) {
+        addPlantForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            addPlant(e);
+        });
+    } else {
+        console.error('Formulário add-plant-form não encontrado!');
+    }
     
     // Carregar estado e renderizar
     loadState();
