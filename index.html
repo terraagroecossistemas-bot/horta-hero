@@ -1,227 +1,55 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Horta Hero</title>
+# 🌱 Horta Hero
 
-<link rel="manifest" href="manifest.json">
+Horta Hero é um aplicativo que conecta agricultura urbana, créditos de carbono e comunidade.
 
-<style>
-:root {
-  --verde-principal: #1B5E20;
-  --verde-claro: #4CAF50;
-  --fundo: #F4F8F4;
-  --card: #ffffff;
-}
+O projeto nasceu da jornada contada no livro **Raízes Invisíveis**, onde a ideia de uma "saca de sementes" representa todas as ideias que germinam para o futuro.
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--fundo);
-  color: #222;
-}
+---
 
-header {
-  background: var(--verde-principal);
-  color: white;
-  padding: 20px;
-  text-align: center;
-  font-weight: 600;
-  font-size: 20px;
-}
+## 🚀 Objetivo
 
-section {
-  display: none;
-  padding: 20px;
-  padding-bottom: 90px;
-}
+Permitir que qualquer pessoa:
 
-.active {
-  display: block;
-}
+- Plante alimentos
+- Registre impacto climático
+- Ganhe créditos de carbono simbólicos
+- Desbloqueie capítulos do livro
+- Participe do ecossistema AgriEcoCoin
 
-.card {
-  background: var(--card);
-  padding: 18px;
-  border-radius: 16px;
-  margin-bottom: 16px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
+---
 
-button {
-  background: var(--verde-principal);
-  color: white;
-  border: none;
-  padding: 12px 16px;
-  border-radius: 12px;
-  font-size: 14px;
-  cursor: pointer;
-}
+## 📱 Funcionalidades
 
-nav {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: white;
-  display: flex;
-  justify-content: space-around;
-  padding: 10px 0;
-  border-top: 1px solid #ddd;
-}
+✔ Registro de plantio  
+✔ Cálculo de carbono  
+✔ Sistema de níveis  
+✔ Desbloqueio de capítulos do livro  
+✔ Preparado para AgriEcoCoin  
 
-nav button {
-  background: none;
-  color: var(--verde-principal);
-  font-weight: 600;
-  font-size: 18px;
-}
-</style>
-</head>
+---
 
-<body>
+## 🌍 Visão de Futuro
 
-<header>🌱 Horta Hero</header>
+Criar uma economia regenerativa global baseada em:
 
-<!-- HOME -->
-<section id="home" class="active">
-  <div class="card">
-    <h3>Missão do Dia</h3>
-    <p>Plante 1 muda e registre no sistema.</p>
-    <button onclick="registrarPlantio()">Registrar Plantio</button>
-  </div>
+- Agricultura regenerativa
+- Tokenização de impacto
+- Comunidades locais
+- Tecnologia acessível
 
-  <div class="card">
-    <h3>Impacto Climático</h3>
-    <p><strong id="carbono">0</strong> kg CO₂ compensados</p>
-  </div>
+---
 
-  <div class="card">
-    <h3>Capítulo do Livro</h3>
-    <p id="capitulo">Bloqueado</p>
-  </div>
-</section>
+## 🛠 Como usar
 
-<!-- PLANTAR -->
-<section id="plantar">
-  <div class="card">
-    <h3>Registrar Nova Planta</h3>
-    <select id="tipoPlanta">
-      <option value="1">Alface (1kg CO₂)</option>
-      <option value="2">Tomate (2kg CO₂)</option>
-      <option value="5">Árvore (5kg CO₂)</option>
-    </select>
-    <br><br>
-    <button onclick="registrarPlantio()">Confirmar</button>
-  </div>
-</section>
+1. Acesse o site
+2. Registre um plantio
+3. Acompanhe seu impacto
+4. Desbloqueie capítulos
 
-<!-- CARBONO -->
-<section id="carbonoSec">
-  <div class="card">
-    <h3>Total de Carbono</h3>
-    <p><strong id="carbonoTotal">0</strong> kg CO₂</p>
-    <p style="color:#666;">Baseado em estimativa agrícola simplificada.</p>
-  </div>
-</section>
+---
 
-<!-- LIVRO -->
-<section id="livro">
-  <div class="card">
-    <h3>Raízes Invisíveis</h3>
-    <p id="textoLivro">Continue plantando para desbloquear o primeiro capítulo.</p>
-  </div>
-</section>
+## 🤝 Contribuir
 
-<!-- PERFIL -->
-<section id="perfil">
-  <div class="card">
-    <h3>Perfil</h3>
-    <p>Usuário: <strong>Hero</strong></p>
-    <p>Pontos: <strong id="pontos">0</strong></p>
-  </div>
-</section>
+Quer ajudar o projeto?
 
-<nav>
-  <button onclick="trocar('home')">🏠</button>
-  <button onclick="trocar('plantar')">🌿</button>
-  <button onclick="trocar('carbonoSec')">♻️</button>
-  <button onclick="trocar('livro')">📖</button>
-  <button onclick="trocar('perfil')">👤</button>
-</nav>
-
-<script>
-// ===============================
-// ESTADO GLOBAL
-// ===============================
-let totalCarbono = 0;
-let pontos = 0;
-
-// ===============================
-// CARREGAR DADOS SALVOS
-// ===============================
-function carregarDados() {
-  const carbonoSalvo = localStorage.getItem("totalCarbono");
-  const pontosSalvos = localStorage.getItem("pontos");
-
-  if (carbonoSalvo) totalCarbono = parseInt(carbonoSalvo);
-  if (pontosSalvos) pontos = parseInt(pontosSalvos);
-
-  atualizarInterface();
-}
-
-// ===============================
-// SALVAR DADOS
-// ===============================
-function salvarDados() {
-  localStorage.setItem("totalCarbono", totalCarbono);
-  localStorage.setItem("pontos", pontos);
-}
-
-// ===============================
-// ATUALIZAR INTERFACE
-// ===============================
-function atualizarInterface() {
-  document.getElementById("carbono").innerText = totalCarbono;
-  document.getElementById("carbonoTotal").innerText = totalCarbono;
-  document.getElementById("pontos").innerText = pontos;
-
-  if (totalCarbono >= 10) {
-    document.getElementById("capitulo").innerText = "Capítulo 1 desbloqueado!";
-    document.getElementById("textoLivro").innerText =
-      "Capítulo 1 – A saca de sementes representava não apenas alimento, mas todas as ideias que germinariam no futuro.";
-  }
-}
-
-// ===============================
-// NAVEGAÇÃO
-// ===============================
-function trocar(secao) {
-  document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
-  document.getElementById(secao).classList.add("active");
-}
-
-// ===============================
-// REGISTRAR PLANTIO
-// ===============================
-function registrarPlantio() {
-  const select = document.getElementById("tipoPlanta");
-  const valor = select ? parseInt(select.value) : 1;
-
-  totalCarbono += valor;
-  pontos += valor * 10;
-
-  salvarDados();
-  atualizarInterface();
-}
-
-// ===============================
-// INICIALIZAÇÃO
-// ===============================
-window.onload = function() {
-  carregarDados();
-};
-</script>
-
-</body>
-</html>
+Entre em contato e plante conosco 🌱
