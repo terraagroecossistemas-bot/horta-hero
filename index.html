@@ -5703,5 +5703,10 @@ window.onload = () => {
             console.log('✅ Todas as melhorias visuais carregadas!');
         });
     </script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/horta-hero/service-worker.js');
+}
+</script>
 </body>
 </html>
