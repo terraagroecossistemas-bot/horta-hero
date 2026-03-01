@@ -6,8 +6,35 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#2D5A27">
+    <meta name="description" content="Regeneração Planetária através do Plantio Agroecológico. Junte-se à rede de agricultores que reflorestam e restauram o planeta.">
+    <meta name="keywords" content="agricultura regenerativa, reflorestamento, sustentabilidade, ecossistema, plantas">
+    <meta name="author" content="Terra Agroecossistemas">
+    <meta name="robots" content="index, follow">
+    
+    <!-- PWA Meta Tags -->
     <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/628/628283.png">
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/628/628283.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Horta Hero">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Android Meta Tags -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Horta Hero">
+    
+    <!-- Open Graph para compartilhamento -->
+    <meta property="og:title" content="Horta Hero - Rede de Reflorestamento">
+    <meta property="og:description" content="Regeneração Planetária através do Plantio Agroecológico">
+    <meta property="og:image" content="https://cdn-icons-png.flaticon.com/512/628/628283.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://terraagroecossistemas-bot.github.io/horta-hero/">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Horta Hero - Rede de Reflorestamento">
+    <meta name="twitter:description" content="Regeneração Planetária através do Plantio Agroecológico">
+    <meta name="twitter:image" content="https://cdn-icons-png.flaticon.com/512/628/628283.png">
     
     <title>Horta Hero - Super App Regenerativo</title>
     
@@ -868,8 +895,38 @@
 
         // --- SISTEMA PWA ---
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').then(() => console.log('SW Registered'));
+            navigator.serviceWorker.register('sw.js').then((registration) => {
+                console.log('✅ Service Worker registrado com sucesso!', registration);
+                
+                // Verificar atualizações a cada 30 minutos
+                setInterval(() => {
+                    registration.update();
+                }, 30 * 60 * 1000);
+                
+                // Notificar quando uma nova versão estiver disponível
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            window.toast('Nova versão disponível! Recarregue para atualizar.');
+                        }
+                    });
+                });
+            }).catch((err) => console.error('❌ Erro ao registrar Service Worker:', err));
         }
+        
+        // Detectar se o app está instalado
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            console.log('✅ App pode ser instalada!');
+        });
+        
+        window.addEventListener('appinstalled', () => {
+            console.log('✅ App instalada com sucesso!');
+            window.toast('Horta Hero instalada! Acesse pelo ícone na tela inicial.');
+        });
 
         window.toast = function(msg) {
             const t = document.getElementById('toast');
@@ -879,6 +936,21 @@
 
         window.saveState = function() { localStorage.setItem('horta_hero_super_v1', JSON.stringify(state)); };
         window.toggleDarkMode = function() { document.body.classList.toggle('dark-mode'); };
+        
+        // Função para instalar o app manualmente
+        window.installApp = function() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        window.toast('Instalando Horta Hero...');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                window.toast('App já está instalada ou não disponível!');
+            }
+        };
 
         // Init
         window.renderCatalog();
