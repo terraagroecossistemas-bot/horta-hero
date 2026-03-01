@@ -171,7 +171,10 @@
                 <div class="w-full bg-white/20 h-2 rounded-full mb-2">
                     <div id="bar-co2" class="bg-white h-full rounded-full transition-all duration-500" style="width: 0%"></div>
                 </div>
-                <p class="text-xs opacity-80">Meta mensal: 50 kg</p>
+                <div class="flex justify-between items-end">
+                    <p class="text-xs opacity-80">Meta mensal: 50 kg</p>
+                    <p class="text-xs font-bold bg-white/20 px-2 py-1 rounded-lg">Nível: <span id="user-level">Seed 🌱</span></p>
+                </div>
             </div>
             <i class="fa-solid fa-leaf absolute -right-4 -bottom-4 text-8xl opacity-10"></i>
         </div>
@@ -191,8 +194,8 @@
                     <i class="fa-solid fa-book"></i>
                 </div>
                 <div>
-                    <p class="text-[10px] text-gray-500 font-bold uppercase">Progresso</p>
-                    <p class="font-bold">Livro 1</p>
+                    <p class="text-[10px] text-gray-500 font-bold uppercase">Nível XP</p>
+                    <p class="font-bold" id="stat-xp">0 XP</p>
                 </div>
             </div>
         </div>
@@ -471,7 +474,9 @@
             { "id": "turnip", "name": "Nabo", "category": "Horta", "co2": 2.5, "icon": "🟣", "stratum": "Baixo", "type": "Raiz", "companions": ["Cenoura", "Alface"] },
             { "id": "potato", "name": "Batata", "category": "Horta", "co2": 8.0, "icon": "🥔", "stratum": "Baixo", "type": "Raiz", "companions": ["Milho", "Feijão"] },
             { "id": "ginger", "name": "Gengibre", "category": "Horta", "co2": 5.0, "icon": "🟣", "stratum": "Baixo", "type": "Raiz", "companions": ["Banana", "Coco"] },
-            { "id": "turmeric", "name": "Cúrcuma", "category": "Horta", "co2": 6.0, "icon": "🟡", "stratum": "Baixo", "type": "Raiz", "companions": ["Gengibre", "Banana"] }
+            { "id": "turmeric", "name": "Cúrcuma", "category": "Horta", "co2": 6.0, "icon": "🟡", "stratum": "Baixo", "type": "Raiz", "companions": ["Gengibre", "Banana"] },
+            { "id": "gliricidia", "name": "Gliricídia (Regional)", "category": "Leguminosa", "co2": 40.0, "icon": "🌳", "stratum": "Alto", "type": "Madeira", "companions": ["Milho", "Feijão"], "regional": true },
+            { "id": "guava_reg", "name": "Goiaba Serrana", "category": "Frutífera", "co2": 30.0, "icon": "🍈", "stratum": "Médio", "type": "Fruto", "companions": ["Nativas"], "regional": true }
         ];
 
         const chapters = {
@@ -588,12 +593,20 @@
             const grid = document.getElementById('catalog-grid');
             if (!grid) return;
             grid.innerHTML = '';
-            const filtered = filter === 'Tudo' ? catalog : catalog.filter(p => p.category === filter);
+            
+            // Ordenar para colocar regionais primeiro
+            const sortedCatalog = [...catalog].sort((a, b) => (b.regional ? 1 : 0) - (a.regional ? 1 : 0));
+            
+            const filtered = filter === 'Tudo' ? sortedCatalog : sortedCatalog.filter(p => p.category === filter);
             filtered.forEach(p => {
                 const card = document.createElement('div');
-                card.className = 'bg-white p-5 rounded-[32px] premium-shadow text-center';
+                card.className = `bg-white p-5 rounded-[32px] premium-shadow text-center relative ${p.regional ? 'border-2 border-green-200' : ''}`;
                 card.onclick = () => window.openModal(p);
-                card.innerHTML = `<div class="text-4xl mb-3">${p.icon}</div><h4 class="font-bold text-sm">${p.name}</h4>`;
+                card.innerHTML = `
+                    ${p.regional ? '<span class="absolute top-2 right-2 text-[8px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-bold">REGIONAL</span>' : ''}
+                    <div class="text-4xl mb-3">${p.icon}</div>
+                    <h4 class="font-bold text-sm">${p.name}</h4>
+                `;
                 grid.appendChild(card);
             });
         };
@@ -639,22 +652,54 @@
         window.confirmPlanting = function() {
             const plant = state.selectedPlant;
             const co2Gained = plant.co2 * state.qty;
-            state.garden.push({...plant, qty: state.qty, date: new Date().toLocaleDateString(), id: Date.now()});
+            
+            // Adiciona ao histórico (garden)
+            state.garden.push({
+                ...plant, 
+                qty: state.qty, 
+                date: new Date().toLocaleDateString('pt-BR'), 
+                timestamp: new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'}),
+                id: Date.now()
+            });
+            
             state.co2 += co2Gained;
             state.coins += Math.floor(co2Gained * 10);
-            window.updateStats();
-            window.saveState();
-            window.closeModal();
-            window.showScreen('screen-dashboard');
-            window.renderGarden();
+            
+            // Feedback visual
+            const btn = event.target;
+            const originalText = btn.innerText;
+            btn.innerText = "Plantado! 🌱";
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                window.updateStats();
+                window.saveState();
+                window.closeModal();
+                btn.innerText = originalText;
+                btn.disabled = false;
+                window.showScreen('screen-dashboard');
+                window.renderGarden();
+            }, 800);
         };
 
         window.updateStats = function() {
             document.getElementById('stat-co2').innerText = state.co2.toFixed(1);
             document.getElementById('stat-coins').innerText = state.coins;
-            document.getElementById('rank-co2').innerText = state.co2.toFixed(1);
+            if (document.getElementById('rank-co2')) document.getElementById('rank-co2').innerText = state.co2.toFixed(1);
+            
+            // Níveis
+            let level = "Seed 🌱";
+            let xp = state.co2 * 10;
+            if (state.co2 >= 100) level = "Forest 🌲";
+            else if (state.co2 >= 50) level = "Tree 🌳";
+            else if (state.co2 >= 20) level = "Sprout 🌿";
+            
+            document.getElementById('user-level').innerText = level;
+            document.getElementById('stat-xp').innerText = Math.floor(xp) + " XP";
+
             const progress = Math.min(100, (state.co2 / 50) * 100);
             document.getElementById('bar-co2').style.width = progress + '%';
+            
             const challengeProgress = Math.min(5, state.co2);
             document.getElementById('challenge-progress').innerText = challengeProgress.toFixed(1);
             document.getElementById('bar-challenge').style.width = (challengeProgress / 5 * 100) + '%';
@@ -685,11 +730,11 @@
             });
             state.garden.slice(-3).reverse().forEach(item => {
                 preview.innerHTML += `
-                    <div class="bg-white p-3 rounded-2xl premium-shadow flex items-center gap-3">
+                    <div class="bg-white p-3 rounded-2xl premium-shadow flex items-center gap-3 animate-fade-in">
                         <div class="text-xl">${item.icon}</div>
                         <div class="flex-1">
                             <h4 class="font-bold text-xs">${item.name}</h4>
-                            <p class="text-[8px] text-gray-400 uppercase font-bold">${item.qty} un</p>
+                            <p class="text-[8px] text-gray-400 uppercase font-bold">${item.qty} un • ${item.timestamp || item.date}</p>
                         </div>
                         <p class="text-[10px] font-bold text-[#2D5A27]">+${(item.co2 * item.qty).toFixed(1)} kg</p>
                     </div>`;
