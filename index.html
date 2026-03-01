@@ -224,11 +224,11 @@
 
         <!-- Filtros -->
         <div class="flex gap-2 overflow-x-auto pb-4 mb-6 no-scrollbar">
-            <button onclick="filterCatalog('Tudo')" class="filter-btn active px-5 py-2 rounded-full bg-[#2D5A27] text-white text-sm font-bold whitespace-nowrap">Tudo</button>
-            <button onclick="filterCatalog('Horta')" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Horta</button>
-            <button onclick="filterCatalog('Frutífera')" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Frutíferas</button>
-            <button onclick="filterCatalog('Leguminosa')" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Leguminosas</button>
-            <button onclick="filterCatalog('Flor')" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Flores</button>
+            <button onclick="filterCatalog('Tudo', this)" class="filter-btn active px-5 py-2 rounded-full bg-[#2D5A27] text-white text-sm font-bold whitespace-nowrap">Tudo</button>
+            <button onclick="filterCatalog('Horta', this)" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Horta</button>
+            <button onclick="filterCatalog('Frutífera', this)" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Frutíferas</button>
+            <button onclick="filterCatalog('Leguminosa', this)" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Leguminosas</button>
+            <button onclick="filterCatalog('Flor', this)" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Flores</button>
         </div>
 
         <div id="catalog-grid" class="grid grid-cols-2 gap-4">
@@ -520,12 +520,16 @@
             });
         }
 
-        function filterCatalog(filter) {
+        function filterCatalog(filter, element) {
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active', 'bg-[#2D5A27]', 'text-white');
                 btn.classList.add('bg-white', 'premium-shadow', 'text-gray-500');
             });
-            event.target.classList.add('active', 'bg-[#2D5A27]', 'text-white');
+            
+            const target = element || event.currentTarget;
+            if (target) {
+                target.classList.add('active', 'bg-[#2D5A27]', 'text-white');
+            }
             renderCatalog(filter);
         }
 
@@ -686,7 +690,8 @@
         }
 
         // --- INIT ---
-        window.onload = () => {
+        // Garantir que o DOM está pronto e tratar eventos de toque
+        document.addEventListener('DOMContentLoaded', () => {
             renderCatalog();
             loadState();
             
@@ -699,8 +704,16 @@
                 "Dia de Fruto: Ideal para plantar Tomates e Jabuticabas!",
                 "Dia de Raiz: Cenouras e Beterrabas agradecem o plantio hoje."
             ];
-            document.getElementById('dica-biodinamica').innerText = dicas[Math.floor(Math.random() * dicas.length)];
-        };
+            const dicaElement = document.getElementById('dica-biodinamica');
+            if (dicaElement) {
+                dicaElement.innerText = dicas[Math.floor(Math.random() * dicas.length)];
+            }
+
+            // Fix para iOS/Safari: forçar cursor pointer e tratar cliques fantasmas
+            document.querySelectorAll('button').forEach(btn => {
+                btn.style.cursor = 'pointer';
+            });
+        });
     </script>
 </body>
 </html>
