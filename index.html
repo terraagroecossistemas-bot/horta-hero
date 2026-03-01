@@ -60,11 +60,18 @@
         }
 
         .screen {
-            display: none;
+            display: none !important;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
             padding: calc(20px + var(--safe-top)) 20px calc(100px + var(--safe-bottom));
             min-height: 100vh;
             box-sizing: border-box;
             animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
         }
         
         @keyframes slideIn { 
@@ -72,7 +79,10 @@
             to { opacity: 1; transform: translateX(0); } 
         }
 
-        .screen.active { display: block; }
+        .screen.active { 
+            display: block !important;
+            z-index: 100;
+        }
 
         /* Componentes de Elite */
         .btn-premium {
@@ -206,7 +216,7 @@
         <div id="toast"></div>
 
         <!-- 1. SPLASH SCREEN ELITE -->
-        <div id="screen-splash" class="screen active flex flex-col items-center justify-center bg-white text-center">
+        <div id="screen-splash" class="screen flex flex-col items-center justify-center bg-white text-center">
             <div class="relative mb-10">
                 <div class="absolute inset-0 bg-green-200 blur-3xl opacity-30 animate-pulse"></div>
                 <img src="https://cdn-icons-png.flaticon.com/512/628/628283.png" class="w-40 h-40 relative z-10 animate-bounce" alt="Logo">
@@ -563,8 +573,18 @@
 
         // --- SISTEMA DE UI ---
         window.showScreen = function(screenId) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
+            // Remover a classe active de TODAS as telas
+            document.querySelectorAll('.screen').forEach(s => {
+                s.classList.remove('active');
+                s.style.display = 'none';
+            });
+            
+            // Adicionar a classe active APENAS à tela desejada
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) {
+                targetScreen.classList.add('active');
+                targetScreen.style.display = 'block';
+            }
             
             const nav = document.getElementById('main-nav');
             const noNav = ['screen-splash', 'screen-onboarding', 'screen-cadastro'];
@@ -582,6 +602,10 @@
         };
 
         window.initApp = function() {
+            // Ocultar a splash screen imediatamente
+            document.getElementById('screen-splash').style.display = 'none';
+            document.getElementById('screen-splash').classList.remove('active');
+            
             const saved = localStorage.getItem('horta_hero_super_v1');
             if (saved) {
                 state = JSON.parse(saved);
@@ -593,10 +617,10 @@
                     window.initChart();
                     window.renderRanking();
                 } else { 
-                    setTimeout(() => window.showScreen('screen-onboarding'), 500);
+                    window.showScreen('screen-onboarding');
                 }
             } else { 
-                setTimeout(() => window.showScreen('screen-onboarding'), 500);
+                window.showScreen('screen-onboarding');
             }
         };
 
@@ -858,7 +882,10 @@
 
         // Init
         window.renderCatalog();
-        window.initApp();
+        // Mostrar a splash screen primeiro
+        window.showScreen('screen-splash');
+        // Depois chamar o initApp após 2 segundos
+        setTimeout(() => window.initApp(), 2000);
     </script>
 </body>
 </html>
