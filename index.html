@@ -31,9 +31,9 @@
         .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
         
         .screen { display: none; min-height: 100vh; padding-bottom: 100px; }
-        .screen.active { display: block; animation: fadeIn 0.4s ease-out; }
+        .screen.active { display: block; animation: fadeIn 0.3s ease-out; will-change: opacity, transform; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .nav-item.active { color: var(--primary); }
         .nav-item.active i { transform: translateY(-4px); color: var(--primary); }
@@ -449,24 +449,38 @@
 
         // --- NAVIGATION ---
         function showScreen(screenId) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
+            const screens = document.querySelectorAll('.screen');
+            const targetScreen = document.getElementById(screenId);
+            
+            if (!targetScreen) return;
+
+            // Prevenir flicker escondendo todas e mostrando a alvo em um único ciclo
+            screens.forEach(s => {
+                if (s.id !== screenId) s.classList.remove('active');
+            });
+            
+            targetScreen.classList.add('active');
             
             // Show/Hide Nav
             const nav = document.getElementById('main-nav');
-            if (['screen-splash', 'screen-onboarding', 'screen-cadastro'].includes(screenId)) {
-                nav.classList.add('hidden');
+            const noNavScreens = ['screen-splash', 'screen-onboarding', 'screen-cadastro'];
+            
+            if (noNavScreens.includes(screenId)) {
+                nav.style.display = 'none';
             } else {
+                nav.style.display = 'flex';
                 nav.classList.remove('hidden');
             }
 
             // Update Nav Active State
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
-                if (item.getAttribute('onclick').includes(screenId)) item.classList.add('active');
+                if (item.getAttribute('onclick') && item.getAttribute('onclick').includes(screenId)) {
+                    item.classList.add('active');
+                }
             });
 
-            window.scrollTo(0, 0);
+            window.scrollTo({ top: 0, behavior: 'instant' });
         }
 
         // --- REGISTRATION ---
