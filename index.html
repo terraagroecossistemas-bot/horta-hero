@@ -25,13 +25,15 @@
             color: var(--text);
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
+            margin: 0;
+            padding: 0;
         }
 
         .premium-shadow { box-shadow: 0 10px 30px rgba(45, 90, 39, 0.08); }
         .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
         
         .screen { display: none; min-height: 100vh; padding-bottom: 100px; }
-        .screen.active { display: block; animation: fadeIn 0.3s ease-out; will-change: opacity, transform; }
+        .screen.active { display: block; animation: fadeIn 0.2s ease-out; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
@@ -41,11 +43,11 @@
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            cursor: pointer;
         }
-        .btn-primary:active { transform: scale(0.96); }
+        .btn-primary:active { transform: scale(0.96); opacity: 0.9; }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 0px; background: transparent; }
 
         .card-gradient { background: linear-gradient(135deg, #2D5A27 0%, #4A7C44 100%); }
@@ -69,18 +71,20 @@
             --card: #1A2619;
             --text: #E8F0E7;
         }
+
+        button { cursor: pointer; -webkit-appearance: none; }
     </style>
 </head>
 <body>
 
     <!-- 1. SPLASH SCREEN -->
     <div id="screen-splash" class="screen active flex flex-col items-center justify-center bg-white p-8 text-center">
-        <div class="mb-8 animate-bounce">
+        <div class="mb-8">
             <img src="https://cdn-icons-png.flaticon.com/512/628/628283.png" class="w-32 h-32 mx-auto" alt="Logo">
         </div>
         <h1 class="text-4xl font-extrabold text-[#2D5A27] mb-2">Horta Hero</h1>
         <p class="text-gray-500 mb-12">Cada semente muda o futuro.</p>
-        <button onclick="showScreen('screen-onboarding')" class="btn-primary w-full py-4 rounded-2xl font-bold text-lg premium-shadow">Começar</button>
+        <button onclick="window.showScreen('screen-onboarding')" class="btn-primary w-full py-4 rounded-2xl font-bold text-lg premium-shadow">Começar</button>
     </div>
 
     <!-- 2. ONBOARDING -->
@@ -95,13 +99,13 @@
             <h2 class="text-3xl font-bold mb-4">Plante alimentos</h2>
             <p class="text-gray-500">Ganha créditos climáticos e transforme sua realidade local.</p>
         </div>
-        <button onclick="showScreen('screen-cadastro')" class="btn-primary w-full py-4 rounded-2xl font-bold text-lg premium-shadow">Próximo</button>
+        <button onclick="window.showScreen('screen-cadastro')" class="btn-primary w-full py-4 rounded-2xl font-bold text-lg premium-shadow">Próximo</button>
     </div>
 
     <!-- 3. CADASTRO -->
     <div id="screen-cadastro" class="screen p-6">
         <div class="flex items-center mb-8">
-            <button onclick="showScreen('screen-onboarding')" class="w-10 h-10 rounded-full bg-white flex items-center justify-center premium-shadow mr-4">
+            <button onclick="window.showScreen('screen-onboarding')" class="w-10 h-10 rounded-full bg-white flex items-center justify-center premium-shadow mr-4">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
             <h2 class="text-2xl font-bold">Criar Conta</h2>
@@ -114,17 +118,17 @@
             <div>
                 <label class="block text-sm font-bold mb-2">Tipo de Guardião</label>
                 <div class="grid grid-cols-2 gap-4">
-                    <button onclick="selectType('Urbano')" id="type-urbano" class="p-4 rounded-2xl bg-white premium-shadow border-2 border-transparent transition-all">
+                    <button onclick="window.selectType('Urbano')" id="type-urbano" class="p-4 rounded-2xl bg-white premium-shadow border-2 border-transparent transition-all">
                         <i class="fa-solid fa-city mb-2 text-xl"></i>
                         <div class="font-bold">Urbano</div>
                     </button>
-                    <button onclick="selectType('Agricultor')" id="type-agricultor" class="p-4 rounded-2xl bg-white premium-shadow border-2 border-transparent transition-all">
+                    <button onclick="window.selectType('Agricultor')" id="type-agricultor" class="p-4 rounded-2xl bg-white premium-shadow border-2 border-transparent transition-all">
                         <i class="fa-solid fa-tractor mb-2 text-xl"></i>
                         <div class="font-bold">Agricultor</div>
                     </button>
                 </div>
             </div>
-            <button onclick="finishRegistration()" class="btn-primary w-full py-4 rounded-2xl font-bold text-lg premium-shadow mt-8">Cadastrar</button>
+            <button onclick="window.finishRegistration()" class="btn-primary w-full py-4 rounded-2xl font-bold text-lg premium-shadow mt-8">Cadastrar</button>
         </div>
     </div>
 
@@ -135,12 +139,11 @@
                 <p class="text-gray-500 text-sm">Olá, <span id="display-name">Guardião</span>!</p>
                 <h2 class="text-2xl font-extrabold">Horta Hero</h2>
             </div>
-            <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-full bg-white flex items-center justify-center premium-shadow">
+            <button onclick="window.toggleDarkMode()" class="w-10 h-10 rounded-full bg-white flex items-center justify-center premium-shadow">
                 <i class="fa-solid fa-moon"></i>
             </button>
         </div>
 
-        <!-- Guia Biodinâmico -->
         <div class="bg-amber-50 p-4 rounded-2xl mb-6 border border-amber-100 flex items-center gap-4">
             <div class="text-2xl">🌙</div>
             <div>
@@ -149,7 +152,6 @@
             </div>
         </div>
 
-        <!-- Impacto Card -->
         <div class="card-gradient p-6 rounded-[32px] text-white mb-6 premium-shadow relative overflow-hidden">
             <div class="relative z-10">
                 <p class="text-sm opacity-80 mb-1">CO₂ Sequestrado</p>
@@ -162,7 +164,6 @@
             <i class="fa-solid fa-leaf absolute -right-4 -bottom-4 text-8xl opacity-10"></i>
         </div>
 
-        <!-- Stats Grid -->
         <div class="grid grid-cols-2 gap-4 mb-8">
             <div class="bg-white p-4 rounded-2xl premium-shadow flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600">
@@ -184,7 +185,6 @@
             </div>
         </div>
 
-        <!-- Desafios -->
         <div class="mb-8">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="font-bold text-lg">Desafio Carbono Zero</h3>
@@ -201,11 +201,10 @@
             </div>
         </div>
 
-        <!-- Minha Horta Preview -->
         <div class="mb-8">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="font-bold text-lg">Minha Horta</h3>
-                <button onclick="showScreen('screen-jardim')" class="text-sm font-bold text-[#2D5A27]">Ver Tudo</button>
+                <button onclick="window.showScreen('screen-jardim')" class="text-sm font-bold text-[#2D5A27]">Ver Tudo</button>
             </div>
             <div id="dashboard-garden-preview" class="space-y-3">
                 <p class="text-center text-gray-400 py-4 text-sm italic">Sua horta está vazia. Comece a plantar!</p>
@@ -213,43 +212,38 @@
         </div>
     </div>
 
-    <!-- 5. REGISTRAR PLANTIO (CATÁLOGO) -->
+    <!-- 5. REGISTRAR PLANTIO -->
     <div id="screen-registrar" class="screen p-6">
         <div class="flex items-center mb-6">
-            <button onclick="showScreen('screen-dashboard')" class="w-10 h-10 rounded-full bg-white flex items-center justify-center premium-shadow mr-4">
+            <button onclick="window.showScreen('screen-dashboard')" class="w-10 h-10 rounded-full bg-white flex items-center justify-center premium-shadow mr-4">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
             <h2 class="text-2xl font-bold">Registrar Impacto</h2>
         </div>
 
-        <!-- Filtros -->
         <div class="flex gap-2 overflow-x-auto pb-4 mb-6 no-scrollbar">
-            <button onclick="filterCatalog('Tudo', this)" class="filter-btn active px-5 py-2 rounded-full bg-[#2D5A27] text-white text-sm font-bold whitespace-nowrap">Tudo</button>
-            <button onclick="filterCatalog('Horta', this)" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Horta</button>
-            <button onclick="filterCatalog('Frutífera', this)" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Frutíferas</button>
-            <button onclick="filterCatalog('Leguminosa', this)" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Leguminosas</button>
-            <button onclick="filterCatalog('Flor', this)" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Flores</button>
+            <button onclick="window.filterCatalog('Tudo', this)" class="filter-btn active px-5 py-2 rounded-full bg-[#2D5A27] text-white text-sm font-bold whitespace-nowrap">Tudo</button>
+            <button onclick="window.filterCatalog('Horta', this)" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Horta</button>
+            <button onclick="window.filterCatalog('Frutífera', this)" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Frutíferas</button>
+            <button onclick="window.filterCatalog('Leguminosa', this)" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Leguminosas</button>
+            <button onclick="window.filterCatalog('Flor', this)" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Flores</button>
         </div>
 
-        <div id="catalog-grid" class="grid grid-cols-2 gap-4">
-            <!-- Plantas serão inseridas via JS -->
-        </div>
+        <div id="catalog-grid" class="grid grid-cols-2 gap-4"></div>
     </div>
 
     <!-- 6. MEU JARDIM -->
     <div id="screen-jardim" class="screen p-6">
         <div class="flex items-center mb-8">
-            <button onclick="showScreen('screen-dashboard')" class="w-10 h-10 rounded-full bg-white flex items-center justify-center premium-shadow mr-4">
+            <button onclick="window.showScreen('screen-dashboard')" class="w-10 h-10 rounded-full bg-white flex items-center justify-center premium-shadow mr-4">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
             <h2 class="text-2xl font-bold">Meu Jardim Digital</h2>
         </div>
-        <div id="garden-list" class="space-y-4">
-            <!-- Plantas plantadas aparecerão aqui -->
-        </div>
+        <div id="garden-list" class="space-y-4"></div>
     </div>
 
-    <!-- 7. COMUNIDADE / RANKING -->
+    <!-- 7. COMUNIDADE -->
     <div id="screen-comunidade" class="screen p-6">
         <h2 class="text-2xl font-bold mb-6">Ranking da Comunidade</h2>
         <div class="bg-white rounded-[32px] premium-shadow overflow-hidden">
@@ -277,95 +271,43 @@
                         </td>
                         <td class="px-6 py-4 text-right font-bold text-sm text-[#2D5A27]"><span id="rank-co2">0.0</span> kg</td>
                     </tr>
-                    <tr>
-                        <td class="px-6 py-4 flex items-center gap-3">
-                            <span class="w-6 h-6 rounded-full bg-orange-300 text-white text-[10px] flex items-center justify-center font-bold">3º</span>
-                            <img src="https://i.pravatar.cc/150?u=lucas" class="w-8 h-8 rounded-full border-2 border-white" alt="User">
-                            <span class="font-bold text-sm">Lucas</span>
-                        </td>
-                        <td class="px-6 py-4 text-right font-bold text-sm">8,3 kg</td>
-                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- 8. LIVRO / CONHECIMENTO -->
+    <!-- 8. LIVRO -->
     <div id="screen-livro" class="screen p-6">
         <h2 class="text-2xl font-bold mb-6">Jornada Raízes Invisíveis</h2>
         <div class="space-y-6">
             <div class="bg-white p-6 rounded-[32px] premium-shadow border-l-8 border-[#2D5A27]">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <h3 class="font-bold text-lg">Capítulo 1</h3>
-                        <p class="text-sm text-gray-500">O Despertar da Semente</p>
-                    </div>
-                    <i class="fa-solid fa-lock-open text-green-600"></i>
-                </div>
-                <p class="text-xs text-gray-600 mb-4">Aprenda os fundamentos da agricultura sintrópica e como preparar seu primeiro berço.</p>
+                <h3 class="font-bold text-lg">Capítulo 1</h3>
+                <p class="text-sm text-gray-500 mb-4">O Despertar da Semente</p>
                 <button class="w-full py-3 rounded-xl bg-gray-100 font-bold text-sm">Ler Agora</button>
-            </div>
-            <div class="bg-white p-6 rounded-[32px] premium-shadow opacity-60">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <h3 class="font-bold text-lg">Capítulo 2</h3>
-                        <p class="text-sm text-gray-500">A Dança dos Estratos</p>
-                    </div>
-                    <i class="fa-solid fa-lock text-gray-400"></i>
-                </div>
-                <p class="text-xs text-gray-600 mb-4">Desbloqueie ao atingir 20 kg de CO₂ sequestrado.</p>
-                <div class="w-full bg-gray-100 h-2 rounded-full">
-                    <div class="bg-gray-300 h-full rounded-full" style="width: 30%"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 9. IMPACTO GLOBAL -->
-    <div id="screen-global" class="screen p-6">
-        <h2 class="text-2xl font-bold mb-6">Impacto Global</h2>
-        <div class="bg-white p-6 rounded-[32px] premium-shadow text-center mb-6">
-            <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fa-solid fa-earth-americas text-4xl text-[#2D5A27]"></i>
-            </div>
-            <h3 class="text-3xl font-black text-[#2D5A27] mb-1">83.425 kg</h3>
-            <p class="text-sm text-gray-500 font-bold uppercase tracking-widest">CO₂ Total Sequestrado</p>
-        </div>
-        <div class="grid grid-cols-2 gap-4">
-            <div class="bg-white p-4 rounded-2xl premium-shadow">
-                <p class="text-2xl font-bold">7.330</p>
-                <p class="text-[10px] text-gray-500 font-bold uppercase">Árvores Plantadas</p>
-            </div>
-            <div class="bg-white p-4 rounded-2xl premium-shadow">
-                <p class="text-2xl font-bold">12.723</p>
-                <p class="text-[10px] text-gray-500 font-bold uppercase">Heróis Ativos</p>
             </div>
         </div>
     </div>
 
     <!-- NAVIGATION BAR -->
-    <nav id="main-nav" class="fixed bottom-0 w-full glass border-t border-gray-100 px-6 py-4 flex justify-between items-center z-50 hidden">
-        <button onclick="showScreen('screen-dashboard')" class="nav-item active flex flex-col items-center transition-all duration-300">
+    <nav id="main-nav" class="fixed bottom-0 w-full glass border-t border-gray-100 px-6 py-4 flex justify-between items-center z-50" style="display: none;">
+        <button onclick="window.showScreen('screen-dashboard')" class="nav-item active flex flex-col items-center">
             <i class="fa-solid fa-house text-xl mb-1"></i>
             <span class="text-[10px] font-bold uppercase">Home</span>
         </button>
-        <button onclick="showScreen('screen-jardim')" class="nav-item flex flex-col items-center transition-all duration-300">
+        <button onclick="window.showScreen('screen-jardim')" class="nav-item flex flex-col items-center">
             <i class="fa-solid fa-leaf text-xl mb-1"></i>
             <span class="text-[10px] font-bold uppercase">Jardim</span>
         </button>
-        
-        <!-- Central Action Button -->
         <div class="relative -top-8">
-            <button onclick="showScreen('screen-registrar')" class="w-16 h-16 rounded-full btn-primary flex items-center justify-center premium-shadow border-4 border-white">
+            <button onclick="window.showScreen('screen-registrar')" class="w-16 h-16 rounded-full btn-primary flex items-center justify-center premium-shadow border-4 border-white">
                 <i class="fa-solid fa-plus text-2xl"></i>
             </button>
         </div>
-
-        <button onclick="showScreen('screen-comunidade')" class="nav-item flex flex-col items-center transition-all duration-300">
+        <button onclick="window.showScreen('screen-comunidade')" class="nav-item flex flex-col items-center">
             <i class="fa-solid fa-users text-xl mb-1"></i>
             <span class="text-[10px] font-bold uppercase">Rede</span>
         </button>
-        <button onclick="showScreen('screen-livro')" class="nav-item flex flex-col items-center transition-all duration-300">
+        <button onclick="window.showScreen('screen-livro')" class="nav-item flex flex-col items-center">
             <i class="fa-solid fa-book-open text-xl mb-1"></i>
             <span class="text-[10px] font-bold uppercase">Livro</span>
         </button>
@@ -373,23 +315,22 @@
 
     <!-- MODAL DE PLANTIO -->
     <div id="modal-plantio" class="fixed inset-0 bg-black/60 z-[100] flex items-end justify-center hidden">
-        <div class="bg-white w-full rounded-t-[40px] p-8 animate-slide-up">
+        <div class="bg-white w-full rounded-t-[40px] p-8">
             <div class="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-8"></div>
             <div class="flex items-center gap-4 mb-8">
                 <div id="modal-icon" class="text-4xl">🥬</div>
                 <div>
                     <h3 id="modal-title" class="text-2xl font-bold">Alface</h3>
-                    <p id="modal-category" class="text-sm text-gray-500">Horta • Estrato Médio • Clímax</p>
+                    <p id="modal-category" class="text-sm text-gray-500">Horta</p>
                 </div>
             </div>
-            
             <div class="grid grid-cols-2 gap-6 mb-8">
                 <div>
                     <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Quantidade</label>
                     <div class="flex items-center gap-4">
-                        <button onclick="updateQty(-1)" class="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center font-bold">-</button>
+                        <button onclick="window.updateQty(-1)" class="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center font-bold">-</button>
                         <span id="plant-qty" class="text-xl font-bold">1</span>
-                        <button onclick="updateQty(1)" class="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center font-bold">+</button>
+                        <button onclick="window.updateQty(1)" class="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center font-bold">+</button>
                     </div>
                 </div>
                 <div>
@@ -397,19 +338,9 @@
                     <input type="number" id="plant-area" value="1" class="w-full p-3 rounded-xl bg-gray-100 font-bold text-center border-none">
                 </div>
             </div>
-
-            <div class="mb-8">
-                <label class="block text-xs font-bold text-gray-400 uppercase mb-3">Método de Plantio</label>
-                <div class="grid grid-cols-3 gap-3">
-                    <button onclick="selectMethod('Semente')" class="method-btn active p-3 rounded-xl border-2 border-[#2D5A27] bg-green-50 text-[10px] font-bold">Semente<br><span class="text-green-600">+50% pts</span></button>
-                    <button onclick="selectMethod('Muda')" class="method-btn p-3 rounded-xl border-2 border-transparent bg-gray-50 text-[10px] font-bold">Muda<br><span class="text-green-600">+20% pts</span></button>
-                    <button onclick="selectMethod('Transplante')" class="method-btn p-3 rounded-xl border-2 border-transparent bg-gray-50 text-[10px] font-bold">Transp.<br>Normal</button>
-                </div>
-            </div>
-
             <div class="flex gap-4">
-                <button onclick="closeModal()" class="flex-1 py-4 rounded-2xl bg-gray-100 font-bold text-gray-500">Cancelar</button>
-                <button onclick="confirmPlanting()" class="flex-[2] py-4 rounded-2xl btn-primary font-bold">Confirmar</button>
+                <button onclick="window.closeModal()" class="flex-1 py-4 rounded-2xl bg-gray-100 font-bold text-gray-500">Cancelar</button>
+                <button onclick="window.confirmPlanting()" class="flex-[2] py-4 rounded-2xl btn-primary font-bold">Confirmar</button>
             </div>
         </div>
     </div>
@@ -417,24 +348,11 @@
     <script>
         // --- DATA ---
         const catalog = [
-            { id: 1, name: 'Alface', category: 'Horta', co2: 0.5, icon: '🥬', stratum: 'Médio', cycle: 'Placenta I' },
-            { id: 2, name: 'Tomate', category: 'Horta', co2: 0.8, icon: '🍅', stratum: 'Médio', cycle: 'Placenta II' },
-            { id: 3, name: 'Cenoura', category: 'Horta', co2: 0.4, icon: '🥕', stratum: 'Baixo', cycle: 'Placenta I' },
-            { id: 4, name: 'Pimentão', category: 'Horta', co2: 0.7, icon: '🫑', stratum: 'Médio', cycle: 'Placenta II' },
-            { id: 5, name: 'Berinjela', category: 'Horta', co2: 0.9, icon: '🍆', stratum: 'Médio', cycle: 'Placenta II' },
-            { id: 6, name: 'Quiabo', category: 'Horta', co2: 1.2, icon: '🍢', stratum: 'Alto', cycle: 'Placenta II' },
-            { id: 7, name: 'Couve', category: 'Horta', co2: 0.6, icon: '🥬', stratum: 'Médio', cycle: 'Placenta II' },
-            { id: 8, name: 'Manjericão', category: 'Horta', co2: 0.3, icon: '🌿', stratum: 'Baixo', cycle: 'Placenta I' },
-            { id: 9, name: 'Jabuticaba', category: 'Frutífera', co2: 45.0, icon: '🟣', stratum: 'Médio', cycle: 'Clímax' },
-            { id: 10, name: 'Pitanga', category: 'Frutífera', co2: 30.0, icon: '🍒', stratum: 'Médio', cycle: 'Secundária' },
-            { id: 11, name: 'Araçá', category: 'Frutífera', co2: 25.0, icon: '🟡', stratum: 'Baixo', cycle: 'Secundária' },
-            { id: 12, name: 'Amora', category: 'Frutífera', co2: 20.0, icon: '🍇', stratum: 'Médio', cycle: 'Secundária' },
-            { id: 13, name: 'Feijão de Porco', category: 'Leguminosa', co2: 2.5, icon: '🫘', stratum: 'Baixo', cycle: 'Placenta I' },
-            { id: 14, name: 'Guandu', category: 'Leguminosa', co2: 5.0, icon: '🌿', stratum: 'Alto', cycle: 'Placenta II' },
-            { id: 15, name: 'Mucuna', category: 'Leguminosa', co2: 3.5, icon: '🌱', stratum: 'Emergente', cycle: 'Placenta I' },
-            { id: 16, name: 'Calêndula', category: 'Flor', co2: 0.2, icon: '🌼', stratum: 'Baixo', cycle: 'Placenta I' },
-            { id: 17, name: 'Tagetes', category: 'Flor', co2: 0.2, icon: '🏵️', stratum: 'Baixo', cycle: 'Placenta I' },
-            { id: 18, name: 'Girassol', category: 'Flor', co2: 1.5, icon: '🌻', stratum: 'Emergente', cycle: 'Placenta I' }
+            { id: 1, name: 'Alface', category: 'Horta', co2: 0.5, icon: '🥬', stratum: 'Médio' },
+            { id: 2, name: 'Tomate', category: 'Horta', co2: 0.8, icon: '🍅', stratum: 'Médio' },
+            { id: 9, name: 'Jabuticaba', category: 'Frutífera', co2: 45.0, icon: '🟣', stratum: 'Médio' },
+            { id: 13, name: 'Feijão de Porco', category: 'Leguminosa', co2: 2.5, icon: '🫘', stratum: 'Baixo' },
+            { id: 18, name: 'Girassol', category: 'Flor', co2: 1.5, icon: '🌻', stratum: 'Emergente' }
         ];
 
         let state = {
@@ -443,276 +361,151 @@
             coins: 0,
             garden: [],
             selectedPlant: null,
-            qty: 1,
-            method: 'Semente'
+            qty: 1
         };
 
-        // --- NAVIGATION ---
-        function showScreen(screenId) {
+        // --- GLOBAL FUNCTIONS (FORCED COMPATIBILITY) ---
+        window.showScreen = function(screenId) {
             const screens = document.querySelectorAll('.screen');
-            const targetScreen = document.getElementById(screenId);
+            screens.forEach(s => s.style.display = 'none');
             
-            if (!targetScreen) return;
-
-            // Prevenir flicker escondendo todas e mostrando a alvo em um único ciclo
-            screens.forEach(s => {
-                if (s.id !== screenId) s.classList.remove('active');
-            });
+            const target = document.getElementById(screenId);
+            if (target) target.style.display = 'block';
             
-            targetScreen.classList.add('active');
-            
-            // Show/Hide Nav
             const nav = document.getElementById('main-nav');
-            const noNavScreens = ['screen-splash', 'screen-onboarding', 'screen-cadastro'];
-            
-            if (noNavScreens.includes(screenId)) {
-                nav.style.display = 'none';
-            } else {
-                nav.style.display = 'flex';
-                nav.classList.remove('hidden');
-            }
+            const noNav = ['screen-splash', 'screen-onboarding', 'screen-cadastro'];
+            if (nav) nav.style.display = noNav.includes(screenId) ? 'none' : 'flex';
 
-            // Update Nav Active State
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
                 if (item.getAttribute('onclick') && item.getAttribute('onclick').includes(screenId)) {
                     item.classList.add('active');
                 }
             });
+            window.scrollTo(0, 0);
+        };
 
-            window.scrollTo({ top: 0, behavior: 'instant' });
-        }
-
-        // --- REGISTRATION ---
-        function selectType(type) {
+        window.selectType = function(type) {
             state.user.type = type;
-            document.getElementById('type-urbano').classList.remove('border-[#2D5A27]', 'bg-green-50');
-            document.getElementById('type-agricultor').classList.remove('border-[#2D5A27]', 'bg-green-50');
-            document.getElementById(`type-${type.toLowerCase()}`).classList.add('border-[#2D5A27]', 'bg-green-50');
-        }
+            document.getElementById('type-urbano').style.borderColor = type === 'Urbano' ? '#2D5A27' : 'transparent';
+            document.getElementById('type-agricultor').style.borderColor = type === 'Agricultor' ? '#2D5A27' : 'transparent';
+        };
 
-        function finishRegistration() {
+        window.finishRegistration = function() {
             const name = document.getElementById('user-name').value;
-            if (!name) return alert('Por favor, digite seu nome.');
+            if (!name) return alert('Digite seu nome');
             state.user.name = name;
             document.getElementById('display-name').innerText = name;
-            saveState();
-            showScreen('screen-dashboard');
-        }
+            window.saveState();
+            window.showScreen('screen-dashboard');
+        };
 
-        // --- CATALOG & PLANTING ---
-        function renderCatalog(filter = 'Tudo') {
+        window.filterCatalog = function(filter, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.style.backgroundColor = 'white';
+                b.style.color = '#1A2E19';
+            });
+            if (btn) {
+                btn.style.backgroundColor = '#2D5A27';
+                btn.style.color = 'white';
+            }
+            window.renderCatalog(filter);
+        };
+
+        window.renderCatalog = function(filter = 'Tudo') {
             const grid = document.getElementById('catalog-grid');
+            if (!grid) return;
             grid.innerHTML = '';
             const filtered = filter === 'Tudo' ? catalog : catalog.filter(p => p.category === filter);
-            
             filtered.forEach(p => {
                 const card = document.createElement('div');
-                card.className = 'bg-white p-5 rounded-[32px] premium-shadow text-center border-2 border-transparent active:border-[#2D5A27] transition-all';
-                card.onclick = () => openModal(p);
-                card.innerHTML = `
-                    <div class="text-4xl mb-3">${p.icon}</div>
-                    <h4 class="font-bold text-sm mb-1">${p.name}</h4>
-                    <p class="text-[10px] text-gray-400 font-bold uppercase mb-2">${p.category}</p>
-                    <div class="text-[10px] bg-green-50 text-green-700 py-1 rounded-full font-bold">${p.stratum}</div>
-                `;
+                card.className = 'bg-white p-5 rounded-[32px] premium-shadow text-center';
+                card.onclick = () => window.openModal(p);
+                card.innerHTML = `<div class="text-4xl mb-3">${p.icon}</div><h4 class="font-bold text-sm">${p.name}</h4>`;
                 grid.appendChild(card);
             });
-        }
+        };
 
-        function filterCatalog(filter, element) {
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active', 'bg-[#2D5A27]', 'text-white');
-                btn.classList.add('bg-white', 'premium-shadow', 'text-gray-500');
-            });
-            
-            const target = element || event.currentTarget;
-            if (target) {
-                target.classList.add('active', 'bg-[#2D5A27]', 'text-white');
-            }
-            renderCatalog(filter);
-        }
-
-        function openModal(plant) {
+        window.openModal = function(plant) {
             state.selectedPlant = plant;
             state.qty = 1;
-            state.method = 'Semente';
             document.getElementById('modal-title').innerText = plant.name;
             document.getElementById('modal-icon').innerText = plant.icon;
-            document.getElementById('modal-category').innerText = `${plant.category} • Estrato ${plant.stratum} • ${plant.cycle}`;
             document.getElementById('plant-qty').innerText = '1';
             document.getElementById('modal-plantio').classList.remove('hidden');
-            
-            // Reset methods
-            document.querySelectorAll('.method-btn').forEach(b => b.classList.remove('active', 'border-[#2D5A27]', 'bg-green-50'));
-            document.querySelector('.method-btn').classList.add('active', 'border-[#2D5A27]', 'bg-green-50');
-        }
+        };
 
-        function closeModal() {
+        window.closeModal = function() {
             document.getElementById('modal-plantio').classList.add('hidden');
-        }
+        };
 
-        function updateQty(val) {
+        window.updateQty = function(val) {
             state.qty = Math.max(1, state.qty + val);
             document.getElementById('plant-qty').innerText = state.qty;
-        }
+        };
 
-        function selectMethod(method) {
-            state.method = method;
-            document.querySelectorAll('.method-btn').forEach(btn => {
-                btn.classList.remove('active', 'border-[#2D5A27]', 'bg-green-50');
-                if (btn.innerText.includes(method)) btn.classList.add('active', 'border-[#2D5A27]', 'bg-green-50');
-            });
-        }
-
-        function confirmPlanting() {
-            const area = parseFloat(document.getElementById('plant-area').value) || 1;
+        window.confirmPlanting = function() {
             const plant = state.selectedPlant;
-            
-            // Calculate Points & CO2
-            let multiplier = state.method === 'Semente' ? 1.5 : (state.method === 'Muda' ? 1.2 : 1.0);
             const co2Gained = plant.co2 * state.qty;
-            const pointsGained = Math.round(co2Gained * 10 * multiplier);
-
-            const newPlant = {
-                ...plant,
-                qty: state.qty,
-                area: area,
-                method: state.method,
-                date: new Date().toLocaleDateString('pt-BR'),
-                id: Date.now()
-            };
-
-            state.garden.push(newPlant);
+            state.garden.push({...plant, qty: state.qty, date: new Date().toLocaleDateString(), id: Date.now()});
             state.co2 += co2Gained;
-            state.coins += pointsGained;
+            state.coins += Math.round(co2Gained * 10);
+            window.updateStats();
+            window.renderGarden();
+            window.saveState();
+            window.closeModal();
+            window.showScreen('screen-jardim');
+        };
 
-            updateStats();
-            renderGarden();
-            saveState();
-            closeModal();
-            showScreen('screen-jardim');
-        }
-
-        // --- GARDEN & REGA ---
-        function renderGarden() {
-            const list = document.getElementById('garden-list');
-            const preview = document.getElementById('dashboard-garden-preview');
-            list.innerHTML = '';
-            preview.innerHTML = '';
-
-            if (state.garden.length === 0) {
-                list.innerHTML = '<p class="text-center text-gray-400 py-12">Seu jardim está vazio.</p>';
-                preview.innerHTML = '<p class="text-center text-gray-400 py-4 text-sm italic">Sua horta está vazia. Comece a plantar!</p>';
-                return;
-            }
-
-            state.garden.slice().reverse().forEach(p => {
-                const item = `
-                    <div class="bg-white p-4 rounded-[24px] premium-shadow flex items-center justify-between relative overflow-hidden">
-                        <div class="flex items-center gap-4">
-                            <div class="text-3xl">${p.icon}</div>
-                            <div>
-                                <h4 class="font-bold text-sm">${p.name} <span class="text-gray-400 text-xs">x${p.qty}</span></h4>
-                                <p class="text-[10px] text-gray-400">Plantado em ${p.date} • ${p.area}m²</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-[10px] font-bold text-gray-400 uppercase mr-2">${p.stratum}</span>
-                            <button onclick="regar(this)" class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center active:scale-90 transition-all">
-                                <i class="fa-solid fa-droplet"></i>
-                            </button>
-                            <button onclick="removerPlanta(${p.id})" class="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                list.innerHTML += item;
-                
-                // Preview (only first 2)
-                if (preview.children.length < 2) {
-                    preview.innerHTML += item;
-                }
-            });
-        }
-
-        function regar(btn) {
-            const drop = document.createElement('i');
-            drop.className = 'fa-solid fa-droplet water-drop';
-            btn.appendChild(drop);
-            state.coins += 5;
-            updateStats();
-            saveState();
-            setTimeout(() => drop.remove(), 1000);
-        }
-
-        function removerPlanta(id) {
-            if (confirm('Deseja remover esta planta do seu jardim?')) {
-                state.garden = state.garden.filter(p => p.id !== id);
-                renderGarden();
-                saveState();
-            }
-        }
-
-        // --- UTILS ---
-        function updateStats() {
+        window.updateStats = function() {
             document.getElementById('stat-co2').innerText = state.co2.toFixed(1);
             document.getElementById('stat-coins').innerText = state.coins;
             document.getElementById('rank-co2').innerText = state.co2.toFixed(1);
-            
-            // Progress Bars
-            const co2Progress = Math.min((state.co2 / 50) * 100, 100);
-            document.getElementById('bar-co2').style.width = co2Progress + '%';
-            
-            const challengeProgress = Math.min((state.co2 / 5) * 100, 100);
-            document.getElementById('bar-challenge').style.width = challengeProgress + '%';
-            document.getElementById('challenge-progress').innerText = Math.min(state.co2, 5).toFixed(1);
-        }
+            document.getElementById('bar-co2').style.width = Math.min((state.co2 / 50) * 100, 100) + '%';
+        };
 
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-        }
-
-        function saveState() {
-            localStorage.setItem('horta_hero_5_state', JSON.stringify(state));
-        }
-
-        function loadState() {
-            const saved = localStorage.getItem('horta_hero_5_state');
-            if (saved) {
-                state = JSON.parse(saved);
-                document.getElementById('display-name').innerText = state.user.name || 'Guardião';
-                updateStats();
-                renderGarden();
-                if (state.user.name) showScreen('screen-dashboard');
-            }
-        }
-
-        // --- INIT ---
-        // Garantir que o DOM está pronto e tratar eventos de toque
-        document.addEventListener('DOMContentLoaded', () => {
-            renderCatalog();
-            loadState();
-            
-            // Dica Biodinâmica Aleatória
-            const dicas = [
-                "Lua Crescente: Máxima energia vital! Ideal para folhosas.",
-                "Lua Cheia: Energia no topo. Ótimo para colher ervas medicinais.",
-                "Lua Minguante: Energia desce para as raízes. Ideal para podas.",
-                "Lua Nova: Repouso da terra. Bom para preparar o solo.",
-                "Dia de Fruto: Ideal para plantar Tomates e Jabuticabas!",
-                "Dia de Raiz: Cenouras e Beterrabas agradecem o plantio hoje."
-            ];
-            const dicaElement = document.getElementById('dica-biodinamica');
-            if (dicaElement) {
-                dicaElement.innerText = dicas[Math.floor(Math.random() * dicas.length)];
-            }
-
-            // Fix para iOS/Safari: forçar cursor pointer e tratar cliques fantasmas
-            document.querySelectorAll('button').forEach(btn => {
-                btn.style.cursor = 'pointer';
+        window.renderGarden = function() {
+            const list = document.getElementById('garden-list');
+            if (!list) return;
+            list.innerHTML = state.garden.length === 0 ? '<p class="text-center text-gray-400">Vazio</p>' : '';
+            state.garden.forEach(p => {
+                list.innerHTML += `<div class="bg-white p-4 rounded-2xl premium-shadow flex justify-between"><span>${p.icon} ${p.name} x${p.qty}</span><button onclick="window.regar(this)" class="text-blue-500"><i class="fa-solid fa-droplet"></i></button></div>`;
             });
+        };
+
+        window.regar = function(btn) {
+            state.coins += 5;
+            window.updateStats();
+            window.saveState();
+            alert('Regado! +5 AgriEcoCoins');
+        };
+
+        window.saveState = function() {
+            try { localStorage.setItem('horta_hero_v5_final', JSON.stringify(state)); } catch(e) {}
+        };
+
+        window.loadState = function() {
+            try {
+                const saved = localStorage.getItem('horta_hero_v5_final');
+                if (saved) {
+                    state = JSON.parse(saved);
+                    document.getElementById('display-name').innerText = state.user.name || 'Guardião';
+                    window.updateStats();
+                    window.renderGarden();
+                    if (state.user.name) window.showScreen('screen-dashboard');
+                }
+            } catch(e) {}
+        };
+
+        window.toggleDarkMode = function() {
+            document.body.classList.toggle('dark-mode');
+        };
+
+        // --- BOOT ---
+        document.addEventListener('DOMContentLoaded', () => {
+            window.renderCatalog();
+            window.loadState();
+            console.log("Horta Hero 5.0 Loaded");
         });
     </script>
 </body>
