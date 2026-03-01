@@ -3,582 +3,690 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Horta Hero - Impacto Real na Terra</title>
+    <title>Horta Hero 5.0 - Missão Regenerativa</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        
         :root {
             --primary: #2D5A27;
             --secondary: #4A7C44;
-            --accent: #8BA888;
-            --background: #F4F7F2;
-            --card-bg: #FFFFFF;
-            --text-main: #1A2E19;
-            --text-muted: #5C715B;
+            --accent: #86B049;
+            --bg: #F8FAF7;
+            --card: #FFFFFF;
+            --text: #1A2E19;
+            --gold: #D4AF37;
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--background);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
+            background-color: var(--bg);
+            color: var(--text);
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
-            transition: background-color 0.3s ease;
         }
 
-        .premium-card {
-            background: var(--card-bg);
-            border-radius: 24px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            transition: all 0.2s ease;
-        }
+        .premium-shadow { box-shadow: 0 10px 30px rgba(45, 90, 39, 0.08); }
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+        
+        .screen { display: none; min-height: 100vh; padding-bottom: 100px; }
+        .screen.active { display: block; animation: fadeIn 0.4s ease-out; }
 
-        .impact-gradient {
-            background: linear-gradient(135deg, #2D5A27 0%, #4A7C44 100%);
-            color: white;
-        }
-
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            height: 80px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
-            z-index: 100;
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--text-muted);
-            font-size: 10px;
-            font-weight: 600;
-            gap: 4px;
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
-
-        .nav-item.active {
-            color: var(--primary);
-        }
-
-        .nav-center-btn {
-            width: 56px;
-            height: 56px;
-            background: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            box-shadow: 0 8px 20px rgba(45, 90, 39, 0.3);
-            margin-top: -40px;
-            border: 4px solid var(--background);
-            cursor: pointer;
-        }
-
-        .fade-in { animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .nav-item.active { color: var(--primary); }
+        .nav-item.active i { transform: translateY(-4px); color: var(--primary); }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:active { transform: scale(0.96); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+
+        .card-gradient { background: linear-gradient(135deg, #2D5A27 0%, #4A7C44 100%); }
+        
+        .onboarding-dot { width: 8px; height: 8px; border-radius: 50%; background: #D1D5DB; transition: all 0.3s; }
+        .onboarding-dot.active { width: 24px; background: var(--primary); }
 
         .water-drop {
             position: absolute;
-            color: #3b82f6;
+            color: #3B82F6;
+            animation: floatUp 1s ease-out forwards;
             pointer-events: none;
-            animation: dropAnim 0.8s ease-out forwards;
-            z-index: 50;
         }
-        @keyframes dropAnim {
+        @keyframes floatUp {
             0% { transform: translateY(0) scale(1); opacity: 1; }
-            100% { transform: translateY(-40px) scale(1.5); opacity: 0; }
+            100% { transform: translateY(-50px) scale(1.5); opacity: 0; }
         }
 
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        
         .dark-mode {
-            --background: #121811;
-            --card-bg: #1C251B;
-            --text-main: #E8F0E7;
-            --text-muted: #9BB09A;
-        }
-
-        .plant-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 12px;
-        }
-
-        .filter-btn {
-            padding: 8px 16px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 700;
-            white-space: nowrap;
-            transition: all 0.2s;
-            border: 1px solid rgba(0,0,0,0.05);
-            background: var(--card-bg);
-            color: var(--text-muted);
-        }
-
-        .filter-btn.active {
-            background: var(--primary);
-            color: white;
-            box-shadow: 0 4px 12px rgba(45, 90, 39, 0.2);
-        }
-
-        .biodynamic-badge {
-            background: linear-gradient(135deg, #FFF9C4 0%, #FBC02D 100%);
-            color: #5D4037;
-            padding: 12px;
-            border-radius: 16px;
-            font-size: 12px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(251, 192, 45, 0.2);
+            --bg: #0F170E;
+            --card: #1A2619;
+            --text: #E8F0E7;
         }
     </style>
 </head>
-<body class="pb-24">
+<body>
 
-    <div id="app" class="max-w-md mx-auto min-h-screen px-4 pt-6">
-        
-        <!-- Header -->
-        <header class="flex justify-between items-center mb-6">
-            <div>
-                <h1 class="text-lg font-medium text-muted">Olá, Guardião!</h1>
-                <p class="text-2xl font-extrabold tracking-tight">Horta Hero</p>
-            </div>
-            <div class="flex gap-3">
-                <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-full bg-white dark:bg-gray-800 flex items-center justify-center shadow-sm border border-gray-100">
-                    <i class="fa-solid fa-moon"></i>
-                </button>
-                <div class="w-10 h-10 rounded-full bg-primary overflow-hidden border-2 border-white shadow-sm">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Avatar">
-                </div>
-            </div>
-        </header>
-
-        <main id="main-content">
-            <!-- Dashboard View -->
-            <div id="view-dashboard" class="fade-in">
-                <!-- Biodynamic Tip -->
-                <div class="biodynamic-badge mb-6">
-                    <div class="w-10 h-10 bg-white/50 rounded-full flex items-center justify-center text-xl">
-                        <i class="fa-solid fa-moon"></i>
-                    </div>
-                    <div>
-                        <p class="text-[10px] uppercase opacity-70">Guia Biodinâmico de Hoje</p>
-                        <p id="biodynamic-tip-text">Carregando sabedoria da terra...</p>
-                    </div>
-                </div>
-
-                <!-- Impact Card -->
-                <div class="premium-card impact-gradient p-6 mb-6 relative overflow-hidden">
-                    <div class="relative z-10">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <p class="text-green-100 text-sm font-medium opacity-80">CO₂ Sequestrado</p>
-                                <h2 class="text-4xl font-extrabold mt-1"><span id="co2-val">0.0</span> <span class="text-xl font-normal">kg</span></h2>
-                            </div>
-                            <div class="bg-white/20 backdrop-blur-md p-2 rounded-xl">
-                                <i class="fa-solid fa-leaf text-2xl"></i>
-                            </div>
-                        </div>
-                        <button onclick="switchView('plantar')" class="w-full bg-white text-primary font-bold py-3 rounded-xl shadow-lg active:scale-95 transition-transform">
-                            Registrar Ação
-                        </button>
-                    </div>
-                    <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full"></div>
-                </div>
-
-                <!-- Stats Row -->
-                <div class="grid grid-cols-2 gap-4 mb-6">
-                    <div class="premium-card p-4 flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600">
-                            <i class="fa-solid fa-coins"></i>
-                        </div>
-                        <div>
-                            <p class="text-xs text-muted font-bold">AgriEcoCoins</p>
-                            <p class="text-lg font-extrabold" id="points-val">0</p>
-                        </div>
-                    </div>
-                    <div class="premium-card p-4 flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600">
-                            <i class="fa-solid fa-book"></i>
-                        </div>
-                        <div>
-                            <p class="text-xs text-muted font-bold">Progresso</p>
-                            <p class="text-lg font-extrabold">Livro 1</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Daily Mission -->
-                <div class="premium-card p-5 mb-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="font-bold text-lg">Desafio Carbono Zero</h3>
-                        <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-lg font-bold">Meta Semanal</span>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <div class="flex-1">
-                            <div class="flex justify-between text-xs mb-1 font-bold">
-                                <span>Reduza 5 kg de CO₂</span>
-                                <span id="mission-progress-text">0.0 / 5 kg</span>
-                            </div>
-                            <div class="w-full bg-gray-100 rounded-full h-2">
-                                <div id="mission-progress-bar" class="bg-green-500 h-2 rounded-full transition-all" style="width: 0%"></div>
-                            </div>
-                        </div>
-                        <div class="w-12 h-12 flex items-center justify-center bg-amber-50 rounded-full border-2 border-amber-200">
-                            <i class="fa-solid fa-medal text-amber-500"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Section Title -->
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="font-extrabold text-xl">Minha Horta</h3>
-                    <button onclick="switchView('jardim')" class="text-primary text-sm font-bold">Ver Tudo</button>
-                </div>
-
-                <!-- Garden Preview -->
-                <div id="garden-preview" class="space-y-4 mb-6">
-                    <div class="text-center py-10 text-muted italic">Sua horta está vazia. Comece a plantar!</div>
-                </div>
-            </div>
-
-            <!-- Garden View -->
-            <div id="view-jardim" class="hidden fade-in">
-                <div class="flex items-center gap-4 mb-6">
-                    <button onclick="switchView('dashboard')" class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm">
-                        <i class="fa-solid fa-chevron-left"></i>
-                    </button>
-                    <h2 class="text-2xl font-extrabold">Meu Jardim Digital</h2>
-                </div>
-                <div id="full-garden-list" class="space-y-4"></div>
-            </div>
-
-            <!-- Plantar View -->
-            <div id="view-plantar" class="hidden fade-in">
-                <div class="flex items-center gap-4 mb-6">
-                    <button onclick="switchView('dashboard')" class="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm">
-                        <i class="fa-solid fa-chevron-left"></i>
-                    </button>
-                    <h2 class="text-2xl font-extrabold">Registrar Impacto</h2>
-                </div>
-                
-                <!-- Category Filters -->
-                <div class="flex gap-2 overflow-x-auto no-scrollbar mb-6 pb-2">
-                    <button onclick="filterCatalog('Tudo')" class="filter-btn active" id="filter-Tudo">Tudo</button>
-                    <button onclick="filterCatalog('Horta')" class="filter-btn" id="filter-Horta">Horta</button>
-                    <button onclick="filterCatalog('Frutífera')" class="filter-btn" id="filter-Frutífera">Frutíferas</button>
-                    <button onclick="filterCatalog('Leguminosa')" class="filter-btn" id="filter-Leguminosa">Leguminosas</button>
-                    <button onclick="filterCatalog('Flor')" class="filter-btn" id="filter-Flor">Flores</button>
-                </div>
-
-                <div id="catalog-list" class="plant-grid"></div>
-            </div>
-
-            <!-- Ranking View -->
-            <div id="view-ranking" class="hidden fade-in">
-                <h2 class="text-2xl font-extrabold mb-6">Ranking da Comunidade</h2>
-                <div class="premium-card overflow-hidden">
-                    <div class="p-4 bg-gray-50 border-b flex justify-between text-xs font-bold text-muted">
-                        <span>POSIÇÃO</span>
-                        <span>CO₂ SEQUESTRADO</span>
-                    </div>
-                    <div class="divide-y">
-                        <div class="p-4 flex justify-between items-center">
-                            <div class="flex items-center gap-3">
-                                <span class="w-6 h-6 bg-amber-400 text-white rounded-full flex items-center justify-center text-[10px] font-bold">1º</span>
-                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Fernanda" class="w-10 h-10 rounded-full bg-gray-100">
-                                <span class="font-bold">Fernanda</span>
-                            </div>
-                            <span class="font-extrabold">12,5 kg</span>
-                        </div>
-                        <div class="p-4 flex justify-between items-center bg-green-50/50">
-                            <div class="flex items-center gap-3">
-                                <span class="w-6 h-6 bg-gray-300 text-white rounded-full flex items-center justify-center text-[10px] font-bold">2º</span>
-                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" class="w-10 h-10 rounded-full bg-gray-100">
-                                <span class="font-bold">Você</span>
-                            </div>
-                            <span class="font-extrabold" id="ranking-user-co2">0,0 kg</span>
-                        </div>
-                        <div class="p-4 flex justify-between items-center">
-                            <div class="flex items-center gap-3">
-                                <span class="w-6 h-6 bg-amber-700 text-white rounded-full flex items-center justify-center text-[10px] font-bold">3º</span>
-                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Lucas" class="w-10 h-10 rounded-full bg-gray-100">
-                                <span class="font-bold">Lucas</span>
-                            </div>
-                            <span class="font-extrabold">8,3 kg</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Bottom Navigation -->
-        <nav class="bottom-nav">
-            <button onclick="switchView('dashboard')" id="nav-dashboard" class="nav-item active">
-                <i class="fa-solid fa-house text-xl"></i>
-                <span>Dashboard</span>
-            </button>
-            <button onclick="switchView('jardim')" id="nav-jardim" class="nav-item">
-                <i class="fa-solid fa-leaf text-xl"></i>
-                <span>Meu Jardim</span>
-            </button>
-            <button onclick="switchView('plantar')" class="nav-center-btn">
-                <i class="fa-solid fa-plus"></i>
-            </button>
-            <button onclick="switchView('ranking')" id="nav-ranking" class="nav-item">
-                <i class="fa-solid fa-users text-xl"></i>
-                <span>Comunidade</span>
-            </button>
-            <button class="nav-item opacity-50">
-                <i class="fa-solid fa-gear text-xl"></i>
-                <span>Ajustes</span>
-            </button>
-        </nav>
+    <!-- 1. SPLASH SCREEN -->
+    <div id="screen-splash" class="screen active flex flex-col items-center justify-center bg-white p-8 text-center">
+        <div class="mb-8 animate-bounce">
+            <img src="https://cdn-icons-png.flaticon.com/512/628/628283.png" class="w-32 h-32 mx-auto" alt="Logo">
+        </div>
+        <h1 class="text-4xl font-extrabold text-[#2D5A27] mb-2">Horta Hero</h1>
+        <p class="text-gray-500 mb-12">Cada semente muda o futuro.</p>
+        <button onclick="showScreen('screen-onboarding')" class="btn-primary w-full py-4 rounded-2xl font-bold text-lg premium-shadow">Começar</button>
     </div>
 
-    <!-- Plant Modal -->
-    <div id="plant-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[200] hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-        <div class="bg-white dark:bg-gray-800 w-full max-w-md rounded-t-[32px] sm:rounded-[32px] p-8 fade-in">
-            <div class="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-6 sm:hidden"></div>
-            <h2 class="text-2xl font-extrabold mb-2" id="modal-title">Plantar Espécie</h2>
-            <p class="text-muted text-sm mb-6" id="modal-subtitle"></p>
-            
-            <form id="plant-form" class="space-y-6">
-                <input type="hidden" id="selected-plant-id">
+    <!-- 2. ONBOARDING -->
+    <div id="screen-onboarding" class="screen bg-white p-8">
+        <div class="flex justify-center gap-2 mb-12">
+            <div class="onboarding-dot active"></div>
+            <div class="onboarding-dot"></div>
+            <div class="onboarding-dot"></div>
+        </div>
+        <div class="text-center mb-12">
+            <img src="https://cdn-icons-png.flaticon.com/512/1518/1518917.png" class="w-64 h-64 mx-auto mb-8" alt="Onboarding">
+            <h2 class="text-3xl font-bold mb-4">Plante alimentos</h2>
+            <p class="text-gray-500">Ganha créditos climáticos e transforme sua realidade local.</p>
+        </div>
+        <button onclick="showScreen('screen-cadastro')" class="btn-primary w-full py-4 rounded-2xl font-bold text-lg premium-shadow">Próximo</button>
+    </div>
+
+    <!-- 3. CADASTRO -->
+    <div id="screen-cadastro" class="screen p-6">
+        <div class="flex items-center mb-8">
+            <button onclick="showScreen('screen-onboarding')" class="w-10 h-10 rounded-full bg-white flex items-center justify-center premium-shadow mr-4">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <h2 class="text-2xl font-bold">Criar Conta</h2>
+        </div>
+        <div class="space-y-6">
+            <div>
+                <label class="block text-sm font-bold mb-2">Nome Completo</label>
+                <input type="text" id="user-name" placeholder="Como quer ser chamado?" class="w-full p-4 rounded-2xl border-none bg-white premium-shadow focus:ring-2 focus:ring-[#2D5A27]">
+            </div>
+            <div>
+                <label class="block text-sm font-bold mb-2">Tipo de Guardião</label>
                 <div class="grid grid-cols-2 gap-4">
+                    <button onclick="selectType('Urbano')" id="type-urbano" class="p-4 rounded-2xl bg-white premium-shadow border-2 border-transparent transition-all">
+                        <i class="fa-solid fa-city mb-2 text-xl"></i>
+                        <div class="font-bold">Urbano</div>
+                    </button>
+                    <button onclick="selectType('Agricultor')" id="type-agricultor" class="p-4 rounded-2xl bg-white premium-shadow border-2 border-transparent transition-all">
+                        <i class="fa-solid fa-tractor mb-2 text-xl"></i>
+                        <div class="font-bold">Agricultor</div>
+                    </button>
+                </div>
+            </div>
+            <button onclick="finishRegistration()" class="btn-primary w-full py-4 rounded-2xl font-bold text-lg premium-shadow mt-8">Cadastrar</button>
+        </div>
+    </div>
+
+    <!-- 4. DASHBOARD -->
+    <div id="screen-dashboard" class="screen p-6">
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <p class="text-gray-500 text-sm">Olá, <span id="display-name">Guardião</span>!</p>
+                <h2 class="text-2xl font-extrabold">Horta Hero</h2>
+            </div>
+            <button onclick="toggleDarkMode()" class="w-10 h-10 rounded-full bg-white flex items-center justify-center premium-shadow">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
+
+        <!-- Guia Biodinâmico -->
+        <div class="bg-amber-50 p-4 rounded-2xl mb-6 border border-amber-100 flex items-center gap-4">
+            <div class="text-2xl">🌙</div>
+            <div>
+                <p class="text-[10px] font-bold text-amber-800 uppercase tracking-wider">Guia Biodinâmico de Hoje</p>
+                <p class="text-sm text-amber-900 font-medium" id="dica-biodinamica">Lua Crescente: Ideal para plantar folhosas!</p>
+            </div>
+        </div>
+
+        <!-- Impacto Card -->
+        <div class="card-gradient p-6 rounded-[32px] text-white mb-6 premium-shadow relative overflow-hidden">
+            <div class="relative z-10">
+                <p class="text-sm opacity-80 mb-1">CO₂ Sequestrado</p>
+                <h1 class="text-4xl font-black mb-4"><span id="stat-co2">0.0</span> kg</h1>
+                <div class="w-full bg-white/20 h-2 rounded-full mb-2">
+                    <div id="bar-co2" class="bg-white h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+                <p class="text-xs opacity-80">Meta mensal: 50 kg</p>
+            </div>
+            <i class="fa-solid fa-leaf absolute -right-4 -bottom-4 text-8xl opacity-10"></i>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-2 gap-4 mb-8">
+            <div class="bg-white p-4 rounded-2xl premium-shadow flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600">
+                    <i class="fa-solid fa-coins"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] text-gray-500 font-bold uppercase">AgriEcoCoins</p>
+                    <p class="font-bold" id="stat-coins">0</p>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-2xl premium-shadow flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600">
+                    <i class="fa-solid fa-book"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] text-gray-500 font-bold uppercase">Progresso</p>
+                    <p class="font-bold">Livro 1</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Desafios -->
+        <div class="mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold text-lg">Desafio Carbono Zero</h3>
+                <span class="text-[10px] bg-green-100 text-green-700 px-2 py-1 rounded-full font-bold">META SEMANAL</span>
+            </div>
+            <div class="bg-white p-5 rounded-3xl premium-shadow">
+                <div class="flex justify-between items-center mb-3">
+                    <p class="text-sm font-medium">Reduza 5 kg de CO₂</p>
+                    <p class="text-sm font-bold text-[#2D5A27]"><span id="challenge-progress">0.0</span> / 5 kg</p>
+                </div>
+                <div class="w-full bg-gray-100 h-3 rounded-full">
+                    <div id="bar-challenge" class="bg-[#2D5A27] h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Minha Horta Preview -->
+        <div class="mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold text-lg">Minha Horta</h3>
+                <button onclick="showScreen('screen-jardim')" class="text-sm font-bold text-[#2D5A27]">Ver Tudo</button>
+            </div>
+            <div id="dashboard-garden-preview" class="space-y-3">
+                <p class="text-center text-gray-400 py-4 text-sm italic">Sua horta está vazia. Comece a plantar!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. REGISTRAR PLANTIO (CATÁLOGO) -->
+    <div id="screen-registrar" class="screen p-6">
+        <div class="flex items-center mb-6">
+            <button onclick="showScreen('screen-dashboard')" class="w-10 h-10 rounded-full bg-white flex items-center justify-center premium-shadow mr-4">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <h2 class="text-2xl font-bold">Registrar Impacto</h2>
+        </div>
+
+        <!-- Filtros -->
+        <div class="flex gap-2 overflow-x-auto pb-4 mb-6 no-scrollbar">
+            <button onclick="filterCatalog('Tudo')" class="filter-btn active px-5 py-2 rounded-full bg-[#2D5A27] text-white text-sm font-bold whitespace-nowrap">Tudo</button>
+            <button onclick="filterCatalog('Horta')" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Horta</button>
+            <button onclick="filterCatalog('Frutífera')" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Frutíferas</button>
+            <button onclick="filterCatalog('Leguminosa')" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Leguminosas</button>
+            <button onclick="filterCatalog('Flor')" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Flores</button>
+        </div>
+
+        <div id="catalog-grid" class="grid grid-cols-2 gap-4">
+            <!-- Plantas serão inseridas via JS -->
+        </div>
+    </div>
+
+    <!-- 6. MEU JARDIM -->
+    <div id="screen-jardim" class="screen p-6">
+        <div class="flex items-center mb-8">
+            <button onclick="showScreen('screen-dashboard')" class="w-10 h-10 rounded-full bg-white flex items-center justify-center premium-shadow mr-4">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <h2 class="text-2xl font-bold">Meu Jardim Digital</h2>
+        </div>
+        <div id="garden-list" class="space-y-4">
+            <!-- Plantas plantadas aparecerão aqui -->
+        </div>
+    </div>
+
+    <!-- 7. COMUNIDADE / RANKING -->
+    <div id="screen-comunidade" class="screen p-6">
+        <h2 class="text-2xl font-bold mb-6">Ranking da Comunidade</h2>
+        <div class="bg-white rounded-[32px] premium-shadow overflow-hidden">
+            <table class="w-full">
+                <thead class="bg-gray-50 text-[10px] font-bold text-gray-400 uppercase">
+                    <tr>
+                        <th class="px-6 py-4 text-left">Posição</th>
+                        <th class="px-6 py-4 text-right">CO₂ Sequestrado</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    <tr class="bg-green-50/30">
+                        <td class="px-6 py-4 flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-full bg-amber-400 text-white text-[10px] flex items-center justify-center font-bold">1º</span>
+                            <img src="https://i.pravatar.cc/150?u=fernanda" class="w-8 h-8 rounded-full border-2 border-white" alt="User">
+                            <span class="font-bold text-sm">Fernanda</span>
+                        </td>
+                        <td class="px-6 py-4 text-right font-bold text-sm">12,5 kg</td>
+                    </tr>
+                    <tr class="border-l-4 border-[#2D5A27]">
+                        <td class="px-6 py-4 flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-full bg-gray-200 text-gray-600 text-[10px] flex items-center justify-center font-bold">2º</span>
+                            <img src="https://i.pravatar.cc/150?u=you" class="w-8 h-8 rounded-full border-2 border-white" alt="User">
+                            <span class="font-bold text-sm">Você</span>
+                        </td>
+                        <td class="px-6 py-4 text-right font-bold text-sm text-[#2D5A27]"><span id="rank-co2">0.0</span> kg</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-full bg-orange-300 text-white text-[10px] flex items-center justify-center font-bold">3º</span>
+                            <img src="https://i.pravatar.cc/150?u=lucas" class="w-8 h-8 rounded-full border-2 border-white" alt="User">
+                            <span class="font-bold text-sm">Lucas</span>
+                        </td>
+                        <td class="px-6 py-4 text-right font-bold text-sm">8,3 kg</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 8. LIVRO / CONHECIMENTO -->
+    <div id="screen-livro" class="screen p-6">
+        <h2 class="text-2xl font-bold mb-6">Jornada Raízes Invisíveis</h2>
+        <div class="space-y-6">
+            <div class="bg-white p-6 rounded-[32px] premium-shadow border-l-8 border-[#2D5A27]">
+                <div class="flex justify-between items-start mb-4">
                     <div>
-                        <label class="block text-xs font-bold text-muted uppercase mb-2">Quantidade</label>
-                        <div class="flex items-center bg-gray-50 rounded-xl border">
-                            <button type="button" onclick="adjustQty(-1)" class="p-3 text-primary"><i class="fa-solid fa-minus"></i></button>
-                            <input type="number" id="plant-qty" value="1" min="1" class="w-full bg-transparent text-center font-bold outline-none">
-                            <button type="button" onclick="adjustQty(1)" class="p-3 text-primary"><i class="fa-solid fa-plus"></i></button>
-                        </div>
+                        <h3 class="font-bold text-lg">Capítulo 1</h3>
+                        <p class="text-sm text-gray-500">O Despertar da Semente</p>
                     </div>
+                    <i class="fa-solid fa-lock-open text-green-600"></i>
+                </div>
+                <p class="text-xs text-gray-600 mb-4">Aprenda os fundamentos da agricultura sintrópica e como preparar seu primeiro berço.</p>
+                <button class="w-full py-3 rounded-xl bg-gray-100 font-bold text-sm">Ler Agora</button>
+            </div>
+            <div class="bg-white p-6 rounded-[32px] premium-shadow opacity-60">
+                <div class="flex justify-between items-start mb-4">
                     <div>
-                        <label class="block text-xs font-bold text-muted uppercase mb-2">Área (m²)</label>
-                        <input type="number" id="plant-area" value="1" step="0.1" class="w-full bg-gray-50 rounded-xl border p-3 font-bold outline-none focus:ring-2 focus:ring-primary">
+                        <h3 class="font-bold text-lg">Capítulo 2</h3>
+                        <p class="text-sm text-gray-500">A Dança dos Estratos</p>
+                    </div>
+                    <i class="fa-solid fa-lock text-gray-400"></i>
+                </div>
+                <p class="text-xs text-gray-600 mb-4">Desbloqueie ao atingir 20 kg de CO₂ sequestrado.</p>
+                <div class="w-full bg-gray-100 h-2 rounded-full">
+                    <div class="bg-gray-300 h-full rounded-full" style="width: 30%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 9. IMPACTO GLOBAL -->
+    <div id="screen-global" class="screen p-6">
+        <h2 class="text-2xl font-bold mb-6">Impacto Global</h2>
+        <div class="bg-white p-6 rounded-[32px] premium-shadow text-center mb-6">
+            <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fa-solid fa-earth-americas text-4xl text-[#2D5A27]"></i>
+            </div>
+            <h3 class="text-3xl font-black text-[#2D5A27] mb-1">83.425 kg</h3>
+            <p class="text-sm text-gray-500 font-bold uppercase tracking-widest">CO₂ Total Sequestrado</p>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <div class="bg-white p-4 rounded-2xl premium-shadow">
+                <p class="text-2xl font-bold">7.330</p>
+                <p class="text-[10px] text-gray-500 font-bold uppercase">Árvores Plantadas</p>
+            </div>
+            <div class="bg-white p-4 rounded-2xl premium-shadow">
+                <p class="text-2xl font-bold">12.723</p>
+                <p class="text-[10px] text-gray-500 font-bold uppercase">Heróis Ativos</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVIGATION BAR -->
+    <nav id="main-nav" class="fixed bottom-0 w-full glass border-t border-gray-100 px-6 py-4 flex justify-between items-center z-50 hidden">
+        <button onclick="showScreen('screen-dashboard')" class="nav-item active flex flex-col items-center transition-all duration-300">
+            <i class="fa-solid fa-house text-xl mb-1"></i>
+            <span class="text-[10px] font-bold uppercase">Home</span>
+        </button>
+        <button onclick="showScreen('screen-jardim')" class="nav-item flex flex-col items-center transition-all duration-300">
+            <i class="fa-solid fa-leaf text-xl mb-1"></i>
+            <span class="text-[10px] font-bold uppercase">Jardim</span>
+        </button>
+        
+        <!-- Central Action Button -->
+        <div class="relative -top-8">
+            <button onclick="showScreen('screen-registrar')" class="w-16 h-16 rounded-full btn-primary flex items-center justify-center premium-shadow border-4 border-white">
+                <i class="fa-solid fa-plus text-2xl"></i>
+            </button>
+        </div>
+
+        <button onclick="showScreen('screen-comunidade')" class="nav-item flex flex-col items-center transition-all duration-300">
+            <i class="fa-solid fa-users text-xl mb-1"></i>
+            <span class="text-[10px] font-bold uppercase">Rede</span>
+        </button>
+        <button onclick="showScreen('screen-livro')" class="nav-item flex flex-col items-center transition-all duration-300">
+            <i class="fa-solid fa-book-open text-xl mb-1"></i>
+            <span class="text-[10px] font-bold uppercase">Livro</span>
+        </button>
+    </nav>
+
+    <!-- MODAL DE PLANTIO -->
+    <div id="modal-plantio" class="fixed inset-0 bg-black/60 z-[100] flex items-end justify-center hidden">
+        <div class="bg-white w-full rounded-t-[40px] p-8 animate-slide-up">
+            <div class="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-8"></div>
+            <div class="flex items-center gap-4 mb-8">
+                <div id="modal-icon" class="text-4xl">🥬</div>
+                <div>
+                    <h3 id="modal-title" class="text-2xl font-bold">Alface</h3>
+                    <p id="modal-category" class="text-sm text-gray-500">Horta • Estrato Médio • Clímax</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-6 mb-8">
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Quantidade</label>
+                    <div class="flex items-center gap-4">
+                        <button onclick="updateQty(-1)" class="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center font-bold">-</button>
+                        <span id="plant-qty" class="text-xl font-bold">1</span>
+                        <button onclick="updateQty(1)" class="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center font-bold">+</button>
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-muted uppercase mb-2">Método de Plantio</label>
-                    <div class="grid grid-cols-3 gap-2">
-                        <label class="cursor-pointer"><input type="radio" name="method" value="semente" checked class="hidden peer"><div class="p-3 text-center rounded-xl border bg-white peer-checked:bg-green-50 peer-checked:border-primary peer-checked:text-primary transition-all"><div class="text-xs font-bold">Semente</div><div class="text-[10px] opacity-70">+50% pts</div></div></label>
-                        <label class="cursor-pointer"><input type="radio" name="method" value="muda" class="hidden peer"><div class="p-3 text-center rounded-xl border bg-white peer-checked:bg-green-50 peer-checked:border-primary peer-checked:text-primary transition-all"><div class="text-xs font-bold">Muda</div><div class="text-[10px] opacity-70">+20% pts</div></div></label>
-                        <label class="cursor-pointer"><input type="radio" name="method" value="transplante" class="hidden peer"><div class="p-3 text-center rounded-xl border bg-white peer-checked:bg-green-50 peer-checked:border-primary peer-checked:text-primary transition-all"><div class="text-xs font-bold">Transp.</div><div class="text-[10px] opacity-70">Normal</div></div></label>
-                    </div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Área (m²)</label>
+                    <input type="number" id="plant-area" value="1" class="w-full p-3 rounded-xl bg-gray-100 font-bold text-center border-none">
                 </div>
-                <div class="flex gap-3 pt-2">
-                    <button type="button" onclick="closePlantModal()" class="flex-1 bg-gray-100 text-gray-600 font-bold py-4 rounded-2xl">Cancelar</button>
-                    <button type="submit" class="flex-[2] bg-primary text-white font-bold py-4 rounded-2xl shadow-lg shadow-green-900/20">Confirmar</button>
+            </div>
+
+            <div class="mb-8">
+                <label class="block text-xs font-bold text-gray-400 uppercase mb-3">Método de Plantio</label>
+                <div class="grid grid-cols-3 gap-3">
+                    <button onclick="selectMethod('Semente')" class="method-btn active p-3 rounded-xl border-2 border-[#2D5A27] bg-green-50 text-[10px] font-bold">Semente<br><span class="text-green-600">+50% pts</span></button>
+                    <button onclick="selectMethod('Muda')" class="method-btn p-3 rounded-xl border-2 border-transparent bg-gray-50 text-[10px] font-bold">Muda<br><span class="text-green-600">+20% pts</span></button>
+                    <button onclick="selectMethod('Transplante')" class="method-btn p-3 rounded-xl border-2 border-transparent bg-gray-50 text-[10px] font-bold">Transp.<br>Normal</button>
                 </div>
-            </form>
+            </div>
+
+            <div class="flex gap-4">
+                <button onclick="closeModal()" class="flex-1 py-4 rounded-2xl bg-gray-100 font-bold text-gray-500">Cancelar</button>
+                <button onclick="confirmPlanting()" class="flex-[2] py-4 rounded-2xl btn-primary font-bold">Confirmar</button>
+            </div>
         </div>
     </div>
 
     <script>
         // --- DATA ---
-        const PLANT_CATALOG = [
-            { id: 'alface', name: 'Alface', icon: '🥬', co2: 0.5, growth: 45, category: 'Horta', stratum: 'Baixo', succession: 'Placenta I' },
-            { id: 'tomate', name: 'Tomate', icon: '🍅', co2: 2.5, growth: 90, category: 'Horta', stratum: 'Médio', succession: 'Secundária I' },
-            { id: 'cenoura', name: 'Cenoura', icon: '🥕', co2: 0.8, growth: 80, category: 'Horta', stratum: 'Baixo', succession: 'Placenta II' },
-            { id: 'pimentao', name: 'Pimentão', icon: '🫑', co2: 2.2, growth: 100, category: 'Horta', stratum: 'Médio', succession: 'Secundária I' },
-            { id: 'beringela', name: 'Berinjela', icon: '🍆', co2: 2.4, growth: 110, category: 'Horta', stratum: 'Médio', succession: 'Secundária I' },
-            { id: 'quiabo', name: 'Quiabo', icon: '🍢', co2: 3.0, growth: 90, category: 'Horta', stratum: 'Alto', succession: 'Secundária I' },
-            { id: 'couve', name: 'Couve', icon: '🥬', co2: 1.8, growth: 70, category: 'Horta', stratum: 'Médio', succession: 'Placenta II' },
-            { id: 'manjericao', name: 'Manjericão', icon: '🌿', co2: 0.6, growth: 60, category: 'Horta', stratum: 'Baixo', succession: 'Placenta II' },
-            { id: 'jabuticaba', name: 'Jabuticaba', icon: '🟣', co2: 45.0, growth: 1825, category: 'Frutífera', stratum: 'Médio', succession: 'Clímax' },
-            { id: 'pitanga', name: 'Pitanga', icon: '🍒', co2: 25.0, growth: 1095, category: 'Frutífera', stratum: 'Médio', succession: 'Secundária III' },
-            { id: 'araca', name: 'Araçá', icon: '🟡', co2: 20.0, growth: 730, category: 'Frutífera', stratum: 'Baixo', succession: 'Secundária II' },
-            { id: 'amora', name: 'Amora', icon: '🍇', co2: 15.0, growth: 365, category: 'Frutífera', stratum: 'Médio', succession: 'Secundária I' },
-            { id: 'feijao_porco', name: 'Feijão de Porco', icon: '🫘', co2: 5.0, growth: 120, category: 'Leguminosa', stratum: 'Baixo', succession: 'Placenta I' },
-            { id: 'guandu', name: 'Guandu', icon: '🌿', co2: 8.0, growth: 180, category: 'Leguminosa', stratum: 'Alto', succession: 'Placenta II' },
-            { id: 'mucuna', name: 'Mucuna', icon: '🌱', co2: 12.0, growth: 150, category: 'Leguminosa', stratum: 'Emergente', succession: 'Placenta I' },
-            { id: 'calendula', name: 'Calêndula', icon: '🌼', co2: 0.4, growth: 60, category: 'Flor', stratum: 'Baixo', succession: 'Placenta I' },
-            { id: 'tagetes', name: 'Tagetes', icon: '🏵️', co2: 0.4, growth: 50, category: 'Flor', stratum: 'Baixo', succession: 'Placenta I' },
-            { id: 'girassol', name: 'Girassol', icon: '🌻', co2: 4.0, growth: 90, category: 'Flor', stratum: 'Emergente', succession: 'Placenta II' }
+        const catalog = [
+            { id: 1, name: 'Alface', category: 'Horta', co2: 0.5, icon: '🥬', stratum: 'Médio', cycle: 'Placenta I' },
+            { id: 2, name: 'Tomate', category: 'Horta', co2: 0.8, icon: '🍅', stratum: 'Médio', cycle: 'Placenta II' },
+            { id: 3, name: 'Cenoura', category: 'Horta', co2: 0.4, icon: '🥕', stratum: 'Baixo', cycle: 'Placenta I' },
+            { id: 4, name: 'Pimentão', category: 'Horta', co2: 0.7, icon: '🫑', stratum: 'Médio', cycle: 'Placenta II' },
+            { id: 5, name: 'Berinjela', category: 'Horta', co2: 0.9, icon: '🍆', stratum: 'Médio', cycle: 'Placenta II' },
+            { id: 6, name: 'Quiabo', category: 'Horta', co2: 1.2, icon: '🍢', stratum: 'Alto', cycle: 'Placenta II' },
+            { id: 7, name: 'Couve', category: 'Horta', co2: 0.6, icon: '🥬', stratum: 'Médio', cycle: 'Placenta II' },
+            { id: 8, name: 'Manjericão', category: 'Horta', co2: 0.3, icon: '🌿', stratum: 'Baixo', cycle: 'Placenta I' },
+            { id: 9, name: 'Jabuticaba', category: 'Frutífera', co2: 45.0, icon: '🟣', stratum: 'Médio', cycle: 'Clímax' },
+            { id: 10, name: 'Pitanga', category: 'Frutífera', co2: 30.0, icon: '🍒', stratum: 'Médio', cycle: 'Secundária' },
+            { id: 11, name: 'Araçá', category: 'Frutífera', co2: 25.0, icon: '🟡', stratum: 'Baixo', cycle: 'Secundária' },
+            { id: 12, name: 'Amora', category: 'Frutífera', co2: 20.0, icon: '🍇', stratum: 'Médio', cycle: 'Secundária' },
+            { id: 13, name: 'Feijão de Porco', category: 'Leguminosa', co2: 2.5, icon: '🫘', stratum: 'Baixo', cycle: 'Placenta I' },
+            { id: 14, name: 'Guandu', category: 'Leguminosa', co2: 5.0, icon: '🌿', stratum: 'Alto', cycle: 'Placenta II' },
+            { id: 15, name: 'Mucuna', category: 'Leguminosa', co2: 3.5, icon: '🌱', stratum: 'Emergente', cycle: 'Placenta I' },
+            { id: 16, name: 'Calêndula', category: 'Flor', co2: 0.2, icon: '🌼', stratum: 'Baixo', cycle: 'Placenta I' },
+            { id: 17, name: 'Tagetes', category: 'Flor', co2: 0.2, icon: '🏵️', stratum: 'Baixo', cycle: 'Placenta I' },
+            { id: 18, name: 'Girassol', category: 'Flor', co2: 1.5, icon: '🌻', stratum: 'Emergente', cycle: 'Placenta I' }
         ];
 
-        const BIODYNAMIC_TIPS = [
-            "Hoje é dia de Fruto (Lua Crescente) - Ideal para plantar Tomates e Pimentões!",
-            "Hoje é dia de Raiz (Lua Minguante) - Perfeito para Cenouras e Rabanetes.",
-            "Hoje é dia de Folha - Ótimo para Alfaces, Couves e Manjericão.",
-            "Hoje é dia de Flor - Calêndulas e Girassóis vão amar ser plantados hoje!",
-            "Lua Nova: Foco na adubação verde e preparação do solo com Leguminosas.",
-            "Lua Cheia: Máxima energia vital! Ideal para colheita de ervas medicinais."
-        ];
+        let state = {
+            user: { name: '', type: 'Urbano' },
+            co2: 0,
+            coins: 0,
+            garden: [],
+            selectedPlant: null,
+            qty: 1,
+            method: 'Semente'
+        };
 
-        let gameState = { points: 0, co2: 0, garden: [], darkMode: false };
-        let currentFilter = 'Tudo';
-
-        // --- CORE ---
-        function init() {
-            const saved = localStorage.getItem('hortaHeroFinal');
-            if (saved) {
-                gameState = JSON.parse(saved);
-                document.body.classList.toggle('dark-mode', gameState.darkMode);
-                updateUI();
+        // --- NAVIGATION ---
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            
+            // Show/Hide Nav
+            const nav = document.getElementById('main-nav');
+            if (['screen-splash', 'screen-onboarding', 'screen-cadastro'].includes(screenId)) {
+                nav.classList.add('hidden');
+            } else {
+                nav.classList.remove('hidden');
             }
-            document.getElementById('biodynamic-tip-text').innerText = BIODYNAMIC_TIPS[Math.floor(Math.random() * BIODYNAMIC_TIPS.length)];
-            renderCatalog();
-            renderGarden();
-        }
 
-        function save() { localStorage.setItem('hortaHeroFinal', JSON.stringify(gameState)); }
-
-        function updateUI() {
-            document.getElementById('points-val').innerText = Math.floor(gameState.points);
-            document.getElementById('co2-val').innerText = gameState.co2.toFixed(1);
-            document.getElementById('ranking-user-co2').innerText = gameState.co2.toFixed(1) + ' kg';
-            const missionProgress = Math.min((gameState.co2 / 5) * 100, 100);
-            document.getElementById('mission-progress-bar').style.width = missionProgress + '%';
-            document.getElementById('mission-progress-text').innerText = `${Math.min(gameState.co2, 5).toFixed(1)} / 5 kg`;
-        }
-
-        function switchView(viewId) {
-            ['dashboard', 'jardim', 'plantar', 'ranking'].forEach(v => {
-                document.getElementById(`view-${v}`).classList.add('hidden');
-                const nav = document.getElementById(`nav-${v}`);
-                if (nav) nav.classList.remove('active');
+            // Update Nav Active State
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('onclick').includes(screenId)) item.classList.add('active');
             });
-            document.getElementById(`view-${viewId}`).classList.remove('hidden');
-            const activeNav = document.getElementById(`nav-${viewId}`);
-            if (activeNav) activeNav.classList.add('active');
-            if (viewId === 'jardim') renderGarden();
-            if (viewId === 'plantar') renderCatalog();
+
+            window.scrollTo(0, 0);
+        }
+
+        // --- REGISTRATION ---
+        function selectType(type) {
+            state.user.type = type;
+            document.getElementById('type-urbano').classList.remove('border-[#2D5A27]', 'bg-green-50');
+            document.getElementById('type-agricultor').classList.remove('border-[#2D5A27]', 'bg-green-50');
+            document.getElementById(`type-${type.toLowerCase()}`).classList.add('border-[#2D5A27]', 'bg-green-50');
+        }
+
+        function finishRegistration() {
+            const name = document.getElementById('user-name').value;
+            if (!name) return alert('Por favor, digite seu nome.');
+            state.user.name = name;
+            document.getElementById('display-name').innerText = name;
+            saveState();
+            showScreen('screen-dashboard');
+        }
+
+        // --- CATALOG & PLANTING ---
+        function renderCatalog(filter = 'Tudo') {
+            const grid = document.getElementById('catalog-grid');
+            grid.innerHTML = '';
+            const filtered = filter === 'Tudo' ? catalog : catalog.filter(p => p.category === filter);
+            
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-5 rounded-[32px] premium-shadow text-center border-2 border-transparent active:border-[#2D5A27] transition-all';
+                card.onclick = () => openModal(p);
+                card.innerHTML = `
+                    <div class="text-4xl mb-3">${p.icon}</div>
+                    <h4 class="font-bold text-sm mb-1">${p.name}</h4>
+                    <p class="text-[10px] text-gray-400 font-bold uppercase mb-2">${p.category}</p>
+                    <div class="text-[10px] bg-green-50 text-green-700 py-1 rounded-full font-bold">${p.stratum}</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterCatalog(filter) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-[#2D5A27]', 'text-white');
+                btn.classList.add('bg-white', 'premium-shadow', 'text-gray-500');
+            });
+            event.target.classList.add('active', 'bg-[#2D5A27]', 'text-white');
+            renderCatalog(filter);
+        }
+
+        function openModal(plant) {
+            state.selectedPlant = plant;
+            state.qty = 1;
+            state.method = 'Semente';
+            document.getElementById('modal-title').innerText = plant.name;
+            document.getElementById('modal-icon').innerText = plant.icon;
+            document.getElementById('modal-category').innerText = `${plant.category} • Estrato ${plant.stratum} • ${plant.cycle}`;
+            document.getElementById('plant-qty').innerText = '1';
+            document.getElementById('modal-plantio').classList.remove('hidden');
+            
+            // Reset methods
+            document.querySelectorAll('.method-btn').forEach(b => b.classList.remove('active', 'border-[#2D5A27]', 'bg-green-50'));
+            document.querySelector('.method-btn').classList.add('active', 'border-[#2D5A27]', 'bg-green-50');
+        }
+
+        function closeModal() {
+            document.getElementById('modal-plantio').classList.add('hidden');
+        }
+
+        function updateQty(val) {
+            state.qty = Math.max(1, state.qty + val);
+            document.getElementById('plant-qty').innerText = state.qty;
+        }
+
+        function selectMethod(method) {
+            state.method = method;
+            document.querySelectorAll('.method-btn').forEach(btn => {
+                btn.classList.remove('active', 'border-[#2D5A27]', 'bg-green-50');
+                if (btn.innerText.includes(method)) btn.classList.add('active', 'border-[#2D5A27]', 'bg-green-50');
+            });
+        }
+
+        function confirmPlanting() {
+            const area = parseFloat(document.getElementById('plant-area').value) || 1;
+            const plant = state.selectedPlant;
+            
+            // Calculate Points & CO2
+            let multiplier = state.method === 'Semente' ? 1.5 : (state.method === 'Muda' ? 1.2 : 1.0);
+            const co2Gained = plant.co2 * state.qty;
+            const pointsGained = Math.round(co2Gained * 10 * multiplier);
+
+            const newPlant = {
+                ...plant,
+                qty: state.qty,
+                area: area,
+                method: state.method,
+                date: new Date().toLocaleDateString('pt-BR'),
+                id: Date.now()
+            };
+
+            state.garden.push(newPlant);
+            state.co2 += co2Gained;
+            state.coins += pointsGained;
+
+            updateStats();
+            renderGarden();
+            saveState();
+            closeModal();
+            showScreen('screen-jardim');
+        }
+
+        // --- GARDEN & REGA ---
+        function renderGarden() {
+            const list = document.getElementById('garden-list');
+            const preview = document.getElementById('dashboard-garden-preview');
+            list.innerHTML = '';
+            preview.innerHTML = '';
+
+            if (state.garden.length === 0) {
+                list.innerHTML = '<p class="text-center text-gray-400 py-12">Seu jardim está vazio.</p>';
+                preview.innerHTML = '<p class="text-center text-gray-400 py-4 text-sm italic">Sua horta está vazia. Comece a plantar!</p>';
+                return;
+            }
+
+            state.garden.slice().reverse().forEach(p => {
+                const item = `
+                    <div class="bg-white p-4 rounded-[24px] premium-shadow flex items-center justify-between relative overflow-hidden">
+                        <div class="flex items-center gap-4">
+                            <div class="text-3xl">${p.icon}</div>
+                            <div>
+                                <h4 class="font-bold text-sm">${p.name} <span class="text-gray-400 text-xs">x${p.qty}</span></h4>
+                                <p class="text-[10px] text-gray-400">Plantado em ${p.date} • ${p.area}m²</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] font-bold text-gray-400 uppercase mr-2">${p.stratum}</span>
+                            <button onclick="regar(this)" class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center active:scale-90 transition-all">
+                                <i class="fa-solid fa-droplet"></i>
+                            </button>
+                            <button onclick="removerPlanta(${p.id})" class="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                list.innerHTML += item;
+                
+                // Preview (only first 2)
+                if (preview.children.length < 2) {
+                    preview.innerHTML += item;
+                }
+            });
+        }
+
+        function regar(btn) {
+            const drop = document.createElement('i');
+            drop.className = 'fa-solid fa-droplet water-drop';
+            btn.appendChild(drop);
+            state.coins += 5;
+            updateStats();
+            saveState();
+            setTimeout(() => drop.remove(), 1000);
+        }
+
+        function removerPlanta(id) {
+            if (confirm('Deseja remover esta planta do seu jardim?')) {
+                state.garden = state.garden.filter(p => p.id !== id);
+                renderGarden();
+                saveState();
+            }
+        }
+
+        // --- UTILS ---
+        function updateStats() {
+            document.getElementById('stat-co2').innerText = state.co2.toFixed(1);
+            document.getElementById('stat-coins').innerText = state.coins;
+            document.getElementById('rank-co2').innerText = state.co2.toFixed(1);
+            
+            // Progress Bars
+            const co2Progress = Math.min((state.co2 / 50) * 100, 100);
+            document.getElementById('bar-co2').style.width = co2Progress + '%';
+            
+            const challengeProgress = Math.min((state.co2 / 5) * 100, 100);
+            document.getElementById('bar-challenge').style.width = challengeProgress + '%';
+            document.getElementById('challenge-progress').innerText = Math.min(state.co2, 5).toFixed(1);
         }
 
         function toggleDarkMode() {
-            gameState.darkMode = !gameState.darkMode;
-            document.body.classList.toggle('dark-mode', gameState.darkMode);
-            save();
+            document.body.classList.toggle('dark-mode');
         }
 
-        // --- CATALOG & FILTERS ---
-        function filterCatalog(category) {
-            currentFilter = category;
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`filter-${category}`).classList.add('active');
+        function saveState() {
+            localStorage.setItem('horta_hero_5_state', JSON.stringify(state));
+        }
+
+        function loadState() {
+            const saved = localStorage.getItem('horta_hero_5_state');
+            if (saved) {
+                state = JSON.parse(saved);
+                document.getElementById('display-name').innerText = state.user.name || 'Guardião';
+                updateStats();
+                renderGarden();
+                if (state.user.name) showScreen('screen-dashboard');
+            }
+        }
+
+        // --- INIT ---
+        window.onload = () => {
             renderCatalog();
-        }
-
-        function renderCatalog() {
-            const container = document.getElementById('catalog-list');
-            container.innerHTML = '';
-            const filtered = currentFilter === 'Tudo' ? PLANT_CATALOG : PLANT_CATALOG.filter(p => p.category === currentFilter);
-            filtered.forEach(plant => {
-                const card = document.createElement('div');
-                card.className = 'premium-card p-4 flex flex-col items-center text-center gap-2 cursor-pointer active:scale-95 transition-transform';
-                card.onclick = () => openPlantModal(plant.id);
-                card.innerHTML = `<div class="text-3xl mb-1">${plant.icon}</div><div class="font-bold text-sm">${plant.name}</div><div class="text-[10px] text-muted font-bold uppercase">${plant.category}</div><div class="flex gap-1 mt-1"><span class="text-[8px] bg-green-50 text-green-700 px-1.5 py-0.5 rounded border border-green-100">${plant.stratum}</span></div>`;
-                container.appendChild(card);
-            });
-        }
-
-        // --- MODAL ---
-        function openPlantModal(plantId) {
-            const plant = PLANT_CATALOG.find(p => p.id === plantId);
-            if (!plant) return;
-            document.getElementById('selected-plant-id').value = plantId;
-            document.getElementById('modal-title').innerText = `Plantar ${plant.name}`;
-            document.getElementById('modal-subtitle').innerText = `${plant.category} • Estrato ${plant.stratum} • ${plant.succession}`;
-            document.getElementById('plant-modal').classList.remove('hidden');
-        }
-        function closePlantModal() { document.getElementById('plant-modal').classList.add('hidden'); }
-        function adjustQty(val) { const input = document.getElementById('plant-qty'); input.value = Math.max(1, parseInt(input.value) + val); }
-
-        document.getElementById('plant-form').onsubmit = (e) => {
-            e.preventDefault();
-            const plantId = document.getElementById('selected-plant-id').value;
-            const qty = parseInt(document.getElementById('plant-qty').value);
-            const area = parseFloat(document.getElementById('plant-area').value);
-            const method = document.querySelector('input[name="method"]:checked').value;
-            const plant = PLANT_CATALOG.find(p => p.id === plantId);
-            let bonus = method === 'semente' ? 1.5 : (method === 'muda' ? 1.2 : 1.0);
-            const pointsEarned = (plant.co2 * 10 * qty * bonus);
-            gameState.garden.push({ instanceId: Date.now(), ...plant, qty, area, method, plantedAt: new Date().toISOString(), lastWatered: new Date().toISOString(), pointsEarned });
-            gameState.points += pointsEarned;
-            gameState.co2 += (plant.co2 * qty);
-            save(); updateUI(); closePlantModal(); switchView('jardim');
+            loadState();
+            
+            // Dica Biodinâmica Aleatória
+            const dicas = [
+                "Lua Crescente: Máxima energia vital! Ideal para folhosas.",
+                "Lua Cheia: Energia no topo. Ótimo para colher ervas medicinais.",
+                "Lua Minguante: Energia desce para as raízes. Ideal para podas.",
+                "Lua Nova: Repouso da terra. Bom para preparar o solo.",
+                "Dia de Fruto: Ideal para plantar Tomates e Jabuticabas!",
+                "Dia de Raiz: Cenouras e Beterrabas agradecem o plantio hoje."
+            ];
+            document.getElementById('dica-biodinamica').innerText = dicas[Math.floor(Math.random() * dicas.length)];
         };
-
-        // --- GARDEN ---
-        function renderGarden() {
-            const preview = document.getElementById('garden-preview');
-            const full = document.getElementById('full-garden-list');
-            preview.innerHTML = ''; full.innerHTML = '';
-            if (gameState.garden.length === 0) {
-                preview.innerHTML = '<div class="text-center py-10 text-muted italic">Sua horta está vazia. Comece a plantar!</div>';
-                full.innerHTML = '<div class="text-center py-10 text-muted italic">Nada plantado ainda.</div>';
-                return;
-            }
-            const sorted = [...gameState.garden].reverse();
-            sorted.slice(0, 3).forEach(item => preview.appendChild(createGardenCard(item)));
-            sorted.forEach(item => full.appendChild(createGardenCard(item, true)));
-        }
-
-        function createGardenCard(item, isFull = false) {
-            const card = document.createElement('div');
-            card.className = 'premium-card p-4 flex items-center gap-4 relative overflow-hidden';
-            card.innerHTML = `
-                <div class="w-14 h-14 rounded-2xl bg-gray-50 flex items-center justify-center text-3xl shadow-inner">${item.icon}</div>
-                <div class="flex-1">
-                    <div class="flex justify-between items-start"><h4 class="font-extrabold">${item.name} <span class="text-xs text-muted font-normal">x${item.qty}</span></h4><span class="text-[10px] font-bold text-primary bg-green-50 px-2 py-0.5 rounded-full">${item.stratum}</span></div>
-                    <p class="text-[10px] text-muted font-medium mb-2">Plantado em ${new Date(item.plantedAt).toLocaleDateString('pt-BR')} • ${item.area}m²</p>
-                    <div class="w-full bg-gray-100 h-1.5 rounded-full overflow-hidden"><div class="bg-primary h-full" style="width: 20%"></div></div>
-                </div>
-                <div class="flex flex-col gap-2">
-                    <button onclick="waterPlant(event, ${item.instanceId})" class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center active:scale-90 transition-transform"><i class="fa-solid fa-droplet text-xs"></i></button>
-                    ${isFull ? `<button onclick="removePlant(${item.instanceId})" class="w-8 h-8 rounded-lg bg-red-50 text-red-600 flex items-center justify-center active:scale-90 transition-transform"><i class="fa-solid fa-trash text-xs"></i></button>` : ''}
-                </div>`;
-            return card;
-        }
-
-        function waterPlant(e, instanceId) {
-            gameState.points += 5;
-            save(); updateUI();
-            const btn = e.currentTarget;
-            const rect = btn.getBoundingClientRect();
-            for(let i=0; i<3; i++) {
-                const drop = document.createElement('i');
-                drop.className = 'fa-solid fa-droplet water-drop';
-                drop.style.left = (rect.left + rect.width/2) + 'px';
-                drop.style.top = (rect.top) + 'px';
-                drop.style.marginLeft = (Math.random() * 20 - 10) + 'px';
-                document.body.appendChild(drop);
-                setTimeout(() => drop.remove(), 800);
-            }
-            btn.classList.add('bg-blue-500', 'text-white');
-            setTimeout(() => btn.classList.remove('bg-blue-500', 'text-white'), 500);
-        }
-
-        function removePlant(instanceId) {
-            if (confirm('Deseja remover esta planta?')) {
-                gameState.garden = gameState.garden.filter(p => p.instanceId !== instanceId);
-                save(); renderGarden(); updateUI();
-            }
-        }
-
-        window.onload = init;
     </script>
 </body>
 </html>
