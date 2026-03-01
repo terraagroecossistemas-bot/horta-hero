@@ -1,0 +1,54 @@
+# Configuração do GitHub Pages para Horta Hero
+
+# Tema (opcional)
+theme: null
+
+# Título do site
+title: "Horta Hero — Super App Regenerativo"
+description: "Regeneração Planetária através do Plantio Agroecológico. Junte-se à rede de agricultores que reflorestam e restauram o planeta."
+
+# URL base
+baseurl: "/horta-hero"
+url: "https://terraagroecossistemas-bot.github.io"
+
+# Autor
+author:
+  name: "Terra Agroecossistemas"
+  email: "contato@terraagroecossistemas.com"
+
+# Configurações de build
+markdown: kramdown
+highlighter: rouge
+
+# Excluir arquivos do build
+exclude:
+  - .gitignore
+  - README.md
+  - LANCAMENTO.md
+  - IMPLEMENTACAO.md
+  - TESTES_E_VALIDACAO.md
+  - node_modules
+  - .git
+
+# Incluir arquivos ocultos
+include:
+  - .htaccess
+  - robots.txt
+  - sitemap.xml
+  - 404.html
+
+# Configurações de SEO
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Configurações de performance
+compress_html:
+  clippings: all
+  comments: all
+  endings: all
+  startings: []
+  blanklines: false
+  profile: false
+  ignore:
+    envs: []

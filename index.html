@@ -815,7 +815,11 @@
         };
 
         window.closeModal = function() { document.getElementById('modal-plantio').classList.add('hidden'); };
-        window.updateQty = function(v) { state.qty = Math.max(1, state.qty + v); document.getElementById('plant-qty').innerText = state.qty; };
+        window.updateQty = function(v) { 
+            state.qty = Math.max(1, state.qty + v); 
+            document.getElementById('plant-qty').innerText = state.qty;
+            window.vibrate(10);
+        };
 
         window.confirmPlanting = function() {
             const plant = state.selectedPlant;
@@ -1034,7 +1038,10 @@
         };
 
         window.saveState = function() { localStorage.setItem('horta_hero_super_v1', JSON.stringify(state)); };
-        window.toggleDarkMode = function() { document.body.classList.toggle('dark-mode'); };
+        window.toggleDarkMode = function() { 
+            document.body.classList.toggle('dark-mode');
+            window.vibrate(25);
+        };
         
         // Função para instalar o app manualmente
         window.installApp = function() {
@@ -1043,6 +1050,7 @@
                 deferredPrompt.userChoice.then((choiceResult) => {
                     if (choiceResult.outcome === 'accepted') {
                         window.toast('Instalando Horta Hero...');
+                        window.vibrate([30, 50, 30]);
                     }
                     deferredPrompt = null;
                 });
@@ -1050,6 +1058,49 @@
                 window.toast('App já está instalada ou não disponível!');
             }
         };
+        
+        // --- SISTEMA DE VIBRAÇÕES TÁTEIS ---
+        window.vibrate = function(pattern = 50) {
+            if (navigator.vibrate) {
+                navigator.vibrate(pattern);
+            }
+        };
+        
+        // --- PULL-TO-REFRESH ---
+        let touchStartY = 0;
+        let isPulling = false;
+        
+        document.addEventListener('touchstart', (e) => {
+            if (window.scrollY === 0) {
+                touchStartY = e.touches[0].clientY;
+            }
+        }, false);
+        
+        document.addEventListener('touchmove', (e) => {
+            if (window.scrollY === 0 && e.touches[0].clientY > touchStartY + 50) {
+                if (!isPulling) {
+                    isPulling = true;
+                    window.vibrate(20);
+                }
+            }
+        }, false);
+        
+        document.addEventListener('touchend', (e) => {
+            if (isPulling && window.scrollY === 0) {
+                isPulling = false;
+                window.vibrate([20, 10, 20]);
+                window.toast('🔄 Atualizando...');
+                
+                // Simular atualização de dados
+                setTimeout(() => {
+                    window.updateStats();
+                    window.renderGarden();
+                    window.renderRanking();
+                    window.vibrate(50);
+                    window.toast('✅ Atualizado!');
+                }, 1000);
+            }
+        }, false);
 
         // Init
         window.renderCatalog();
