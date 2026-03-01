@@ -212,11 +212,11 @@
                 <img src="https://cdn-icons-png.flaticon.com/512/628/628283.png" class="w-40 h-40 relative z-10 animate-bounce" alt="Logo">
             </div>
             <h1 class="text-5xl font-black text-[#2D5A27] tracking-tighter mb-3">Horta Hero</h1>
-            <p class="text-gray-400 font-bold uppercase tracking-[0.2em] text-[10px] mb-16">Super App Regenerativo</p>
+                <p class="text-gray-400 font-bold uppercase tracking-[0.2em] text-[10px] mb-16">Rede de Reflorestamento</p>
             <div class="w-12 h-1 bg-gray-100 rounded-full overflow-hidden mb-12">
                 <div class="h-full bg-green-600 animate-[loading_2s_infinite]"></div>
             </div>
-            <button onclick="window.initApp()" class="btn-premium w-full max-w-xs">Iniciar Despertar</button>
+            <button onclick="window.showScreen('screen-onboarding')" class="btn-premium w-full max-w-xs">Iniciar Despertar</button>
         </div>
 
         <!-- 2. ONBOARDING NARRATIVO -->
@@ -226,16 +226,15 @@
                     <img src="https://cdn-icons-png.flaticon.com/512/5117/5117065.png" class="w-56 h-56" alt="Semente">
                 </div>
                 <h2 class="text-4xl font-black mb-6 leading-tight px-4">O Mundo Espera por Você.</h2>
-                <p class="text-gray-500 text-lg px-10 leading-relaxed mb-16">Transforme cada metro quadrado em uma caverna mágica de regeneração. Ganhe AgriEcoCoins reais enquanto restaura o planeta.</p>
-                <button onclick="window.showScreen('screen-cadastro')" class="btn-premium w-full">Criar Identidade</button>
-            </div>
+                <p class="text-gray-500 text-lg px-10 leading-relaxed mb-16">Refloreste a terra, cultive alimentos regenerativos e junte-se à rede de agricultores que restauram o planeta. Ganhe AgriEcoCoins reais pelo impacto que você gera.</p>
+               <button onclick="window.showScreen('screen-cadastro')" class="btn-premium w-full">Criar Identidade</button>            </div>
         </div>
 
         <!-- 3. CADASTRO PREMIUM -->
         <div id="screen-cadastro" class="screen">
             <div class="mt-10">
                 <h2 class="text-3xl font-black mb-2">Quem é você?</h2>
-                <p class="text-gray-400 font-bold text-xs uppercase mb-12">Sua identidade na rede de guardiões</p>
+                <p class="text-gray-400 font-bold text-xs uppercase mb-12">Sua identidade na rede de agricultores regenerativos</p>
                 
                 <div class="space-y-6">
                     <div class="glass p-6 rounded-[30px]">
@@ -246,7 +245,7 @@
                         <label class="block text-[10px] font-black text-green-700 uppercase mb-3">Sua Base (Cidade)</label>
                         <input type="text" id="user-city" placeholder="Ex: Tubarão, SC" class="w-full bg-transparent border-none focus:ring-0 font-bold text-xl placeholder:text-gray-300">
                     </div>
-                    <button onclick="window.finishRegistration()" class="btn-premium w-full mt-10">Consolidar Guardião</button>
+                    <button onclick="window.finishRegistration()" class="btn-premium w-full mt-10">Iniciar Jornada</button>
                 </div>
             </div>
         </div>
@@ -257,8 +256,8 @@
                 <div class="flex items-center gap-4">
                     <div class="w-14 h-14 rounded-2xl bg-white flex items-center justify-center glass text-2xl" id="dash-avatar">🌱</div>
                     <div>
-                        <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest">Guardião Nível <span id="dash-level-num">1</span></p>
-                        <h2 class="text-2xl font-black" id="display-name">Carregando...</h2>
+                        <p class="text-[10px] font-black uppercase tracking-widest">Agricultor Nível <span id="dash-level-num">1</span></p>
+                        <h2 class="text-2xl font-black" id="display-name">Agricultor</h2>
                     </div>
                 </div>
                 <div class="flex gap-3">
@@ -342,7 +341,7 @@
             <!-- Ranking e Social -->
             <div class="flex justify-between items-center mb-6">
                 <h3 class="text-xl font-black">Líderes da Rede</h3>
-                <button onclick="window.shareProfile()" class="text-[10px] font-black text-green-700 uppercase"><i class="fa-solid fa-share-nodes mr-1"></i> Compartilhar</button>
+                        <button onclick="window.shareProfile()" class="text-[10px] font-black text-green-700 uppercase tracking-widest"><i class="fa-solid fa-share-nodes mr-1"></i> Compartilhar</button>
             </div>
             <div id="ranking-list" class="space-y-3 mb-10">
                 <!-- Injetado via JS -->
@@ -593,14 +592,18 @@
                     window.renderGarden();
                     window.initChart();
                     window.renderRanking();
-                } else { window.showScreen('screen-onboarding'); }
-            } else { window.showScreen('screen-onboarding'); }
+                } else { 
+                    setTimeout(() => window.showScreen('screen-onboarding'), 500);
+                }
+            } else { 
+                setTimeout(() => window.showScreen('screen-onboarding'), 500);
+            }
         };
 
         window.finishRegistration = function() {
             const name = document.getElementById('user-name').value;
             const city = document.getElementById('user-city').value;
-            if (!name || !city) return window.toast('Identifique-se, Guardião.');
+            if (!name || !city) return window.toast('Identifique-se, Agricultor.');
             state.user = { name, city, level: 1 };
             document.getElementById('display-name').innerText = name;
             window.saveState();
@@ -608,7 +611,7 @@
             window.initChart();
             window.renderRanking();
             confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-            window.toast("Jornada Iniciada!");
+            window.toast("Bem-vindo à rede de reflorestamento!");
         };
 
         window.renderCatalog = function(filter = 'Tudo', btn) {
@@ -687,11 +690,11 @@
             document.getElementById('stat-co2').innerText = state.co2.toFixed(1);
             document.getElementById('stat-coins').innerText = state.coins;
             
-            let rank = "SEED 🌱"; let next = 20; let level = 1;
-            if (state.co2 >= 200) { rank = "BIOME 🌍"; next = 1000; level = 4; }
-            else if (state.co2 >= 100) { rank = "FOREST 🌲"; next = 200; level = 3; }
-            else if (state.co2 >= 50) { rank = "TREE 🌳"; next = 100; level = 2; }
-            else if (state.co2 >= 20) { rank = "SPROUT 🌿"; next = 50; level = 1.5; }
+            let rank = "INICIANTE 🌱"; let next = 20; let level = 1;
+            if (state.co2 >= 200) { rank = "MESTRE 🌍"; next = 1000; level = 4; }
+            else if (state.co2 >= 100) { rank = "ESPECIALISTA 🌲"; next = 200; level = 3; }
+            else if (state.co2 >= 50) { rank = "EXPERIENTE 🌳"; next = 100; level = 2; }
+            else if (state.co2 >= 20) { rank = "PRATICANTE 🌿"; next = 50; level = 1.5; }
             
             document.getElementById('user-rank').innerText = rank;
             document.getElementById('dash-level-num').innerText = Math.floor(level);
@@ -795,7 +798,7 @@
         window.closeCarbonModal = function() { document.getElementById('modal-carbon').classList.add('hidden'); };
 
         window.shareProfile = function() {
-            const text = `Sou Guardião Nível ${Math.floor(state.co2/50 + 1)} no Horta Hero! Já neutralizei ${state.co2.toFixed(1)}kg de CO2. Junte-se à regeneração!`;
+            const text = `Sou Agricultor Nível ${Math.floor(state.co2/50 + 1)} no Horta Hero! Já reflorestei ${state.co2.toFixed(1)}kg de CO2. Junte-se à rede de reflorestamento!`;
             if (navigator.share) {
                 navigator.share({ title: 'Horta Hero', text: text, url: window.location.href });
             } else {
