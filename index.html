@@ -138,6 +138,7 @@
             padding-bottom: 60px;
         }
         .book-reader h1 { font-size: 2rem; font-weight: 900; color: var(--primary); margin-bottom: 2rem; }
+        .book-reader h2 { font-size: 1.5rem; font-weight: 800; color: var(--secondary); margin-top: 2rem; margin-bottom: 1rem; }
         .book-reader p { margin-bottom: 1.8rem; }
 
         /* Progress Bar Premium */
@@ -164,6 +165,39 @@
             animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         @keyframes bounceIn { from { transform: translate(-50%, -100%); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
+
+        /* Dark Mode */
+        body.dark-mode {
+            --bg: #1A2E19;
+            --text: #F8FAF7;
+            --card: rgba(30, 50, 30, 0.85);
+        }
+        body.dark-mode .stat-card { background: #2D4A2B; color: white; }
+        body.dark-mode .glass { border-color: rgba(255,255,255,0.05); }
+
+        /* Ranking Styles */
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-radius: 20px;
+            background: white;
+            margin-bottom: 10px;
+        }
+        .ranking-pos {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 12px;
+        }
+        .pos-1 { background: #FFD700; color: #856404; }
+        .pos-2 { background: #C0C0C0; color: #495057; }
+        .pos-3 { background: #CD7F32; color: #ffffff; }
     </style>
 </head>
 <body>
@@ -238,69 +272,93 @@
                     <div class="flex justify-between items-start mb-6">
                         <div>
                             <p class="text-[10px] font-black uppercase tracking-[0.2em] opacity-70">CO₂ Acumulado</p>
-                            <h1 class="text-6xl font-black mt-2 tracking-tighter"><span id="stat-co2">0.0</span><span class="text-xl ml-1">kg</span></h1>
+                            <h3 class="text-5xl font-black mt-1"><span id="stat-co2">0.0</span><span class="text-xl opacity-60 ml-2">kg</span></h3>
                         </div>
-                        <div class="bg-white/20 backdrop-blur-md px-4 py-2 rounded-2xl text-[10px] font-black" id="user-rank">SEED 🌱</div>
+                        <button onclick="window.showCarbonModal()" class="bg-white/20 p-3 rounded-2xl backdrop-blur-md">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </button>
                     </div>
                     
-                    <div class="space-y-3">
-                        <div class="flex justify-between text-[10px] font-black uppercase opacity-70">
-                            <span>Evolução</span>
-                            <span><span id="progress-percent">0</span>%</span>
+                    <div class="flex items-center gap-6 mb-8">
+                        <div class="flex-1 bg-white/10 h-3 rounded-full overflow-hidden">
+                            <div id="bar-co2" class="h-full bg-white rounded-full transition-all duration-1000" style="width: 0%"></div>
                         </div>
-                        <div class="w-full bg-black/10 h-3 rounded-full overflow-hidden">
-                            <div id="bar-co2" class="bg-white h-full rounded-full transition-all duration-1000 ease-out shadow-[0_0_15px_rgba(255,255,255,0.5)]" style="width: 0%"></div>
+                        <p class="text-xs font-black"><span id="progress-percent">0</span>%</p>
+                    </div>
+
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-lg">💰</div>
+                            <div>
+                                <p class="text-[8px] font-black uppercase opacity-60">AgriEcoCoins</p>
+                                <p class="font-black text-sm" id="stat-coins">0</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-[8px] font-black uppercase opacity-60">Status da Rede</p>
+                            <p class="font-black text-xs" id="user-rank">SEED 🌱</p>
                         </div>
                     </div>
                 </div>
-                <i class="fa-solid fa-tree absolute -right-10 -bottom-10 text-[12rem] opacity-10 rotate-12"></i>
+                <!-- Decorativo -->
+                <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
             </div>
 
-            <!-- Grid de Status Dinâmico -->
+            <!-- Dica Lunar Dinâmica -->
+            <div class="glass p-6 rounded-[35px] mb-10 flex items-center gap-5 border-l-4 border-l-amber-400">
+                <div class="text-3xl">🌙</div>
+                <div>
+                    <p class="text-[9px] font-black text-amber-600 uppercase mb-1">Calendário Biodinâmico</p>
+                    <p id="dica-biodinamica" class="text-xs font-bold leading-relaxed">Carregando influências astrais...</p>
+                </div>
+            </div>
+
+            <!-- Seção de Gráficos e Insights -->
             <div class="grid grid-cols-2 gap-5 mb-10">
-                <div class="glass p-6 rounded-[35px] flex flex-col justify-between h-36">
-                    <div class="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600"><i class="fa-solid fa-coins"></i></div>
-                    <div>
-                        <p class="text-[10px] text-gray-400 font-black uppercase">AgriEcoCoins</p>
-                        <p class="text-2xl font-black" id="stat-coins">0</p>
-                    </div>
+                <div class="glass p-6 rounded-[35px]">
+                    <p class="text-[9px] font-black text-gray-400 uppercase mb-4">Atividade</p>
+                    <canvas id="impactChart" height="100"></canvas>
                 </div>
-                <div class="glass p-6 rounded-[35px] flex flex-col justify-between h-36">
-                    <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600"><i class="fa-solid fa-dna"></i></div>
-                    <div>
-                        <p class="text-[10px] text-gray-400 font-black uppercase">Biodiversidade</p>
-                        <p class="text-2xl font-black" id="stat-bio">0%</p>
+                <div class="glass p-6 rounded-[35px] flex flex-col justify-between">
+                    <p class="text-[9px] font-black text-gray-400 uppercase">Biodiversidade</p>
+                    <div class="flex items-end gap-2">
+                        <h4 class="text-3xl font-black" id="stat-bio">0%</h4>
+                        <p class="text-[8px] font-black text-green-600 mb-1">ALTA</p>
+                    </div>
+                    <div class="w-full bg-gray-100 h-1.5 rounded-full mt-4 overflow-hidden">
+                        <div class="h-full bg-green-500 w-1/3"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Gráfico de Impacto (Placeholder) -->
-            <div class="glass p-6 rounded-[35px] mb-10">
-                <h3 class="text-sm font-black mb-4 uppercase tracking-widest">Tendência Semanal</h3>
-                <canvas id="impactChart" height="150"></canvas>
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-black">Ecos Recentes</h3>
+                <button onclick="window.showScreen('screen-jardim')" class="text-[10px] font-black text-green-700 uppercase">Ver Tudo</button>
+            </div>
+            <div id="dashboard-garden-preview" class="space-y-4 mb-10">
+                <!-- Injetado via JS -->
             </div>
 
-            <!-- Atividades Recentes -->
-            <div class="mb-10">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="font-black text-xl">Atividades</h3>
-                    <button class="text-[10px] font-black text-green-700 uppercase">Ver Diário</button>
-                </div>
-                <div id="dashboard-garden-preview" class="space-y-4">
-                    <!-- Dinâmico -->
-                </div>
+            <!-- Ranking e Social -->
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-black">Líderes da Rede</h3>
+                <button onclick="window.shareProfile()" class="text-[10px] font-black text-green-700 uppercase"><i class="fa-solid fa-share-nodes mr-1"></i> Compartilhar</button>
+            </div>
+            <div id="ranking-list" class="space-y-3 mb-10">
+                <!-- Injetado via JS -->
             </div>
         </div>
 
-        <!-- 5. CATÁLOGO COM MOTOR AGROECOLÓGICO -->
+        <!-- 5. CATÁLOGO (LOJA DE REGENERAÇÃO) -->
         <div id="screen-registrar" class="screen">
-            <h2 class="text-3xl font-black mb-8 mt-4">Laboratório Vivo</h2>
+            <h2 class="text-3xl font-black mb-2 mt-4">Plantar Vida</h2>
+            <p class="text-gray-400 font-bold text-xs uppercase mb-10">Escolha sua ferramenta de impacto</p>
             
-            <div class="flex gap-3 overflow-x-auto pb-6 mb-8 no-scrollbar">
-                <button onclick="window.filterCatalog('Tudo', this)" class="filter-btn active px-8 py-3 rounded-2xl glass text-[10px] font-black uppercase tracking-widest text-green-800">Tudo</button>
-                <button onclick="window.filterCatalog('Horta', this)" class="filter-btn px-8 py-3 rounded-2xl glass text-[10px] font-black uppercase tracking-widest">Horta</button>
-                <button onclick="window.filterCatalog('Frutífera', this)" class="filter-btn px-8 py-3 rounded-2xl glass text-[10px] font-black uppercase tracking-widest">Frutíferas</button>
-                <button onclick="window.filterCatalog('Árvore', this)" class="filter-btn px-8 py-3 rounded-2xl glass text-[10px] font-black uppercase tracking-widest">Árvores</button>
+            <div class="flex gap-3 mb-10 overflow-x-auto pb-4 no-scrollbar">
+                <button onclick="window.renderCatalog('Tudo', this)" class="filter-btn px-8 py-3 rounded-2xl bg-[#2D5A27] text-white text-[10px] font-black uppercase tracking-widest">Tudo</button>
+                <button onclick="window.renderCatalog('Horta', this)" class="filter-btn px-8 py-3 rounded-2xl glass text-[10px] font-black uppercase tracking-widest">Horta</button>
+                <button onclick="window.renderCatalog('Frutífera', this)" class="filter-btn px-8 py-3 rounded-2xl glass text-[10px] font-black uppercase tracking-widest">Frutíferas</button>
+                <button onclick="window.renderCatalog('Árvore', this)" class="filter-btn px-8 py-3 rounded-2xl glass text-[10px] font-black uppercase tracking-widest">Árvores</button>
             </div>
 
             <div id="catalog-grid" class="grid grid-cols-2 gap-5">
@@ -381,9 +439,14 @@
                 </div>
             </div>
 
-            <div class="bg-green-50 p-6 rounded-[30px] mb-10 border border-green-100">
+            <div class="bg-green-50 p-6 rounded-[30px] mb-6 border border-green-100">
                 <p class="text-[9px] font-black text-green-800 uppercase mb-2">Sinergia Agroecológica</p>
                 <p id="modal-companions" class="text-sm text-green-900 font-bold italic"></p>
+            </div>
+
+            <div id="modal-lunar-tip" class="p-6 rounded-[30px] mb-10 border">
+                <p class="text-[9px] font-black uppercase mb-2">Influência Lunar</p>
+                <p id="modal-lunar-text" class="text-sm font-bold"></p>
             </div>
 
             <div class="flex items-center justify-between mb-12">
@@ -400,26 +463,94 @@
         </div>
     </div>
 
+    <!-- MODAL CRÉDITOS DE CARBONO -->
+    <div id="modal-carbon" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-[2000] flex items-center justify-center hidden p-6">
+        <div class="bg-white w-full max-w-[400px] rounded-[40px] p-10 animate-[fadeIn_0.3s]">
+            <div class="text-5xl mb-6">💎</div>
+            <h3 class="text-2xl font-black mb-4">AgriEcoCoins</h3>
+            <div class="space-y-4 text-sm text-gray-600 leading-relaxed mb-8">
+                <p>Cada <strong>1kg de CO₂</strong> sequestrado gera <strong>10 AgriEcoCoins</strong>.</p>
+                <p>Estas moedas representam o valor real da sua contribuição para o resfriamento do planeta e regeneração do solo.</p>
+                <p>No futuro, elas poderão ser trocadas por sementes raras, ferramentas premium e acesso a mentorias exclusivas.</p>
+            </div>
+            <button onclick="window.closeCarbonModal()" class="btn-premium w-full">Entendido</button>
+        </div>
+    </div>
+
     <script>
         // --- MOTOR DE DADOS ---
         const catalog = [
-            { "id": "gliricidia", "name": "Gliricídia", "category": "Árvore", "co2": 45.0, "icon": "🌳", "stratum": "Alto", "companions": ["Milho", "Feijão", "Café"], "regional": true },
-            { "id": "guava_reg", "name": "Goiaba Serrana", "category": "Frutífera", "co2": 35.0, "icon": "🍈", "stratum": "Médio", "companions": ["Nativas", "Grama"], "regional": true },
-            { "id": "jacaranda", "name": "Jacarandá", "category": "Árvore", "co2": 150.0, "icon": "🌳", "stratum": "Alto", "companions": ["Palmeiras", "Orquídeas"] },
-            { "id": "avocado", "name": "Abacate", "category": "Frutífera", "co2": 75.0, "icon": "🥑", "stratum": "Alto", "companions": ["Café", "Banana", "Citrus"] },
-            { "id": "banana", "name": "Banana", "category": "Frutífera", "co2": 25.0, "icon": "🍌", "stratum": "Alto", "companions": ["Cacau", "Café", "Ingá"] },
-            { "id": "mango", "name": "Manga", "category": "Frutífera", "co2": 85.0, "icon": "🥭", "stratum": "Alto", "companions": ["Nativas"] },
-            { "id": "lettuce", "name": "Alface", "category": "Horta", "co2": 1.8, "icon": "🥬", "stratum": "Baixo", "companions": ["Cenoura", "Rabanete", "Cebolinha"] },
-            { "id": "kale", "name": "Couve", "category": "Horta", "co2": 5.0, "icon": "🥬", "stratum": "Médio", "companions": ["Sálvia", "Alecrim", "Tomilho"] },
-            { "id": "turmeric", "name": "Cúrcuma", "category": "Horta", "co2": 6.0, "icon": "🟡", "stratum": "Baixo", "companions": ["Frutíferas", "Banana"] }
+            { "id": "cocoa", "name": "Cacau", "category": "Frutífera", "co2": 35.0, "icon": "🍫", "stratum": "Baixo", "type": "Fruto", "companions": ["Banana", "Seringueira"] },
+            { "id": "guava", "name": "Goiaba", "category": "Frutífera", "co2": 40.0, "icon": "🍐", "stratum": "Médio", "type": "Fruto", "companions": ["Citros", "Manga"] },
+            { "id": "acerola", "name": "Acerola", "category": "Frutífera", "co2": 25.0, "icon": "🍒", "stratum": "Médio", "type": "Fruto", "companions": ["Pitanga", "Goiaba"] },
+            { "id": "pitanga", "name": "Pitanga", "category": "Frutífera", "co2": 30.0, "icon": "🍒", "stratum": "Médio", "type": "Fruto", "companions": ["Acerola", "Jabuticaba"] },
+            { "id": "passion_fruit", "name": "Maracujá", "category": "Frutífera", "co2": 12.0, "icon": "🍇", "stratum": "Alto", "type": "Fruto", "companions": ["Milho", "Cerca viva"] },
+            { "id": "sweet_potato", "name": "Batata Doce", "category": "Horta", "co2": 15.0, "icon": "🍠", "stratum": "Rasteiro", "type": "Raiz", "companions": ["Milho", "Mandioca"] },
+            { "id": "eggplant", "name": "Berinjela", "category": "Frutífera", "co2": 3.5, "icon": "🍆", "stratum": "Médio", "type": "Fruto", "companions": ["Feijão", "Pimentão"] },
+            { "id": "cabbage", "name": "Repolho", "category": "Horta", "co2": 4.0, "icon": "🥬", "stratum": "Médio", "type": "Folha", "companions": ["Alecrim", "Hortelã"] },
+            { "id": "beet", "name": "Beterraba", "category": "Horta", "co2": 3.0, "icon": "🟣", "stratum": "Baixo", "type": "Raiz", "companions": ["Cebola", "Alface"] },
+            { "id": "onion", "name": "Cebola", "category": "Horta", "co2": 2.2, "icon": "🧅", "stratum": "Baixo", "type": "Raiz", "companions": ["Cenoura", "Beterraba"] },
+            { "id": "garlic", "name": "Alho", "category": "Horta", "co2": 2.0, "icon": "🧄", "stratum": "Baixo", "type": "Raiz", "companions": ["Tomate", "Rosa"] },
+            { "id": "strawberry", "name": "Morango", "category": "Frutífera", "co2": 1.2, "icon": "🍓", "stratum": "Rasteiro", "type": "Fruto", "companions": ["Alface", "Espinafre"] },
+            { "id": "rosemary", "name": "Alecrim", "category": "Horta", "co2": 4.5, "icon": "🌿", "stratum": "Médio", "type": "Folha", "companions": ["Sálvia", "Cenoura"] },
+            { "id": "sunflower_new", "name": "Girassol", "category": "Flor", "co2": 10.0, "icon": "🌻", "stratum": "Alto", "type": "Flor", "companions": ["Milho", "Feijão"] },
+            { "id": "marigold", "name": "Calêndula", "category": "Flor", "co2": 1.5, "icon": "🌼", "stratum": "Baixo", "type": "Flor", "companions": ["Tomate", "Hortaliças"] },
+            { "id": "crotalaria_new", "name": "Crotalária", "category": "Flor", "co2": 8.0, "icon": "🌼", "stratum": "Médio", "type": "Flor", "companions": ["Café", "Citros"] },
+            { "id": "inga", "name": "Ingá", "category": "Frutífera", "co2": 55.0, "icon": "🌱", "stratum": "Alto", "type": "Fruto", "companions": ["Café", "Cacau"] },
+            { "id": "embauba", "name": "Embaúba", "category": "Árvore", "co2": 40.0, "icon": "🍃", "stratum": "Emergente", "type": "Folha", "companions": ["Ingá", "Sangra d'água"] },
+            { "id": "jacaranda", "name": "Jacarandá", "category": "Árvore", "co2": 150.0, "icon": "🌳", "stratum": "Alto", "type": "Madeira", "companions": ["Nativas"] },
+            { "id": "avocado", "name": "Abacate", "category": "Frutífera", "co2": 70.0, "icon": "🥑", "stratum": "Alto", "type": "Fruto", "companions": ["Café", "Banana"] },
+            { "id": "citrus", "name": "Limão", "category": "Frutífera", "co2": 35.0, "icon": "🍋", "stratum": "Médio", "type": "Fruto", "companions": ["Goiaba", "Manjericão"] },
+            { "id": "mango", "name": "Manga", "category": "Frutífera", "co2": 85.0, "icon": "🥭", "stratum": "Alto", "type": "Fruto", "companions": ["Citros", "Goiaba"] },
+            { "id": "jabuticaba", "name": "Jabuticaba", "category": "Frutífera", "co2": 45.0, "icon": "🟣", "stratum": "Baixo", "type": "Fruto", "companions": ["Café", "Samambaias"] },
+            { "id": "papaya", "name": "Mamão", "category": "Frutífera", "co2": 15.0, "icon": "🥭", "stratum": "Emergente", "type": "Fruto", "companions": ["Banana", "Café"] },
+            { "id": "banana", "name": "Banana", "category": "Frutífera", "co2": 25.0, "icon": "🍌", "stratum": "Alto", "type": "Fruto", "companions": ["Café", "Cacau"] },
+            { "id": "tomato", "name": "Tomate", "category": "Frutífera", "co2": 4.5, "icon": "🍅", "stratum": "Médio", "type": "Fruto", "companions": ["Manjericão", "Cenoura", "Cebola"] },
+            { "id": "lettuce", "name": "Alface", "category": "Horta", "co2": 1.8, "icon": "🥬", "stratum": "Baixo", "type": "Folha", "companions": ["Cenoura", "Rabanete"] },
+            { "id": "spinach", "name": "Espinafre", "category": "Horta", "co2": 2.2, "icon": "🥬", "stratum": "Baixo", "type": "Folha", "companions": ["Morango", "Cebola"] },
+            { "id": "cucumber", "name": "Pepino", "category": "Frutífera", "co2": 3.2, "icon": "🥒", "stratum": "Rasteiro", "type": "Fruto", "companions": ["Milho", "Rabanete"] },
+            { "id": "radish", "name": "Rabanete", "category": "Horta", "co2": 1.0, "icon": "🌶️", "stratum": "Baixo", "type": "Raiz", "companions": ["Alface", "Cenoura"] },
+            { "id": "zucchini", "name": "Abobrinha", "category": "Frutífera", "co2": 6.0, "icon": "🥒", "stratum": "Rasteiro", "type": "Fruto", "companions": ["Milho", "Feijão"] },
+            { "id": "peas", "name": "Ervilha", "category": "Horta", "co2": 7.5, "icon": "🫛", "stratum": "Médio", "type": "Grão", "companions": ["Cenoura", "Milho"] },
+            { "id": "corn", "name": "Milho", "category": "Horta", "co2": 12.0, "icon": "🌽", "stratum": "Alto", "type": "Grão", "companions": ["Feijão", "Abóbora"] },
+            { "id": "basil", "name": "Manjericão", "category": "Horta", "co2": 1.2, "icon": "🌿", "stratum": "Baixo", "type": "Folha", "companions": ["Tomate", "Pimentão"] },
+            { "id": "lavender", "name": "Lavanda", "category": "Flor", "co2": 5.0, "icon": "💜", "stratum": "Médio", "type": "Flor", "companions": ["Alecrim", "Sálvia"] },
+            { "id": "chamomile", "name": "Camomila", "category": "Flor", "co2": 1.5, "icon": "🌼", "stratum": "Baixo", "type": "Flor", "companions": ["Hortaliças em geral"] },
+            { "id": "cedar", "name": "Cedro", "category": "Árvore", "co2": 120.0, "icon": "🌲", "stratum": "Alto", "type": "Madeira", "companions": ["Nativas"] },
+            { "id": "ipe", "name": "Ipê", "category": "Árvore", "co2": 160.0, "icon": "🌳", "stratum": "Alto", "type": "Madeira", "companions": ["Nativas"] },
+            { "id": "moringa", "name": "Moringa", "category": "Horta", "co2": 35.0, "icon": "🌿", "stratum": "Médio", "type": "Folha", "companions": ["Hortaliças"] },
+            { "id": "mulberry", "name": "Amora", "category": "Frutífera", "co2": 45.0, "icon": "🫐", "stratum": "Médio", "type": "Fruto", "companions": ["Hortaliças", "Leguminosas"] },
+            { "id": "mimosa", "name": "Mimosa", "category": "Flor", "co2": 60.0, "icon": "🌼", "stratum": "Alto", "type": "Flor", "companions": ["Nativas"] },
+            { "id": "kale", "name": "Couve Crespa", "category": "Horta", "co2": 5.0, "icon": "🥬", "stratum": "Médio", "type": "Folha", "companions": ["Cebola", "Alho"] },
+            { "id": "chard", "name": "Acelga", "category": "Horta", "co2": 3.0, "icon": "🥬", "stratum": "Baixo", "type": "Folha", "companions": ["Beterraba", "Cenoura"] },
+            { "id": "okra", "name": "Quiabo", "category": "Frutífera", "co2": 4.0, "icon": "🌿", "stratum": "Médio", "type": "Fruto", "companions": ["Milho", "Feijão"] },
+            { "id": "mint", "name": "Hortelã", "category": "Horta", "co2": 2.0, "icon": "🌿", "stratum": "Baixo", "type": "Folha", "companions": ["Hortaliças em geral"] },
+            { "id": "parsley", "name": "Salsa", "category": "Horta", "co2": 1.5, "icon": "🌿", "stratum": "Baixo", "type": "Folha", "companions": ["Tomate", "Cenoura"] },
+            { "id": "ginger", "name": "Gengibre", "category": "Horta", "co2": 5.0, "icon": "🟣", "stratum": "Baixo", "type": "Raiz", "companions": ["Banana", "Coco"] },
+            { "id": "turmeric", "name": "Cúrcuma", "category": "Horta", "co2": 6.0, "icon": "🟡", "stratum": "Baixo", "type": "Raiz", "companions": ["Gengibre", "Banana"] }
         ];
 
         const chapters = {
             1: {
-                title: "O Silêncio Antes da Semente",
-                content: `<h1>O Silêncio Antes da Semente</h1><p>O peso invisível do futuro e o despertar de um novo caminho. A jornada começa no momento em que decidimos parar de apenas existir e passamos a regenerar.</p><p>A caverna mágica não é um lugar físico, mas um estado de espírito onde a semente encontra o solo pela primeira vez. Na fazenda em SP, aprendi que o tempo da terra não é o tempo do relógio.</p><p>Cada plantio é uma conversa filosófica com o amanhã. O silêncio que precede o broto é o grito mais alto da vida.</p>`
+                title: "Capítulo 1: O Despertar da Semente",
+                content: `
+                    <h1>Capítulo 1: O Despertar da Semente</h1>
+                    <p>A jornada de um Guardião da Terra começa com um pequeno milagre: a semente. Muitas vezes esquecemos que dentro dessa minúscula cápsula reside todo o potencial de uma floresta inteira. Na agricultura regenerativa, não apenas plantamos comida; nós cultivamos vida e restauramos o equilíbrio do nosso planeta.</p>
+                    <h2>A Inteligência da Natureza</h2>
+                    <p>Cada semente possui uma programação biológica perfeita. Ela aguarda pacientemente pelo momento ideal — a combinação certa de umidade, temperatura e oxigênio. Quando esses elementos se encontram, inicia-se um processo irreversível de transformação.</p>
+                    <h2>O Papel do Guardião</h2>
+                    <p>Como Guardião, seu papel não é "fazer a planta crescer" — a natureza já sabe como fazer isso. Seu papel é criar as condições ideais para que ela possa expressar todo o seu potencial. Isso envolve cuidar do solo, respeitar os ciclos da lua e entender que cada planta tem suas companheiras ideais.</p>
+                    <h2>Sincronicidade e Regeneração</h2>
+                    <p>Ao plantar uma semente hoje, você está participando ativamente do sequestro de carbono da atmosfera. Suas mãos estão ajudando a resfriar o planeta. Cada folha que nasce é um pequeno painel solar capturando energia e transformando-a em vida.</p>
+                `
             }
         };
+
+        const globalRanking = [
+            { name: "EcoWarrior", points: 2500, plants: 142 },
+            { name: "TerraMaster", points: 2100, plants: 98 },
+            { name: "GaiaGuard", points: 1850, plants: 76 }
+        ];
 
         let state = {
             user: { name: '', city: '', level: 1 },
@@ -444,6 +575,10 @@
                 item.classList.remove('active');
                 if (item.getAttribute('onclick').includes(screenId)) item.classList.add('active');
             });
+            
+            if (screenId === 'screen-dashboard') window.updateLunarDashboard();
+            if (screenId === 'screen-livro') window.renderChapters();
+            
             window.scrollTo(0, 0);
         };
 
@@ -457,6 +592,7 @@
                     window.updateStats();
                     window.renderGarden();
                     window.initChart();
+                    window.renderRanking();
                 } else { window.showScreen('screen-onboarding'); }
             } else { window.showScreen('screen-onboarding'); }
         };
@@ -470,11 +606,16 @@
             window.saveState();
             window.showScreen('screen-dashboard');
             window.initChart();
+            window.renderRanking();
             confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
             window.toast("Jornada Iniciada!");
         };
 
-        window.renderCatalog = function(filter = 'Tudo') {
+        window.renderCatalog = function(filter = 'Tudo', btn) {
+            if (btn) {
+                document.querySelectorAll('.filter-btn').forEach(b => b.className = 'filter-btn px-8 py-3 rounded-2xl glass text-[10px] font-black uppercase tracking-widest');
+                btn.className = 'filter-btn px-8 py-3 rounded-2xl bg-[#2D5A27] text-white text-[10px] font-black uppercase tracking-widest';
+            }
             const grid = document.getElementById('catalog-grid');
             grid.innerHTML = '';
             const filtered = filter === 'Tudo' ? catalog : catalog.filter(p => p.category === filter);
@@ -483,7 +624,6 @@
                 card.className = `glass p-6 rounded-[35px] text-center relative animate-fadeIn`;
                 card.onclick = () => window.openModal(p);
                 card.innerHTML = `
-                    ${p.regional ? '<span class="absolute top-4 right-4 text-[7px] bg-green-100 text-green-700 px-3 py-1 rounded-full font-black">REGIONAL</span>' : ''}
                     <div class="text-5xl mb-4">${p.icon}</div>
                     <h4 class="font-black text-xs uppercase tracking-tighter">${p.name}</h4>
                     <p class="text-[8px] text-gray-400 font-black mt-1">${p.co2}kg CO₂/ano</p>
@@ -499,7 +639,24 @@
             document.getElementById('modal-category').innerText = plant.category;
             document.getElementById('modal-co2-val').innerText = plant.co2;
             document.getElementById('modal-stratum').innerText = plant.stratum;
-            document.getElementById('modal-companions').innerText = "Combina bem com: " + plant.companions.join(', ');
+            document.getElementById('modal-companions').innerText = plant.companions ? plant.companions.join(', ') : 'Nenhuma listada';
+            
+            // Dica Lunar
+            const lunar = window.getBiodynamicInfo(new Date());
+            const lunarEl = document.getElementById('modal-lunar-tip');
+            const lunarText = document.getElementById('modal-lunar-text');
+            
+            if (lunar.type === plant.type) {
+                lunarEl.className = 'p-6 rounded-[30px] mb-10 border border-amber-200 bg-amber-50';
+                lunarText.innerText = `Momento ideal! A lua favorece o plantio de ${plant.name} hoje.`;
+            } else if (lunar.type === 'Desfavorável') {
+                lunarEl.className = 'p-6 rounded-[30px] mb-10 border border-red-200 bg-red-50';
+                lunarText.innerText = `Atenção: Nó Lunar. Evite plantios hoje.`;
+            } else {
+                lunarEl.className = 'p-6 rounded-[30px] mb-10 border border-gray-100 bg-gray-50';
+                lunarText.innerText = `Neutro. A lua hoje favorece plantas de ${lunar.type.toLowerCase()}.`;
+            }
+            
             document.getElementById('plant-qty').innerText = '1';
             document.getElementById('modal-plantio').classList.remove('hidden');
         };
@@ -544,10 +701,9 @@
             document.getElementById('bar-co2').style.width = pct + '%';
             document.getElementById('progress-percent').innerText = Math.floor(pct);
 
-            // Bio-diversity calculation
             const categories = new Set(state.garden.map(i => i.category));
             const bioPct = Math.min(100, (categories.size / 4) * 100);
-            document.getElementById('stat-bio').innerText = bioPct + '%';
+            document.getElementById('stat-bio').innerText = Math.floor(bioPct) + '%';
         };
 
         window.renderGarden = function() {
@@ -572,10 +728,87 @@
             });
         };
 
+        window.renderChapters = function() {
+            const list = document.getElementById('chapters-list');
+            list.innerHTML = '';
+            Object.keys(chapters).forEach(id => {
+                const c = chapters[id];
+                list.innerHTML += `<div onclick="window.readChapter(${id})" class="glass p-6 rounded-[35px] flex items-center justify-between">
+                    <div><p class="text-[9px] font-black text-green-700 uppercase mb-1">Capítulo ${id}</p><h4 class="font-black text-lg">${c.title}</h4></div>
+                    <div class="w-12 h-12 rounded-2xl bg-green-50 flex items-center justify-center text-green-700"><i class="fa-solid fa-play"></i></div>
+                </div>`;
+            });
+        };
+
+        window.readChapter = function(id) {
+            const c = chapters[id];
+            document.getElementById('reading-title').innerText = c.title;
+            document.getElementById('reading-content').innerHTML = c.content;
+            window.showScreen('screen-leitura');
+        };
+
+        window.renderRanking = function() {
+            const list = document.getElementById('ranking-list');
+            list.innerHTML = '';
+            globalRanking.forEach((u, i) => {
+                list.innerHTML += `<div class="ranking-item glass">
+                    <div class="ranking-pos pos-${i+1}">${i+1}</div>
+                    <div class="flex-1"><h4 class="font-black text-sm">${u.name}</h4><p class="text-[9px] text-gray-400 font-black uppercase">${u.plants} plantas</p></div>
+                    <div class="text-right"><p class="font-black text-sm">${u.points} pts</p></div>
+                </div>`;
+            });
+        };
+
+        window.getBiodynamicInfo = function(date) {
+            const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 86400000);
+            const zodiacCycle = dayOfYear % 28;
+            const zodiacMap = [
+                { sign: 'Áries', type: 'Fruto' }, { sign: 'Áries', type: 'Fruto' }, 
+                { sign: 'Touro', type: 'Raiz' }, { sign: 'Touro', type: 'Raiz' }, { sign: 'Touro', type: 'Raiz' },
+                { sign: 'Gêmeos', type: 'Flor' }, { sign: 'Gêmeos', type: 'Flor' },
+                { sign: 'Câncer', type: 'Folha' }, { sign: 'Câncer', type: 'Folha' },
+                { sign: 'Leão', type: 'Fruto' }, { sign: 'Leão', type: 'Fruto' },
+                { sign: 'Virgem', type: 'Raiz' }, { sign: 'Virgem', type: 'Raiz' }, { sign: 'Virgem', type: 'Raiz' },
+                { sign: 'Libra', type: 'Flor' }, { sign: 'Libra', type: 'Flor' },
+                { sign: 'Escorpião', type: 'Folha' }, { sign: 'Escorpião', type: 'Folha' }, { sign: 'Escorpião', type: 'Folha' },
+                { sign: 'Sagitário', type: 'Fruto' }, { sign: 'Sagitário', type: 'Fruto' },
+                { sign: 'Capricórnio', type: 'Raiz' }, { sign: 'Capricórnio', type: 'Raiz' },
+                { sign: 'Aquário', type: 'Flor' }, { sign: 'Aquário', type: 'Flor' }, { sign: 'Aquário', type: 'Flor' },
+                { sign: 'Peixes', type: 'Folha' }, { sign: 'Peixes', type: 'Folha' },
+            ];
+            const dayInfo = zodiacMap[Math.floor(zodiacCycle)] || { sign: 'Indefinido', type: 'Neutro' };
+            if (date.getDate() % 9 === 0) return { type: 'Desfavorável', sign: 'Nó Lunar' };
+            return dayInfo;
+        };
+
+        window.updateLunarDashboard = function() {
+            const info = window.getBiodynamicInfo(new Date());
+            const el = document.getElementById('dica-biodinamica');
+            if (info.type === 'Desfavorável') {
+                el.innerText = "Hoje é Nó Lunar. Evite mexer na terra e plantios importantes.";
+            } else {
+                el.innerText = `Hoje a lua favorece plantas de ${info.type.toLowerCase()}. Ideal para plantar ou cuidar de ${info.type === 'Folha' ? 'Hortaliças' : (info.type === 'Raiz' ? 'Raízes' : (info.type === 'Flor' ? 'Flores' : 'Frutos'))}!`;
+            }
+        };
+
+        window.showCarbonModal = function() { document.getElementById('modal-carbon').classList.remove('hidden'); };
+        window.closeCarbonModal = function() { document.getElementById('modal-carbon').classList.add('hidden'); };
+
+        window.shareProfile = function() {
+            const text = `Sou Guardião Nível ${Math.floor(state.co2/50 + 1)} no Horta Hero! Já neutralizei ${state.co2.toFixed(1)}kg de CO2. Junte-se à regeneração!`;
+            if (navigator.share) {
+                navigator.share({ title: 'Horta Hero', text: text, url: window.location.href });
+            } else {
+                window.toast("Copiado para a área de transferência!");
+                navigator.clipboard.writeText(text);
+            }
+        };
+
         // --- GRÁFICOS ---
         let impactChart;
         window.initChart = function() {
             const ctx = document.getElementById('impactChart').getContext('2d');
+            if (impactChart) impactChart.destroy();
             impactChart = new Chart(ctx, {
                 type: 'line',
                 data: {
