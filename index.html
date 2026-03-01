@@ -218,7 +218,7 @@
             <button onclick="window.showScreen('screen-dashboard')" class="w-10 h-10 rounded-full bg-white flex items-center justify-center premium-shadow mr-4">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
-            <h2 class="text-2xl font-bold">Registrar Impacto</h2>
+            <h2 class="text-2xl font-bold">O que vamos plantar?</h2>
         </div>
 
         <div class="flex gap-2 overflow-x-auto pb-4 mb-6 no-scrollbar">
@@ -348,11 +348,63 @@
     <script>
         // --- DATA ---
         const catalog = [
-            { id: 1, name: 'Alface', category: 'Horta', co2: 0.5, icon: '🥬', stratum: 'Médio' },
-            { id: 2, name: 'Tomate', category: 'Horta', co2: 0.8, icon: '🍅', stratum: 'Médio' },
-            { id: 9, name: 'Jabuticaba', category: 'Frutífera', co2: 45.0, icon: '🟣', stratum: 'Médio' },
-            { id: 13, name: 'Feijão de Porco', category: 'Leguminosa', co2: 2.5, icon: '🫘', stratum: 'Baixo' },
-            { id: 18, name: 'Girassol', category: 'Flor', co2: 1.5, icon: '🌻', stratum: 'Emergente' }
+            { "id": "cocoa", "name": "Cacau", "category": "Frutífera", "co2": 35.0, "icon": "🍫", "stratum": "Baixo" },
+            { "id": "guava", "name": "Goiaba", "category": "Frutífera", "co2": 40.0, "icon": "🍐", "stratum": "Médio" },
+            { "id": "acerola", "name": "Acerola", "category": "Frutífera", "co2": 25.0, "icon": "🍒", "stratum": "Médio" },
+            { "id": "pitanga", "name": "Pitanga", "category": "Frutífera", "co2": 30.0, "icon": "🍒", "stratum": "Médio" },
+            { "id": "passion_fruit", "name": "Maracujá", "category": "Frutífera", "co2": 12.0, "icon": "🍇", "stratum": "Alto" },
+            { "id": "sweet_potato", "name": "Batata Doce", "category": "Horta", "co2": 15.0, "icon": "🍠", "stratum": "Rasteiro" },
+            { "id": "eggplant", "name": "Berinjela", "category": "Frutífera", "co2": 3.5, "icon": "🍆", "stratum": "Médio" },
+            { "id": "cabbage", "name": "Repolho", "category": "Horta", "co2": 4.0, "icon": "🥬", "stratum": "Médio" },
+            { "id": "beet", "name": "Beterraba", "category": "Horta", "co2": 3.0, "icon": "🟣", "stratum": "Baixo" },
+            { "id": "onion", "name": "Cebola", "category": "Horta", "co2": 2.2, "icon": "🧅", "stratum": "Baixo" },
+            { "id": "garlic", "name": "Alho", "category": "Horta", "co2": 2.0, "icon": "🧄", "stratum": "Baixo" },
+            { "id": "strawberry", "name": "Morango", "category": "Frutífera", "co2": 1.2, "icon": "🍓", "stratum": "Rasteiro" },
+            { "id": "rosemary", "name": "Alecrim", "category": "Horta", "co2": 4.5, "icon": "🌿", "stratum": "Médio" },
+            { "id": "sunflower_new", "name": "Girassol", "category": "Flor", "co2": 10.0, "icon": "🌻", "stratum": "Alto" },
+            { "id": "marigold", "name": "Calêndula", "category": "Flor", "co2": 1.5, "icon": "🌼", "stratum": "Baixo" },
+            { "id": "crotalaria_new", "name": "Crotalária", "category": "Flor", "co2": 8.0, "icon": "🌼", "stratum": "Médio" },
+            { "id": "inga", "name": "Ingá", "category": "Frutífera", "co2": 55.0, "icon": "🌱", "stratum": "Alto" },
+            { "id": "embauba", "name": "Embaúba", "category": "Leguminosa", "co2": 40.0, "icon": "🍃", "stratum": "Emergente" },
+            { "id": "jacaranda", "name": "Jacarandá", "category": "Leguminosa", "co2": 150.0, "icon": "🌳", "stratum": "Alto" },
+            { "id": "avocado", "name": "Abacate", "category": "Frutífera", "co2": 70.0, "icon": "🥑", "stratum": "Alto" },
+            { "id": "citrus", "name": "Limão", "category": "Frutífera", "co2": 35.0, "icon": "🍋", "stratum": "Médio" },
+            { "id": "mango", "name": "Manga", "category": "Frutífera", "co2": 85.0, "icon": "🥭", "stratum": "Alto" },
+            { "id": "jabuticaba", "name": "Jabuticaba", "category": "Frutífera", "co2": 45.0, "icon": "🟣", "stratum": "Baixo" },
+            { "id": "papaya", "name": "Mamão", "category": "Frutífera", "co2": 15.0, "icon": "🥭", "stratum": "Emergente" },
+            { "id": "banana", "name": "Banana", "category": "Frutífera", "co2": 25.0, "icon": "🍌", "stratum": "Alto" },
+            { "id": "tomato", "name": "Tomate", "category": "Frutífera", "co2": 4.5, "icon": "🍅", "stratum": "Médio" },
+            { "id": "lettuce", "name": "Alface", "category": "Horta", "co2": 1.8, "icon": "🥬", "stratum": "Baixo" },
+            { "id": "spinach", "name": "Espinafre", "category": "Horta", "co2": 2.2, "icon": "🥬", "stratum": "Baixo" },
+            { "id": "cucumber", "name": "Pepino", "category": "Frutífera", "co2": 3.2, "icon": "🥒", "stratum": "Rasteiro" },
+            { "id": "radish", "name": "Rabanete", "category": "Horta", "co2": 1.0, "icon": "🌶️", "stratum": "Baixo" },
+            { "id": "zucchini", "name": "Abobrinha", "category": "Frutífera", "co2": 6.0, "icon": "🥒", "stratum": "Rasteiro" },
+            { "id": "peas", "name": "Ervilha", "category": "Horta", "co2": 7.5, "icon": "🫛", "stratum": "Médio" },
+            { "id": "corn", "name": "Milho", "category": "Horta", "co2": 12.0, "icon": "🌽", "stratum": "Alto" },
+            { "id": "basil", "name": "Manjericão", "category": "Horta", "co2": 1.2, "icon": "🌿", "stratum": "Baixo" },
+            { "id": "sunflower_alt", "name": "Girassol Gigante", "category": "Flor", "co2": 18.0, "icon": "🌻", "stratum": "Emergente" },
+            { "id": "lavender", "name": "Lavanda", "category": "Flor", "co2": 5.0, "icon": "💜", "stratum": "Médio" },
+            { "id": "chamomile", "name": "Camomila", "category": "Flor", "co2": 1.5, "icon": "🌼", "stratum": "Baixo" },
+            { "id": "nasturtium", "name": "Capuchinha", "category": "Flor", "co2": 2.0, "icon": "🌺", "stratum": "Rasteiro" },
+            { "id": "cedar", "name": "Cedro", "category": "Leguminosa", "co2": 120.0, "icon": "🌲", "stratum": "Alto" },
+            { "id": "ipe", "name": "Ipê", "category": "Leguminosa", "co2": 160.0, "icon": "🌳", "stratum": "Alto" },
+            { "id": "seringa", "name": "Seringueira", "category": "Leguminosa", "co2": 80.0, "icon": "🌳", "stratum": "Alto" },
+            { "id": "moringa", "name": "Moringa", "category": "Horta", "co2": 35.0, "icon": "🌿", "stratum": "Médio" },
+            { "id": "mulberry", "name": "Amora", "category": "Frutífera", "co2": 45.0, "icon": "🫐", "stratum": "Médio" },
+            { "id": "fig", "name": "Figueira", "category": "Frutífera", "co2": 40.0, "icon": "🫐", "stratum": "Médio" },
+            { "id": "papaw", "name": "Ata/Graviola", "category": "Frutífera", "co2": 50.0, "icon": "🍃", "stratum": "Médio" },
+            { "id": "mimosa", "name": "Mimosa", "category": "Flor", "co2": 60.0, "icon": "🌼", "stratum": "Alto" },
+            { "id": "albizia", "name": "Albizia", "category": "Horta", "co2": 70.0, "icon": "🌳", "stratum": "Alto" },
+            { "id": "kale", "name": "Couve Crespa", "category": "Horta", "co2": 5.0, "icon": "🥬", "stratum": "Médio" },
+            { "id": "chard", "name": "Acelga", "category": "Horta", "co2": 3.0, "icon": "🥬", "stratum": "Baixo" },
+            { "id": "okra", "name": "Quiabo", "category": "Frutífera", "co2": 4.0, "icon": "🌿", "stratum": "Médio" },
+            { "id": "mint", "name": "Hortelã", "category": "Horta", "co2": 2.0, "icon": "🌿", "stratum": "Baixo" },
+            { "id": "parsley", "name": "Salsa", "category": "Horta", "co2": 1.5, "icon": "🌿", "stratum": "Baixo" },
+            { "id": "dill", "name": "Endro", "category": "Horta", "co2": 1.2, "icon": "🌿", "stratum": "Médio" },
+            { "id": "turnip", "name": "Nabo", "category": "Horta", "co2": 2.5, "icon": "🟣", "stratum": "Baixo" },
+            { "id": "potato", "name": "Batata", "category": "Horta", "co2": 8.0, "icon": "🥔", "stratum": "Baixo" },
+            { "id": "ginger", "name": "Gengibre", "category": "Horta", "co2": 5.0, "icon": "🟣", "stratum": "Baixo" },
+            { "id": "turmeric", "name": "Cúrcuma", "category": "Horta", "co2": 6.0, "icon": "🟡", "stratum": "Baixo" }
         ];
 
         let state = {
@@ -448,65 +500,105 @@
             const plant = state.selectedPlant;
             const co2Gained = plant.co2 * state.qty;
             state.garden.push({...plant, qty: state.qty, date: new Date().toLocaleDateString(), id: Date.now()});
+            
             state.co2 += co2Gained;
-            state.coins += Math.round(co2Gained * 10);
+            state.coins += Math.floor(co2Gained * 10);
+            
             window.updateStats();
-            window.renderGarden();
             window.saveState();
             window.closeModal();
-            window.showScreen('screen-jardim');
+            window.showScreen('screen-dashboard');
+            window.renderGarden();
         };
 
         window.updateStats = function() {
             document.getElementById('stat-co2').innerText = state.co2.toFixed(1);
             document.getElementById('stat-coins').innerText = state.coins;
             document.getElementById('rank-co2').innerText = state.co2.toFixed(1);
-            document.getElementById('bar-co2').style.width = Math.min((state.co2 / 50) * 100, 100) + '%';
+            
+            const progress = Math.min(100, (state.co2 / 50) * 100);
+            document.getElementById('bar-co2').style.width = progress + '%';
+            
+            const challengeProgress = Math.min(5, state.co2);
+            document.getElementById('challenge-progress').innerText = challengeProgress.toFixed(1);
+            document.getElementById('bar-challenge').style.width = (challengeProgress / 5 * 100) + '%';
         };
 
         window.renderGarden = function() {
             const list = document.getElementById('garden-list');
-            if (!list) return;
-            list.innerHTML = state.garden.length === 0 ? '<p class="text-center text-gray-400">Vazio</p>' : '';
-            state.garden.forEach(p => {
-                list.innerHTML += `<div class="bg-white p-4 rounded-2xl premium-shadow flex justify-between"><span>${p.icon} ${p.name} x${p.qty}</span><button onclick="window.regar(this)" class="text-blue-500"><i class="fa-solid fa-droplet"></i></button></div>`;
+            const preview = document.getElementById('dashboard-garden-preview');
+            if (!list || !preview) return;
+
+            list.innerHTML = '';
+            preview.innerHTML = '';
+
+            if (state.garden.length === 0) {
+                preview.innerHTML = '<p class="text-center text-gray-400 py-4 text-sm italic">Sua horta está vazia. Comece a plantar!</p>';
+                return;
+            }
+
+            state.garden.forEach(item => {
+                const card = `
+                    <div class="bg-white p-4 rounded-3xl premium-shadow flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="text-3xl">${item.icon}</div>
+                            <div>
+                                <h4 class="font-bold text-sm">${item.name}</h4>
+                                <p class="text-[10px] text-gray-400 uppercase font-bold">${item.qty} unidades • ${item.date}</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs font-bold text-[#2D5A27]">+${(item.co2 * item.qty).toFixed(1)} kg CO₂</p>
+                        </div>
+                    </div>
+                `;
+                list.innerHTML += card;
+            });
+
+            // Preview (last 3)
+            state.garden.slice(-3).reverse().forEach(item => {
+                const card = `
+                    <div class="bg-white p-3 rounded-2xl premium-shadow flex items-center gap-3">
+                        <div class="text-xl">${item.icon}</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-xs">${item.name}</h4>
+                            <p class="text-[8px] text-gray-400 uppercase font-bold">${item.qty} un</p>
+                        </div>
+                        <p class="text-[10px] font-bold text-[#2D5A27]">+${(item.co2 * item.qty).toFixed(1)} kg</p>
+                    </div>
+                `;
+                preview.innerHTML += card;
             });
         };
 
-        window.regar = function(btn) {
-            state.coins += 5;
-            window.updateStats();
-            window.saveState();
-            alert('Regado! +5 AgriEcoCoins');
-        };
-
         window.saveState = function() {
-            try { localStorage.setItem('horta_hero_v5_final', JSON.stringify(state)); } catch(e) {}
+            localStorage.setItem('horta_hero_state', JSON.stringify(state));
         };
 
         window.loadState = function() {
-            try {
-                const saved = localStorage.getItem('horta_hero_v5_final');
-                if (saved) {
-                    state = JSON.parse(saved);
-                    document.getElementById('display-name').innerText = state.user.name || 'Guardião';
-                    window.updateStats();
-                    window.renderGarden();
-                    if (state.user.name) window.showScreen('screen-dashboard');
+            const saved = localStorage.getItem('horta_hero_state');
+            if (saved) {
+                state = JSON.parse(saved);
+                if (state.user.name) {
+                    document.getElementById('display-name').innerText = state.user.name;
+                    window.showScreen('screen-dashboard');
                 }
-            } catch(e) {}
+                window.updateStats();
+                window.renderGarden();
+            }
         };
 
         window.toggleDarkMode = function() {
             document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('horta_hero_dark', isDark);
         };
 
-        // --- BOOT ---
-        document.addEventListener('DOMContentLoaded', () => {
-            window.renderCatalog();
-            window.loadState();
-            console.log("Horta Hero 5.0 Loaded");
-        });
+        // Init
+        window.renderCatalog();
+        window.loadState();
+        if (localStorage.getItem('horta_hero_dark') === 'true') document.body.classList.add('dark-mode');
+
     </script>
 </body>
 </html>
