@@ -2,8 +2,8 @@
   "name": "Horta Hero - Rede de Reflorestamento",
   "short_name": "Horta Hero",
   "description": "Regeneração Planetária através do Plantio Agroecológico. Junte-se à rede de agricultores que reflorestam e restauram o planeta.",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
   "background_color": "#F8FAF7",
@@ -54,7 +54,7 @@
       "name": "Plantar",
       "short_name": "Plantar",
       "description": "Comece a plantar agora",
-      "url": "/?action=plant",
+      "url": "./index.html?action=plant",
       "icons": [
         {
           "src": "https://cdn-icons-png.flaticon.com/512/3050/3050159.png",
@@ -66,7 +66,7 @@
       "name": "Meu Ecossistema",
       "short_name": "Ecos",
       "description": "Veja suas plantas",
-      "url": "/?action=garden",
+      "url": "./index.html?action=garden",
       "icons": [
         {
           "src": "https://cdn-icons-png.flaticon.com/512/1995/1995467.png",
@@ -76,7 +76,7 @@
     }
   ],
   "share_target": {
-    "action": "/share",
+    "action": "./index.html?action=share",
     "method": "POST",
     "enctype": "multipart/form-data",
     "params": {
