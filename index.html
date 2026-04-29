@@ -316,6 +316,22 @@
         </div>
     </div>
 
+    <!-- 10. SABERES DOS AGRICULTORES -->
+    <div id="screen-saberes" class="screen p-6">
+        <h2 class="text-2xl font-bold mb-6">Saberes Ancestrais</h2>
+        <div id="saberes-content" class="space-y-6">
+            <!-- Saberes serão renderizados aqui -->
+        </div>
+    </div>
+
+    <!-- 11. RECEITAS E DEFENSIVOS -->
+    <div id="screen-receitas" class="screen p-6">
+        <h2 class="text-2xl font-bold mb-6">Receitas e Defensivos</h2>
+        <div id="receitas-content" class="space-y-6">
+            <!-- Receitas serão renderizadas aqui -->
+        </div>
+    </div>
+
     <!-- NAVIGATION BAR -->
     <nav id="main-nav" class="fixed bottom-0 w-full glass border-t border-gray-100 px-6 py-4 flex justify-between items-center z-50" style="display: none;">
         <button onclick="window.showScreen('screen-dashboard')" class="nav-item active flex flex-col items-center">
@@ -338,6 +354,14 @@
         <button onclick="window.showScreen('screen-livro')" class="nav-item flex flex-col items-center">
             <i class="fa-solid fa-book-open text-xl mb-1"></i>
             <span class="text-[10px] font-bold uppercase">Livro</span>
+        </button>
+        <button onclick="window.showScreen('screen-saberes')" class="nav-item flex flex-col items-center">
+            <i class="fa-solid fa-leaf text-xl mb-1"></i>
+            <span class="text-[10px] font-bold uppercase">Saberes</span>
+        </button>
+        <button onclick="window.showScreen('screen-receitas')" class="nav-item flex flex-col items-center">
+            <i class="fa-solid fa-flask text-xl mb-1"></i>
+            <span class="text-[10px] font-bold uppercase">Receitas</span>
         </button>
     </nav>
 
@@ -447,6 +471,93 @@
             { "id": "ginger", "name": "Gengibre", "category": "Horta", "co2": 5.0, "icon": "🟣", "stratum": "Baixo", "type": "Raiz", "companions": ["Banana", "Coco"] },
             { "id": "turmeric", "name": "Cúrcuma", "category": "Horta", "co2": 6.0, "icon": "🟡", "stratum": "Baixo", "type": "Raiz", "companions": ["Gengibre", "Banana"] }
         ];
+
+        const saberes = {
+            primavesi: {
+                title: "Saberes de Ana Primavesi",
+                content: `
+                    <h1>Saberes de Ana Primavesi</h1>
+                    <p>Ana Maria Primavesi foi a pioneira da agroecologia no Brasil. Seus ensinamentos revolucionaram a forma como entendemos o solo como um organismo vivo.</p>
+                    <p><strong>A Vida do Solo:</strong> Para ela, "solo é vida". Um solo saudável não precisa de venenos, pois plantas bem nutridas são resistentes a pragas.</p>
+                    <p><strong>A Teoria da Trofobiose:</strong> Explica que as pragas só atacam plantas doentes ou mal nutridas, que possuem excesso de substâncias simples (aminoácidos) em sua seiva.</p>
+                    <div style="background: #f0f4f0; padding: 15px; border-radius: 15px; border-left: 5px solid #2d5a27; margin: 15px 0;">
+                        <p style="margin: 0; font-style: italic;">"Não existe praga, existe planta doente. O inseto é o indicador de que algo no solo não está bem."</p>
+                    </div>
+                `
+            },
+            biodinamica: {
+                title: "Agricultura Biodinâmica",
+                content: `
+                    <h1>Agricultura Biodinâmica</h1>
+                    <p>A agricultura biodinâmica é um sistema holístico que considera o solo, as plantas e os animais como um organismo integrado.</p>
+                    <p><strong>Princípios Fundamentais:</strong></p>
+                    <ul style="list-style: disc; margin-left: 20px;">
+                        <li>Trabalhar com os ciclos lunares e estelares</li>
+                        <li>Usar preparados naturais para fortalecer o solo</li>
+                        <li>Integrar animais no sistema produtivo</li>
+                        <li>Manter a biodiversidade</li>
+                    </ul>
+                `
+            },
+            permacultura: {
+                title: "Permacultura",
+                content: `
+                    <h1>Princípios da Permacultura</h1>
+                    <p>Permacultura é um sistema de design que trabalha com a natureza, não contra ela.</p>
+                    <p><strong>Ética Permacultural:</strong></p>
+                    <ul style="list-style: disc; margin-left: 20px;">
+                        <li>Cuidado com a Terra</li>
+                        <li>Cuidado com as Pessoas</li>
+                        <li>Partilha Justa</li>
+                    </ul>
+                    <p>Ao aplicar estes princípios, criamos sistemas regenerativos que produzem alimento enquanto restauram o ecossistema.</p>
+                `
+            }
+        };
+
+        const receitas = {
+            bordalesa: {
+                title: "Calda Bordalesa (Fungicida)",
+                content: `
+                    <h1>Calda Bordalesa</h1>
+                    <p>Ideal para controlar fungos em frutíferas e hortaliças.</p>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Ingredientes:</h3>
+                    <ul style="list-style: disc; margin-left: 20px; margin-bottom: 10px;">
+                        <li>100g de Sulfato de Cobre</li>
+                        <li>100g de Cal Virgem</li>
+                        <li>10 Litros de Água</li>
+                    </ul>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Preparo:</h3>
+                    <p>Dissolva o cobre em 5L de água e a cal em outros 5L. Misture o cobre sobre a cal (nunca o contrário!). Teste a acidez com um prego antes de usar.</p>
+                `
+            },
+            alho: {
+                title: "Repelente de Alho e Sabão",
+                content: `
+                    <h1>Repelente de Alho e Sabão</h1>
+                    <p>Eficiente contra pulgões, cochonilhas e lagartas pequenas.</p>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Ingredientes:</h3>
+                    <ul style="list-style: disc; margin-left: 20px; margin-bottom: 10px;">
+                        <li>3 dentes de alho grandes</li>
+                        <li>1 colher de sabão de coco neutro</li>
+                        <li>1 Litro de água</li>
+                    </ul>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Preparo:</h3>
+                    <p>Bata o alho com a água no liquidificador. Coe e misture o sabão dissolvido. Pulverize no final da tarde.</p>
+                `
+            },
+            supermagro: {
+                title: "Biofertilizante Supermagro",
+                content: `
+                    <h1>Biofertilizante Supermagro</h1>
+                    <p>Um poderoso tônico para fortalecer as plantas.</p>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Composição:</h3>
+                    <p>Utiliza esterco fresco, leite, melado e micronutrientes fermentados aerobicamente por 30 dias. É a base da nutrição foliar agroecológica.</p>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Aplicação:</h3>
+                    <p>Pulverizar nas folhas no final da tarde, a cada 15 dias. Fortalece as plantas contra pragas e doenças.</p>
+                `
+            }
+        };
 
         const chapters = {
             0: {
@@ -795,14 +906,51 @@
                         <p class="text-[10px] font-bold text-[#2D5A27]">+${(item.co2 * item.qty).toFixed(1)} kg</p>
                     </div>`;
             });
+        };        window.readChapter = function(chapterNum) {
+            window.showScreen('screen-leitura');
+            document.getElementById('reading-title').innerText = chapters[chapterNum].title;
+            document.getElementById('reading-content').innerHTML = chapters[chapterNum].content;
         };
 
-        window.readChapter = function(id) {
-            const chapter = chapters[id];
-            if (!chapter) return;
-            document.getElementById('reading-title').innerText = chapter.title;
-            document.getElementById('reading-content').innerHTML = chapter.content;
+        window.renderSaberes = function() {
+            const container = document.getElementById('saberes-content');
+            container.innerHTML = '';
+            for (const [key, saber] of Object.entries(saberes)) {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-6 rounded-[32px] premium-shadow border-l-8 border-[#2D5A27]';
+                card.innerHTML = `
+                    <h3 class="font-bold text-lg mb-2">${saber.title}</h3>
+                    <button onclick="window.showSaber('${key}')" class="w-full py-3 rounded-xl bg-[#2D5A27] text-white font-bold text-sm">Ler Mais</button>
+                `;
+                container.appendChild(card);
+            }
+        };
+
+        window.showSaber = function(saberKey) {
             window.showScreen('screen-leitura');
+            document.getElementById('reading-title').innerText = saberes[saberKey].title;
+            document.getElementById('reading-content').innerHTML = saberes[saberKey].content;
+        };
+
+        window.renderReceitas = function() {
+            const container = document.getElementById('receitas-content');
+            container.innerHTML = '';
+            for (const [key, receita] of Object.entries(receitas)) {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-6 rounded-[32px] premium-shadow border-l-8 border-[#2D5A27]';
+                card.innerHTML = `
+                    <h3 class="font-bold text-lg mb-2">${receita.title}</h3>
+                    <button onclick="window.showReceita('${key}')" class="w-full py-3 rounded-xl bg-[#2D5A27] text-white font-bold text-sm">Ver Receita</button>
+                `;
+                container.appendChild(card);
+            }
+        };
+
+        window.showReceita = function(receitaKey) {
+            window.showScreen('screen-leitura');
+            document.getElementById('reading-title').innerText = receitas[receitaKey].title;
+            document.getElementById('reading-content').innerHTML = receitas[receitaKey].content;
+        };dow.showScreen('screen-leitura');
         };
 
         window.saveState = function() { localStorage.setItem('horta_hero_state', JSON.stringify(state)); };
@@ -831,6 +979,8 @@
 
         // Init
         window.renderCatalog();
+        window.renderSaberes();
+        window.renderReceitas();
         window.loadState();
         if (localStorage.getItem('horta_hero_dark') === 'true') document.body.classList.add('dark-mode');
         
