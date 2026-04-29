@@ -950,7 +950,6 @@
             window.showScreen('screen-leitura');
             document.getElementById('reading-title').innerText = receitas[receitaKey].title;
             document.getElementById('reading-content').innerHTML = receitas[receitaKey].content;
-        };dow.showScreen('screen-leitura');
         };
 
         window.saveState = function() { localStorage.setItem('horta_hero_state', JSON.stringify(state)); };
