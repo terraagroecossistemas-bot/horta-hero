@@ -813,9 +813,14 @@
                 if (state.user.name) {
                     document.getElementById('display-name').innerText = state.user.name;
                     window.showScreen('screen-dashboard');
+                } else {
+                    window.showScreen('screen-splash');
                 }
                 window.updateStats();
                 window.renderGarden();
+            } else {
+                // Primeira vez - mostrar splash screen
+                window.showScreen('screen-splash');
             }
         };
 
@@ -828,6 +833,17 @@
         window.renderCatalog();
         window.loadState();
         if (localStorage.getItem('horta_hero_dark') === 'true') document.body.classList.add('dark-mode');
+        
+        // Esconder nav bar nas telas de onboarding
+        const noNav = ['screen-splash', 'screen-onboarding', 'screen-cadastro'];
+        window.showScreen_original = window.showScreen;
+        window.showScreen = function(screenId) {
+            window.showScreen_original(screenId);
+            const nav = document.getElementById('main-nav');
+            if (nav) {
+                nav.style.display = noNav.includes(screenId) ? 'none' : 'flex';
+            }
+        };
     </script>
 </body>
 </html>
