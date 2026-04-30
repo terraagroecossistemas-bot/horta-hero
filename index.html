@@ -817,18 +817,28 @@
                 lunarPhase = 'Cheia';
                 lunarEmoji = '🌕';
             } else if (diaAtual > luaNovaDoMes && diaAtual < luaCheiaDaMes) {
+                // Entre lua nova e lua cheia = Crescente
                 lunarPhase = 'Crescente';
                 if (diaAtual < luaCheiaDaMes - 7) {
                     lunarEmoji = '🌒';
                 } else {
                     lunarEmoji = '🌓';
                 }
-            } else if (diaAtual > luaCheiaDaMes) {
+            } else if (diaAtual > luaCheiaDaMes && diaAtual < luaNovaDoMes + 30) {
+                // Entre lua cheia e lua nova do próximo mês = Minguante
                 lunarPhase = 'Minguante';
                 if (diaAtual < luaCheiaDaMes + 7) {
                     lunarEmoji = '🌖';
                 } else {
                     lunarEmoji = '🌗';
+                }
+            } else if (diaAtual > luaNovaDoMes) {
+                // Após lua nova do mês = Crescente
+                lunarPhase = 'Crescente';
+                if (diaAtual < luaNovaDoMes + 7) {
+                    lunarEmoji = '🌒';
+                } else {
+                    lunarEmoji = '🌓';
                 }
             }
             
