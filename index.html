@@ -153,11 +153,29 @@
             </button>
         </div>
 
-        <div class="bg-amber-50 p-4 rounded-2xl mb-6 border border-amber-100 flex items-center gap-4">
-            <div class="text-2xl">🌙</div>
-            <div>
-                <p class="text-[10px] font-bold text-amber-800 uppercase tracking-wider">Guia Biodinâmico de Hoje</p>
+        <div class="bg-gradient-to-br from-amber-50 to-orange-50 p-6 rounded-3xl mb-6 border-2 border-amber-200 premium-shadow">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <p class="text-[10px] font-bold text-amber-800 uppercase tracking-wider mb-1">Guia Biodinâmico de Hoje</p>
+                    <p class="text-lg font-bold text-amber-900" id="data-biodinamica">Carregando data...</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl mb-2" id="lua-desenho">🌙</div>
+                    <p class="text-xs font-bold text-amber-700" id="fase-lunar">Fase Lunar</p>
+                </div>
+            </div>
+            <div class="bg-white/60 p-4 rounded-2xl mb-3">
                 <p class="text-sm text-amber-900 font-medium" id="dica-biodinamica">Calculando influência lunar...</p>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-white/70 p-3 rounded-xl text-center">
+                    <p class="text-[10px] text-amber-700 font-bold uppercase">Elemento</p>
+                    <p class="text-lg font-bold text-amber-900" id="elemento-dia">--</p>
+                </div>
+                <div class="bg-white/70 p-3 rounded-xl text-center">
+                    <p class="text-[10px] text-amber-700 font-bold uppercase">Astro</p>
+                    <p class="text-lg font-bold text-amber-900" id="astro-dia">--</p>
+                </div>
             </div>
         </div>
 
@@ -764,7 +782,56 @@
         };
 
         window.updateLunarDashboard = function() {
-            const info = window.getBiodynamicInfo(new Date());
+            const hoje = new Date();
+            const info = window.getBiodynamicInfo(hoje);
+            
+            // Atualizar data em português
+            const opcoes = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dataFormatada = hoje.toLocaleDateString('pt-BR', opcoes);
+            const dataCapitalizada = dataFormatada.charAt(0).toUpperCase() + dataFormatada.slice(1);
+            const elData = document.getElementById('data-biodinamica');
+            if (elData) elData.innerText = dataCapitalizada;
+            
+            // Atualizar fase lunar (emoji)
+            const luaEmojis = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘'];
+            const dia = hoje.getDate();
+            const faseIndex = Math.floor((dia % 29.5) / 3.6875);
+            const elLua = document.getElementById('lua-desenho');
+            if (elLua) elLua.innerText = luaEmojis[faseIndex];
+            
+            // Atualizar nome da fase
+            const fases = ['Lua Nova', 'Crescente', 'Crescente', 'Crescente', 'Lua Cheia', 'Minguante', 'Minguante', 'Minguante'];
+            const elFase = document.getElementById('fase-lunar');
+            if (elFase) elFase.innerText = fases[faseIndex];
+            
+            // Atualizar elemento
+            const elElemento = document.getElementById('elemento-dia');
+            if (elElemento) elElemento.innerText = info.type || '--';
+            
+            // Atualizar astro/zodíaco
+            const signos = ['Capricórnio', 'Aquário', 'Peixes', 'Áries', 'Touro', 'Gêmeos', 'Câncer', 'Leão', 'Virgem', 'Libra', 'Escorpião', 'Sagitário'];
+            const mes = hoje.getMonth();
+            const diaDoMes = hoje.getDate();
+            let signo = signos[mes];
+            
+            // Ajustar para datas próximas ao fim/início do mês
+            if ((mes === 0 && diaDoMes >= 20) || (mes === 1 && diaDoMes <= 18)) signo = 'Aquário';
+            else if ((mes === 1 && diaDoMes >= 19) || (mes === 2 && diaDoMes <= 20)) signo = 'Peixes';
+            else if ((mes === 2 && diaDoMes >= 21) || (mes === 3 && diaDoMes <= 19)) signo = 'Áries';
+            else if ((mes === 3 && diaDoMes >= 20) || (mes === 4 && diaDoMes <= 20)) signo = 'Touro';
+            else if ((mes === 4 && diaDoMes >= 21) || (mes === 5 && diaDoMes <= 20)) signo = 'Gêmeos';
+            else if ((mes === 5 && diaDoMes >= 21) || (mes === 6 && diaDoMes <= 22)) signo = 'Câncer';
+            else if ((mes === 6 && diaDoMes >= 23) || (mes === 7 && diaDoMes <= 22)) signo = 'Leão';
+            else if ((mes === 7 && diaDoMes >= 23) || (mes === 8 && diaDoMes <= 22)) signo = 'Virgem';
+            else if ((mes === 8 && diaDoMes >= 23) || (mes === 9 && diaDoMes <= 22)) signo = 'Libra';
+            else if ((mes === 9 && diaDoMes >= 23) || (mes === 10 && diaDoMes <= 21)) signo = 'Escorpião';
+            else if ((mes === 10 && diaDoMes >= 22) || (mes === 11 && diaDoMes <= 21)) signo = 'Sagitário';
+            else if ((mes === 11 && diaDoMes >= 22) || (mes === 0 && diaDoMes <= 19)) signo = 'Capricórnio';
+            
+            const elAstro = document.getElementById('astro-dia');
+            if (elAstro) elAstro.innerText = signo;
+            
+            // Atualizar dica biodinâmica
             const el = document.getElementById('dica-biodinamica');
             if (el) el.innerText = `Hoje: Influência de ${info.type}. Ideal para cuidar de plantas de ${info.type.toLowerCase()}!`;
         };
