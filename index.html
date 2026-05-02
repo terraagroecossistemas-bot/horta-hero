@@ -358,6 +358,33 @@
         </div>
     </div>
 
+    <!-- NOTIFICAÇÕES DE PLANTIO -->
+    <div id="screen-notificacoes" class="screen p-6">
+        <h2 class="text-2xl font-bold mb-6" style="color: #2D5A27;">📢 Notificações de Plantio</h2>
+        <div id="notificacoes-list" class="space-y-4">
+            <!-- Preenchido dinamicamente -->
+        </div>
+    </div>
+
+    <!-- BUSCA E FILTROS -->
+    <div id="screen-busca" class="screen p-6">
+        <h2 class="text-2xl font-bold mb-6" style="color: #2D5A27;">🔍 Buscar Receitas</h2>
+        <div class="mb-6">
+            <input type="text" id="search-input" placeholder="Buscar receita..." 
+                class="w-full p-4 rounded-2xl border-2 border-[#2D5A27] text-sm"
+                oninput="window.filterReceitas()">
+        </div>
+        <div class="mb-6 flex gap-2 flex-wrap">
+            <button onclick="window.filterByType('Tudo')" class="px-4 py-2 rounded-full bg-[#2D5A27] text-white text-sm font-bold">Tudo</button>
+            <button onclick="window.filterByType('Defensivos')" class="px-4 py-2 rounded-full bg-white border-2 border-[#2D5A27] text-[#2D5A27] text-sm font-bold">Defensivos</button>
+            <button onclick="window.filterByType('Adubos')" class="px-4 py-2 rounded-full bg-white border-2 border-[#2D5A27] text-[#2D5A27] text-sm font-bold">Adubos</button>
+            <button onclick="window.filterByType('Técnicas')" class="px-4 py-2 rounded-full bg-white border-2 border-[#2D5A27] text-[#2D5A27] text-sm font-bold">Técnicas</button>
+        </div>
+        <div id="search-results" class="space-y-4">
+            <!-- Preenchido dinamicamente -->
+        </div>
+    </div>
+
     <!-- NAVIGATION BAR -->
     <nav id="main-nav" class="fixed bottom-0 w-full glass border-t border-gray-100 px-4 py-4 flex justify-between items-center z-50 overflow-x-auto" style="display: none;">
         <button onclick="window.showScreen('screen-dashboard')" class="nav-item active flex flex-col items-center flex-shrink-0">
@@ -376,6 +403,14 @@
         <button onclick="window.showScreen('screen-saberes')" class="nav-item flex flex-col items-center flex-shrink-0">
             <i class="fa-solid fa-sprout text-xl mb-1"></i>
             <span class="text-[9px] font-bold uppercase">Saberes</span>
+        </button>
+        <button onclick="window.showScreen('screen-notificacoes')" class="nav-item flex flex-col items-center flex-shrink-0">
+            <i class="fa-solid fa-bell text-xl mb-1"></i>
+            <span class="text-[9px] font-bold uppercase">Alertas</span>
+        </button>
+        <button onclick="window.showScreen('screen-busca')" class="nav-item flex flex-col items-center flex-shrink-0">
+            <i class="fa-solid fa-magnifying-glass text-xl mb-1"></i>
+            <span class="text-[9px] font-bold uppercase">Buscar</span>
         </button>
         <button onclick="window.showScreen('screen-receitas')" class="nav-item flex flex-col items-center flex-shrink-0">
             <i class="fa-solid fa-flask text-xl mb-1"></i>
@@ -1212,46 +1247,12 @@
             document.getElementById('reading-content').innerHTML = receitas[receitaKey].content;
         };
 
-        window.saveState = function() { localStorage.setItem('horta_hero_state', JSON.stringify(state)); };
-        window.loadState = function() {
-            const saved = localStorage.getItem('horta_hero_state');
-            if (saved) {
-                state = JSON.parse(saved);
-                if (state.user.name) {
-                    document.getElementById('display-name').innerText = state.user.name;
-                    window.showScreen('screen-dashboard');
-                } else {
-                    window.showScreen('screen-splash');
-                }
-                window.updateStats();
-                window.renderGarden();
-            } else {
-                // Primeira vez - mostrar splash screen
-                window.showScreen('screen-splash');
-            }
-        };
-
-        window.toggleDarkMode = function() {
-            document.body.classList.toggle('dark-mode');
-            localStorage.setItem('horta_hero_dark', document.body.classList.contains('dark-mode'));
-        };
-
-        // Init
-        window.renderCatalog();
-        window.renderSaberes();
-        window.renderReceitas();
-        window.loadState();
-        if (localStorage.getItem('horta_hero_dark') === 'true') document.body.classList.add('dark-mode');
-        
-        // Init completo
-    
         // ===== NOTIFICAÇÕES DE PLANTIO =====
         window.generatePlantingNotifications = function() {
             const notifications = [];
             const today = new Date();
             const lunar = window.getBiodynamicInfo(today);
             
-            // Notificação do dia
             notifications.push({
                 type: 'Hoje',
                 title: `Dia ${lunar.type}`,
@@ -1260,7 +1261,6 @@
                 date: today.toLocaleDateString('pt-BR')
             });
             
-            // Próximas datas ideais
             for (let i = 1; i <= 7; i++) {
                 const futureDate = new Date(today);
                 futureDate.setDate(futureDate.getDate() + i);
@@ -1271,7 +1271,7 @@
                         type: 'Próximo',
                         title: `${futureDate.toLocaleDateString('pt-BR')} - Dia de Fruto`,
                         message: 'Ideal para plantio de frutíferas e tomates',
-                        icon: '🍅',
+                        icon: '🝅',
                         date: futureDate.toLocaleDateString('pt-BR')
                     });
                 }
@@ -1312,7 +1312,6 @@
             currentFilterType = type;
             window.filterReceitas();
             
-            // Atualizar botões ativos
             document.querySelectorAll('[onclick*="filterByType"]').forEach(btn => {
                 btn.style.backgroundColor = btn.textContent.includes(type) ? '#2D5A27' : 'white';
                 btn.style.color = btn.textContent.includes(type) ? 'white' : '#2D5A27';
@@ -1351,13 +1350,6 @@
             });
         };
         
-        // ===== PROGRESSIVE WEB APP (PWA) =====
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').catch(() => {
-                console.log('ServiceWorker não disponível');
-            });
-        }
-        
         // Adicionar tipo às receitas
         Object.assign(receitas, {
             bordalesa: { ...receitas.bordalesa, type: 'Defensivos' },
@@ -1369,9 +1361,47 @@
             compostagem: { ...receitas.compostagem, type: 'Técnicas' }
         });
         
-        // Renderizar notificações e busca ao carregar
+        // PWA Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(() => {
+                console.log('ServiceWorker não disponível');
+            });
+        }
+
+        window.saveState = function() { localStorage.setItem('horta_hero_state', JSON.stringify(state)); };
+        window.loadState = function() {
+            const saved = localStorage.getItem('horta_hero_state');
+            if (saved) {
+                state = JSON.parse(saved);
+                if (state.user.name) {
+                    document.getElementById('display-name').innerText = state.user.name;
+                    window.showScreen('screen-dashboard');
+                } else {
+                    window.showScreen('screen-splash');
+                }
+                window.updateStats();
+                window.renderGarden();
+            } else {
+                // Primeira vez - mostrar splash screen
+                window.showScreen('screen-splash');
+            }
+        };
+
+        window.toggleDarkMode = function() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('horta_hero_dark', document.body.classList.contains('dark-mode'));
+        };
+
+        // Init
+        window.renderCatalog();
+        window.renderSaberes();
+        window.renderReceitas();
         window.renderNotificacoes();
         window.filterReceitas();
+        window.loadState();
+        if (localStorage.getItem('horta_hero_dark') === 'true') document.body.classList.add('dark-mode');
+        
+        // Init completo
 
         </script>
 </body>
