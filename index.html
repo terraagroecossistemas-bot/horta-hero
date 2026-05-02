@@ -1253,11 +1253,13 @@
             const today = new Date();
             const lunar = window.getBiodynamicInfo(today);
             
+            const lunarEmojis = { 'Fruto': '🍅', 'Raiz': '🥔', 'Flor': '🌸', 'Folha': '🍃', 'Desfavorável': '⚠️' };
+            
             notifications.push({
                 type: 'Hoje',
                 title: `Dia ${lunar.type}`,
-                message: `Influência de ${lunar.element}. Ideal para plantas de ${lunar.element.toLowerCase()}.`,
-                icon: lunar.emoji,
+                message: `Influência de ${lunar.type}. Ideal para plantas de ${lunar.type.toLowerCase()}.`,
+                icon: lunarEmojis[lunar.type] || '🌱',
                 date: today.toLocaleDateString('pt-BR')
             });
             
@@ -1266,7 +1268,7 @@
                 futureDate.setDate(futureDate.getDate() + i);
                 const futLunar = window.getBiodynamicInfo(futureDate);
                 
-                if (futLunar.element === 'Fruto') {
+                if (futLunar.type === 'Fruto') {
                     notifications.push({
                         type: 'Próximo',
                         title: `${futureDate.toLocaleDateString('pt-BR')} - Dia de Fruto`,
