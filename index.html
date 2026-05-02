@@ -83,6 +83,14 @@
         .book-content h2 { font-size: 1.2rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 1rem; }
         .book-content p { margin-bottom: 1rem; }
     </style>
+
+        <!-- PWA Manifest -->
+        <link rel="manifest" href="manifest.json">
+        <meta name="theme-color" content="#2D5A27">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="apple-mobile-web-app-title" content="Horta Hero">
+
 </head>
 <body>
 
@@ -1236,6 +1244,135 @@
         if (localStorage.getItem('horta_hero_dark') === 'true') document.body.classList.add('dark-mode');
         
         // Init completo
-    </script>
+    
+        // ===== NOTIFICAÇÕES DE PLANTIO =====
+        window.generatePlantingNotifications = function() {
+            const notifications = [];
+            const today = new Date();
+            const lunar = window.getBiodynamicInfo(today);
+            
+            // Notificação do dia
+            notifications.push({
+                type: 'Hoje',
+                title: `Dia ${lunar.type}`,
+                message: `Influência de ${lunar.element}. Ideal para plantas de ${lunar.element.toLowerCase()}.`,
+                icon: lunar.emoji,
+                date: today.toLocaleDateString('pt-BR')
+            });
+            
+            // Próximas datas ideais
+            for (let i = 1; i <= 7; i++) {
+                const futureDate = new Date(today);
+                futureDate.setDate(futureDate.getDate() + i);
+                const futLunar = window.getBiodynamicInfo(futureDate);
+                
+                if (futLunar.element === 'Fruto') {
+                    notifications.push({
+                        type: 'Próximo',
+                        title: `${futureDate.toLocaleDateString('pt-BR')} - Dia de Fruto`,
+                        message: 'Ideal para plantio de frutíferas e tomates',
+                        icon: '🍅',
+                        date: futureDate.toLocaleDateString('pt-BR')
+                    });
+                }
+            }
+            
+            return notifications;
+        };
+        
+        window.renderNotificacoes = function() {
+            const container = document.getElementById('notificacoes-list');
+            if (!container) return;
+            
+            const notifications = window.generatePlantingNotifications();
+            container.innerHTML = '';
+            
+            notifications.forEach(notif => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-5 rounded-[24px] premium-shadow border-l-4 border-[#2D5A27]';
+                card.innerHTML = `
+                    <div class="flex items-start gap-4">
+                        <div class="text-4xl">${notif.icon}</div>
+                        <div class="flex-1">
+                            <p class="text-xs font-bold text-gray-500 uppercase">${notif.type}</p>
+                            <h3 class="font-bold text-lg mb-1">${notif.title}</h3>
+                            <p class="text-sm text-gray-600">${notif.message}</p>
+                            <p class="text-xs text-gray-400 mt-2">${notif.date}</p>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        };
+        
+        // ===== BUSCA E FILTROS =====
+        let currentFilterType = 'Tudo';
+        
+        window.filterByType = function(type) {
+            currentFilterType = type;
+            window.filterReceitas();
+            
+            // Atualizar botões ativos
+            document.querySelectorAll('[onclick*="filterByType"]').forEach(btn => {
+                btn.style.backgroundColor = btn.textContent.includes(type) ? '#2D5A27' : 'white';
+                btn.style.color = btn.textContent.includes(type) ? 'white' : '#2D5A27';
+            });
+        };
+        
+        window.filterReceitas = function() {
+            const searchTerm = document.getElementById('search-input')?.value.toLowerCase() || '';
+            const resultsContainer = document.getElementById('search-results');
+            if (!resultsContainer) return;
+            
+            resultsContainer.innerHTML = '';
+            
+            const receitasArray = Object.entries(receitas);
+            const filtered = receitasArray.filter(([key, receita]) => {
+                const matchesSearch = receita.title.toLowerCase().includes(searchTerm);
+                const matchesType = currentFilterType === 'Tudo' || receita.type === currentFilterType;
+                return matchesSearch && matchesType;
+            });
+            
+            if (filtered.length === 0) {
+                resultsContainer.innerHTML = '<p class="text-center text-gray-400 py-8">Nenhuma receita encontrada</p>';
+                return;
+            }
+            
+            filtered.forEach(([key, receita]) => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-5 rounded-[24px] premium-shadow cursor-pointer hover:shadow-lg transition';
+                card.onclick = () => window.showReceita(key);
+                card.innerHTML = `
+                    <h3 class="font-bold text-lg mb-2">${receita.title}</h3>
+                    <p class="text-xs font-bold text-[#2D5A27] uppercase mb-3">${receita.type || 'Receita'}</p>
+                    <button class="w-full py-2 rounded-lg bg-[#2D5A27] text-white font-bold text-sm">Ver Receita</button>
+                `;
+                resultsContainer.appendChild(card);
+            });
+        };
+        
+        // ===== PROGRESSIVE WEB APP (PWA) =====
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(() => {
+                console.log('ServiceWorker não disponível');
+            });
+        }
+        
+        // Adicionar tipo às receitas
+        Object.assign(receitas, {
+            bordalesa: { ...receitas.bordalesa, type: 'Defensivos' },
+            alho: { ...receitas.alho, type: 'Defensivos' },
+            supermagro: { ...receitas.supermagro, type: 'Adubos' },
+            neem: { ...receitas.neem, type: 'Defensivos' },
+            pimenta: { ...receitas.pimenta, type: 'Defensivos' },
+            cha_compostagem: { ...receitas.cha_compostagem, type: 'Adubos' },
+            compostagem: { ...receitas.compostagem, type: 'Técnicas' }
+        });
+        
+        // Renderizar notificações e busca ao carregar
+        window.renderNotificacoes();
+        window.filterReceitas();
+
+        </script>
 </body>
 </html>
