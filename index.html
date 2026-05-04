@@ -332,7 +332,7 @@
     <!-- 9. LEITURA DO CAPÍTULO -->
     <div id="screen-leitura" class="screen p-6">
         <div class="flex items-center mb-8">
-            <button onclick="window.showScreen('screen-livro')" class="w-10 h-10 rounded-full bg-white flex items-center justify-center premium-shadow mr-4">
+            <button onclick="window.showScreen(window.lastScreen || 'screen-livro')" class="w-10 h-10 rounded-full bg-white flex items-center justify-center premium-shadow mr-4">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
             <h2 class="text-xl font-bold" id="reading-title">Lendo Capítulo</h2>
@@ -982,8 +982,8 @@
             // Lua Cheia: 12 fev, 14 mar, 13 abr, 13 mai, 12 jun, 12 jul, 10 ago, 9 set, 9 out, 8 nov, 8 dez
             
             const lunarData2026 = {
-                novas: [29, 28, 30, 24, 29, 27, 27, 26, 25, 24, 23, 23],
-                cheias: [12, 14, 14, 9, 13, 12, 12, 10, 9, 9, 8, 8]
+                novas: [29, 28, 30, 24, 24, 27, 27, 26, 25, 24, 23, 23],
+                cheias: [12, 14, 14, 9, 9, 12, 12, 10, 9, 9, 8, 8]
             };
             
             const mesAtual = hoje.getMonth();
@@ -1222,6 +1222,7 @@
         };
 
         window.showSaber = function(saberKey) {
+            window.lastScreen = 'screen-saberes';
             window.showScreen('screen-leitura');
             document.getElementById('reading-title').innerText = saberes[saberKey].title;
             document.getElementById('reading-content').innerHTML = saberes[saberKey].content;
@@ -1242,6 +1243,7 @@
         };
 
         window.showReceita = function(receitaKey) {
+            window.lastScreen = 'screen-busca';
             window.showScreen('screen-leitura');
             document.getElementById('reading-title').innerText = receitas[receitaKey].title;
             document.getElementById('reading-content').innerHTML = receitas[receitaKey].content;
