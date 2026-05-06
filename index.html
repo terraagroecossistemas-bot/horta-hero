@@ -32,7 +32,10 @@
         .premium-shadow { box-shadow: 0 10px 30px rgba(45, 90, 39, 0.08); }
         .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
         
-        .screen { display: none; min-height: 100vh; padding-bottom: 100px; }
+        .screen { display: none; min-height: 100vh; padding-bottom: 140px; }
+        .screen-leitura { padding-bottom: 180px; }
+        .screen-saberes { padding-bottom: 180px; }
+        .screen-receitas { padding-bottom: 180px; }
         .screen.active { display: block; animation: fadeIn 0.2s ease-out; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -922,7 +925,55 @@
         };
 
         // --- CALENDÁRIO LUNAR ---
+        // Dados precisos do Rhythm of Nature para 2026
+        const biodynamicData2026 = {
+            // Maio 2026: Baseado em https://www.rhythmofnature.net/biodynamic-calendar-may-2026
+            5: {
+                1: { type: 'Folha', sign: 'Touro' },
+                2: { type: 'Fruto', sign: 'Touro' },
+                3: { type: 'Fruto', sign: 'Touro' },
+                4: { type: 'Fruto', sign: 'Touro' },
+                5: { type: 'Raiz', sign: 'Touro' },
+                6: { type: 'Flor', sign: 'Touro' },
+                7: { type: 'Folha', sign: 'Touro' },
+                8: { type: 'Folha', sign: 'Touro' },
+                9: { type: 'Fruto', sign: 'Touro' },
+                10: { type: 'Fruto', sign: 'Touro' },
+                11: { type: 'Fruto', sign: 'Touro' },
+                12: { type: 'Raiz', sign: 'Touro' },
+                13: { type: 'Raiz', sign: 'Touro' },
+                14: { type: 'Raiz', sign: 'Touro' },
+                15: { type: 'Flor', sign: 'Touro' },
+                16: { type: 'Flor', sign: 'Touro' },
+                17: { type: 'Flor', sign: 'Touro' },
+                18: { type: 'Folha', sign: 'Touro' },
+                19: { type: 'Folha', sign: 'Touro' },
+                20: { type: 'Folha', sign: 'Gêmeos' },
+                21: { type: 'Folha', sign: 'Gêmeos' },
+                22: { type: 'Fruto', sign: 'Gêmeos' },
+                23: { type: 'Fruto', sign: 'Gêmeos' },
+                24: { type: 'Fruto', sign: 'Gêmeos' },
+                25: { type: 'Raiz', sign: 'Gêmeos' },
+                26: { type: 'Raiz', sign: 'Gêmeos' },
+                27: { type: 'Raiz', sign: 'Gêmeos' },
+                28: { type: 'Flor', sign: 'Gêmeos' },
+                29: { type: 'Flor', sign: 'Gêmeos' },
+                30: { type: 'Flor', sign: 'Gêmeos' },
+                31: { type: 'Folha', sign: 'Gêmeos' }
+            }
+        };
+        
         window.getBiodynamicInfo = function(date) {
+            const mes = date.getMonth() + 1; // 1-12
+            const dia = date.getDate();
+            
+            // Procurar dados específicos para o mês
+            if (biodynamicData2026[mes] && biodynamicData2026[mes][dia]) {
+                const info = biodynamicData2026[mes][dia];
+                return { ...info, quality: `Influência de ${info.type}.` };
+            }
+            
+            // Fallback: usar algoritmo anterior para meses não mapeados
             const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 86400000);
             const zodiacCycle = dayOfYear % 28;
             const zodiacMap = [
