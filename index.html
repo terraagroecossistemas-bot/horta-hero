@@ -430,6 +430,16 @@
             <i class="fa-solid fa-users text-xl mb-1"></i>
             <span class="text-[9px] font-bold uppercase">Rede</span>
         </button>
+        <button onclick="window.showScreen('screen-catalogo')" class="nav-item flex flex-col items-center flex-shrink-0">
+            <i class="fas fa-leaf text-2xl mb-1"></i>
+            <span class="text-xs">CATÁLOGO</span>
+        </button>
+        <button onclick="window.showScreen('screen-catalogo')" class="nav-item flex flex-col items-center flex-shrink-0">
+            <i class="fas fa-leaf text-2xl mb-1"></i>
+            <span class="text-xs">CATÁLOGO</span>
+        </button>
+    
+    
     </nav>
 
     <!-- MODAL DE PLANTIO -->
@@ -1461,6 +1471,1001 @@
         
         // Init completo
 
-        </script>
+        
+
+window.plantasData = [
+  {
+    "id": 1,
+    "nome": "Tomate",
+    "cientifico": "Solanum lycopersicum",
+    "tipo": "Fruto",
+    "categoria": "Hortaliça",
+    "descricao": "Fruto vermelho rico em licopeno, vitamina C e antioxidantes. Ideal para saladas e molhos.",
+    "plantio": "Setembro a Novembro",
+    "colheita": "60-90 dias após plantio",
+    "dicas": "Requer sol pleno (6-8h), solo bem drenado, rega regular. Tutorar a planta para melhor desenvolvimento.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece crescimento.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "tomate.jpg"
+  },
+  {
+    "id": 2,
+    "nome": "Alface",
+    "cientifico": "Lactuca sativa",
+    "tipo": "Folha",
+    "categoria": "Hortaliça",
+    "descricao": "Folhas verdes e crocantes, rica em fibras e vitaminas. Perfeita para saladas frescas.",
+    "plantio": "Março a Setembro",
+    "colheita": "30-60 dias após plantio",
+    "dicas": "Prefere meia-sombra em climas quentes, solo úmido mas não encharcado. Colher as folhas externas.",
+    "biodinamica": "Ideal em dias de Folha. Melhor em lua minguante.",
+    "zodiacos": [
+      "Câncer",
+      "Escorpião"
+    ],
+    "imagem": "alface.jpg"
+  },
+  {
+    "id": 3,
+    "nome": "Cenoura",
+    "cientifico": "Daucus carota",
+    "tipo": "Raiz",
+    "categoria": "Hortaliça",
+    "descricao": "Raiz alaranjada rica em beta-caroteno e vitamina A. Essencial para a saúde dos olhos.",
+    "plantio": "Março a Setembro",
+    "colheita": "70-100 dias após plantio",
+    "dicas": "Solo solto e profundo, sem pedras. Rega moderada. Desbaste as mudas para melhor desenvolvimento.",
+    "biodinamica": "Ideal em dias de Raiz. Lua nova favorece enraizamento.",
+    "zodiacos": [
+      "Virgem",
+      "Capricórnio"
+    ],
+    "imagem": "cenoura.jpg"
+  },
+  {
+    "id": 4,
+    "nome": "Manjericão",
+    "cientifico": "Ocimum basilicum",
+    "tipo": "Folha",
+    "categoria": "Erva Aromática",
+    "descricao": "Erva aromática com aroma intenso, usada em culinária e chás. Propriedades antibacterianas.",
+    "plantio": "Setembro a Março",
+    "colheita": "30-40 dias após plantio",
+    "dicas": "Ama sol pleno, solo fértil e bem drenado. Pinçar o topo para estimular ramificação.",
+    "biodinamica": "Ideal em dias de Flor. Lua crescente favorece aroma.",
+    "zodiacos": [
+      "Gêmeos",
+      "Libra"
+    ],
+    "imagem": "manjericao.jpg"
+  },
+  {
+    "id": 5,
+    "nome": "Morango",
+    "cientifico": "Fragaria × ananassa",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto vermelho doce, rico em vitamina C e antioxidantes. Ideal para sobremesas.",
+    "plantio": "Março a Maio",
+    "colheita": "30-40 dias após floração",
+    "dicas": "Prefere clima temperado, solo rico em matéria orgânica. Mulch para conservar umidade.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "morango.jpg"
+  },
+  {
+    "id": 6,
+    "nome": "Gengibre",
+    "cientifico": "Zingiber officinale",
+    "tipo": "Raiz",
+    "categoria": "Planta Medicinal",
+    "descricao": "Raiz aromática com propriedades anti-inflamatórias e termogênicas. Usado em chás e culinária.",
+    "plantio": "Setembro a Dezembro",
+    "colheita": "8-10 meses após plantio",
+    "dicas": "Solo rico em matéria orgânica, meia-sombra, rega regular. Não tolera encharcamento.",
+    "biodinamica": "Ideal em dias de Raiz. Lua nova favorece enraizamento profundo.",
+    "zodiacos": [
+      "Virgem",
+      "Capricórnio"
+    ],
+    "imagem": "gengibre.jpg"
+  },
+  {
+    "id": 7,
+    "nome": "Hortelã",
+    "cientifico": "Mentha piperita",
+    "tipo": "Folha",
+    "categoria": "Erva Aromática",
+    "descricao": "Erva refrescante com aroma intenso, usada em chás e bebidas. Propriedades digestivas.",
+    "plantio": "Ano todo",
+    "colheita": "30-45 dias após plantio",
+    "dicas": "Cresce facilmente, prefere meia-sombra, solo úmido. Controlar o crescimento para evitar invasão.",
+    "biodinamica": "Ideal em dias de Folha. Lua crescente favorece vigor.",
+    "zodiacos": [
+      "Câncer",
+      "Escorpião"
+    ],
+    "imagem": "hortela.jpg"
+  },
+  {
+    "id": 8,
+    "nome": "Cúrcuma",
+    "cientifico": "Curcuma longa",
+    "tipo": "Raiz",
+    "categoria": "Planta Medicinal",
+    "descricao": "Raiz amarela com propriedades anti-inflamatórias poderosas. Especiaria essencial na culinária.",
+    "plantio": "Setembro a Dezembro",
+    "colheita": "8-10 meses após plantio",
+    "dicas": "Clima quente e úmido, solo rico em matéria orgânica. Meia-sombra ideal.",
+    "biodinamica": "Ideal em dias de Raiz. Lua nova favorece enraizamento.",
+    "zodiacos": [
+      "Virgem",
+      "Capricórnio"
+    ],
+    "imagem": "curcuma.jpg"
+  },
+  {
+    "id": 9,
+    "nome": "Melancia",
+    "cientifico": "Citrullus lanatus",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto grande e refrescante, rico em água e licopeno. Perfeito para dias quentes.",
+    "plantio": "Setembro a Novembro",
+    "colheita": "70-100 dias após plantio",
+    "dicas": "Requer muito espaço, sol pleno, solo fértil. Rega abundante em clima quente.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "melancia.jpg"
+  },
+  {
+    "id": 10,
+    "nome": "Alecrim",
+    "cientifico": "Rosmarinus officinalis",
+    "tipo": "Folha",
+    "categoria": "Erva Aromática",
+    "descricao": "Erva aromática lenhosa com propriedades antioxidantes. Usada em culinária e rituais.",
+    "plantio": "Ano todo",
+    "colheita": "60-90 dias após plantio",
+    "dicas": "Prefere sol pleno, solo bem drenado. Resistente à seca. Poda regular estimula ramificação.",
+    "biodinamica": "Ideal em dias de Flor. Lua crescente favorece aroma.",
+    "zodiacos": [
+      "Gêmeos",
+      "Libra"
+    ],
+    "imagem": "alecrim.jpg"
+  },
+  {
+    "id": 11,
+    "nome": "Beterraba",
+    "cientifico": "Beta vulgaris",
+    "tipo": "Raiz",
+    "categoria": "Hortaliça",
+    "descricao": "Raiz vermelha escura rica em ferro e antioxidantes. Versátil na culinária.",
+    "plantio": "Março a Setembro",
+    "colheita": "60-80 dias após plantio",
+    "dicas": "Solo bem preparado, rega regular. Desbaste as mudas para melhor desenvolvimento.",
+    "biodinamica": "Ideal em dias de Raiz. Lua nova favorece enraizamento.",
+    "zodiacos": [
+      "Virgem",
+      "Capricórnio"
+    ],
+    "imagem": "beterraba.jpg"
+  },
+  {
+    "id": 12,
+    "nome": "Couve",
+    "cientifico": "Brassica oleracea",
+    "tipo": "Folha",
+    "categoria": "Hortaliça",
+    "descricao": "Folhas verdes escuras ricas em cálcio e ferro. Superalimento nutritivo.",
+    "plantio": "Março a Setembro",
+    "colheita": "60-90 dias após plantio",
+    "dicas": "Prefere clima ameno, solo fértil. Colher as folhas externas regularmente.",
+    "biodinamica": "Ideal em dias de Folha. Lua minguante favorece vigor.",
+    "zodiacos": [
+      "Câncer",
+      "Escorpião"
+    ],
+    "imagem": "couve.jpg"
+  },
+  {
+    "id": 13,
+    "nome": "Melão",
+    "cientifico": "Cucumis melo",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto doce e aromático, rico em vitaminas e minerais. Refrescante e nutritivo.",
+    "plantio": "Setembro a Novembro",
+    "colheita": "70-90 dias após plantio",
+    "dicas": "Requer espaço, sol pleno, solo fértil. Suporte para as frutas evita podridão.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "melao.jpg"
+  },
+  {
+    "id": 14,
+    "nome": "Camomila",
+    "cientifico": "Matricaria chamomilla",
+    "tipo": "Flor",
+    "categoria": "Planta Medicinal",
+    "descricao": "Flores delicadas com propriedades calmantes. Usada em chás relaxantes.",
+    "plantio": "Março a Setembro",
+    "colheita": "60-90 dias após plantio",
+    "dicas": "Prefere sol pleno, solo bem drenado. Auto-semeia facilmente.",
+    "biodinamica": "Ideal em dias de Flor. Lua crescente favorece floração.",
+    "zodiacos": [
+      "Gêmeos",
+      "Libra"
+    ],
+    "imagem": "camomila.jpg"
+  },
+  {
+    "id": 15,
+    "nome": "Abóbora",
+    "cientifico": "Cucurbita moschata",
+    "tipo": "Fruto",
+    "categoria": "Hortaliça",
+    "descricao": "Fruto grande e nutritivo, rico em beta-caroteno. Versátil na culinária.",
+    "plantio": "Setembro a Novembro",
+    "colheita": "80-120 dias após plantio",
+    "dicas": "Requer muito espaço, sol pleno, solo fértil. Rega regular em clima seco.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "abobora.jpg"
+  },
+  {
+    "id": 16,
+    "nome": "Espinafre",
+    "cientifico": "Spinacia oleracea",
+    "tipo": "Folha",
+    "categoria": "Hortaliça",
+    "descricao": "Folhas verdes ricas em ferro e ácido fólico. Superalimento nutritivo.",
+    "plantio": "Março a Setembro",
+    "colheita": "40-50 dias após plantio",
+    "dicas": "Prefere clima fresco, solo rico em matéria orgânica. Colher antes do florescimento.",
+    "biodinamica": "Ideal em dias de Folha. Lua minguante favorece vigor.",
+    "zodiacos": [
+      "Câncer",
+      "Escorpião"
+    ],
+    "imagem": "espinafre.jpg"
+  },
+  {
+    "id": 17,
+    "nome": "Pimenta",
+    "cientifico": "Capsicum annuum",
+    "tipo": "Fruto",
+    "categoria": "Hortaliça",
+    "descricao": "Fruto picante ou doce, rico em vitamina C. Versátil na culinária.",
+    "plantio": "Setembro a Novembro",
+    "colheita": "60-90 dias após plantio",
+    "dicas": "Requer sol pleno, clima quente, solo bem drenado. Rega regular.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "pimenta.jpg"
+  },
+  {
+    "id": 18,
+    "nome": "Brócolis",
+    "cientifico": "Brassica oleracea italica",
+    "tipo": "Flor",
+    "categoria": "Hortaliça",
+    "descricao": "Inflorescência verde rica em vitaminas e minerais. Superalimento nutritivo.",
+    "plantio": "Março a Setembro",
+    "colheita": "60-90 dias após plantio",
+    "dicas": "Prefere clima ameno, solo fértil. Colher antes da floração completa.",
+    "biodinamica": "Ideal em dias de Flor. Lua crescente favorece desenvolvimento.",
+    "zodiacos": [
+      "Gêmeos",
+      "Libra"
+    ],
+    "imagem": "brocolis.jpg"
+  },
+  {
+    "id": 19,
+    "nome": "Cebola",
+    "cientifico": "Allium cepa",
+    "tipo": "Raiz",
+    "categoria": "Hortaliça",
+    "descricao": "Bulbo aromático essencial na culinária, com propriedades antibacterianas.",
+    "plantio": "Março a Setembro",
+    "colheita": "100-120 dias após plantio",
+    "dicas": "Solo bem preparado, rega moderada. Armazenar em local fresco e seco.",
+    "biodinamica": "Ideal em dias de Raiz. Lua nova favorece enraizamento.",
+    "zodiacos": [
+      "Virgem",
+      "Capricórnio"
+    ],
+    "imagem": "cebola.jpg"
+  },
+  {
+    "id": 20,
+    "nome": "Alho",
+    "cientifico": "Allium sativum",
+    "tipo": "Raiz",
+    "categoria": "Hortaliça",
+    "descricao": "Bulbo aromático com propriedades antifúngicas e antibacterianas poderosas.",
+    "plantio": "Março a Maio",
+    "colheita": "150-180 dias após plantio",
+    "dicas": "Plantio em fileiras, solo bem drenado. Colher quando folhas secarem.",
+    "biodinamica": "Ideal em dias de Raiz. Lua nova favorece enraizamento profundo.",
+    "zodiacos": [
+      "Virgem",
+      "Capricórnio"
+    ],
+    "imagem": "alho.jpg"
+  },
+  {
+    "id": 21,
+    "nome": "Rúcula",
+    "cientifico": "Eruca vesicaria",
+    "tipo": "Folha",
+    "categoria": "Hortaliça",
+    "descricao": "Folhas picantes e aromáticas, ricas em vitaminas. Perfeita para saladas.",
+    "plantio": "Março a Setembro",
+    "colheita": "30-40 dias após plantio",
+    "dicas": "Prefere meia-sombra em clima quente, solo úmido. Colher regularmente.",
+    "biodinamica": "Ideal em dias de Folha. Lua minguante favorece vigor.",
+    "zodiacos": [
+      "Câncer",
+      "Escorpião"
+    ],
+    "imagem": "rucula.jpg"
+  },
+  {
+    "id": 22,
+    "nome": "Banana",
+    "cientifico": "Musa paradisiaca",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto tropical rico em potássio e carboidratos. Nutritivo e versátil.",
+    "plantio": "Ano todo",
+    "colheita": "9-12 meses após plantio",
+    "dicas": "Clima tropical/subtropical, solo fértil, proteção do vento. Rega regular.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "banana.jpg"
+  },
+  {
+    "id": 23,
+    "nome": "Limão",
+    "cientifico": "Citrus limon",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto cítrico ácido, rico em vitamina C. Essencial na culinária.",
+    "plantio": "Ano todo",
+    "colheita": "6-12 meses após floração",
+    "dicas": "Clima subtropical/tropical, solo bem drenado, sol pleno. Rega moderada.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "limao.jpg"
+  },
+  {
+    "id": 24,
+    "nome": "Maçã",
+    "cientifico": "Malus domestica",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto doce e crocante, rico em fibras. Nutritivo e versátil.",
+    "plantio": "Março a Maio",
+    "colheita": "120-150 dias após floração",
+    "dicas": "Clima temperado, solo bem drenado, poda anual. Polinização cruzada necessária.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "maca.jpg"
+  },
+  {
+    "id": 25,
+    "nome": "Uva",
+    "cientifico": "Vitis vinifera",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto doce em cachos, rico em antioxidantes. Versátil em culinária.",
+    "plantio": "Março a Maio",
+    "colheita": "60-100 dias após floração",
+    "dicas": "Treliça para suporte, poda anual, solo bem drenado. Proteção de pragas.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "uva.jpg"
+  },
+  {
+    "id": 26,
+    "nome": "Salsa",
+    "cientifico": "Petroselinum crispum",
+    "tipo": "Folha",
+    "categoria": "Erva Aromática",
+    "descricao": "Erva aromática com folhas verdes, usada como tempero e guarnição.",
+    "plantio": "Ano todo",
+    "colheita": "60-80 dias após plantio",
+    "dicas": "Meia-sombra, solo úmido mas não encharcado. Colher folhas externas.",
+    "biodinamica": "Ideal em dias de Folha. Lua crescente favorece vigor.",
+    "zodiacos": [
+      "Câncer",
+      "Escorpião"
+    ],
+    "imagem": "salsa.jpg"
+  },
+  {
+    "id": 27,
+    "nome": "Cebolinha",
+    "cientifico": "Allium schoenoprasum",
+    "tipo": "Folha",
+    "categoria": "Erva Aromática",
+    "descricao": "Erva aromática com folhas finas, usada como tempero em diversos pratos.",
+    "plantio": "Ano todo",
+    "colheita": "30-40 dias após plantio",
+    "dicas": "Meia-sombra, solo úmido. Colher regularmente para estimular crescimento.",
+    "biodinamica": "Ideal em dias de Folha. Lua crescente favorece vigor.",
+    "zodiacos": [
+      "Câncer",
+      "Escorpião"
+    ],
+    "imagem": "cebolinha.jpg"
+  },
+  {
+    "id": 28,
+    "nome": "Orégano",
+    "cientifico": "Origanum vulgare",
+    "tipo": "Folha",
+    "categoria": "Erva Aromática",
+    "descricao": "Erva aromática com propriedades antioxidantes, usada em culinária.",
+    "plantio": "Ano todo",
+    "colheita": "60-90 dias após plantio",
+    "dicas": "Sol pleno, solo bem drenado. Resistente à seca. Poda estimula ramificação.",
+    "biodinamica": "Ideal em dias de Flor. Lua crescente favorece aroma.",
+    "zodiacos": [
+      "Gêmeos",
+      "Libra"
+    ],
+    "imagem": "oregano.jpg"
+  },
+  {
+    "id": 29,
+    "nome": "Tomilho",
+    "cientifico": "Thymus vulgaris",
+    "tipo": "Folha",
+    "categoria": "Erva Aromática",
+    "descricao": "Erva aromática com propriedades antissépticas, usada em culinária e chás.",
+    "plantio": "Ano todo",
+    "colheita": "60-90 dias após plantio",
+    "dicas": "Sol pleno, solo bem drenado. Resistente à seca. Poda regular.",
+    "biodinamica": "Ideal em dias de Flor. Lua crescente favorece aroma.",
+    "zodiacos": [
+      "Gêmeos",
+      "Libra"
+    ],
+    "imagem": "tomilho.jpg"
+  },
+  {
+    "id": 30,
+    "nome": "Rabanete",
+    "cientifico": "Raphanus sativus",
+    "tipo": "Raiz",
+    "categoria": "Hortaliça",
+    "descricao": "Raiz pequena e picante, rica em vitamina C. Colheita rápida.",
+    "plantio": "Março a Setembro",
+    "colheita": "25-30 dias após plantio",
+    "dicas": "Solo bem preparado, rega regular. Colher quando atingir tamanho desejado.",
+    "biodinamica": "Ideal em dias de Raiz. Lua nova favorece enraizamento rápido.",
+    "zodiacos": [
+      "Virgem",
+      "Capricórnio"
+    ],
+    "imagem": "rabanete.jpg"
+  },
+  {
+    "id": 31,
+    "nome": "Nabo",
+    "cientifico": "Brassica rapa",
+    "tipo": "Raiz",
+    "categoria": "Hortaliça",
+    "descricao": "Raiz branca ou roxa, rica em vitaminas e minerais. Versátil na culinária.",
+    "plantio": "Março a Setembro",
+    "colheita": "60-80 dias após plantio",
+    "dicas": "Solo bem preparado, rega regular. Desbaste as mudas para melhor desenvolvimento.",
+    "biodinamica": "Ideal em dias de Raiz. Lua nova favorece enraizamento.",
+    "zodiacos": [
+      "Virgem",
+      "Capricórnio"
+    ],
+    "imagem": "nabo.jpg"
+  },
+  {
+    "id": 32,
+    "nome": "Batata",
+    "cientifico": "Solanum tuberosum",
+    "tipo": "Raiz",
+    "categoria": "Hortaliça",
+    "descricao": "Tubérculo rico em carboidratos e potássio. Alimento versátil e nutritivo.",
+    "plantio": "Março a Maio",
+    "colheita": "70-100 dias após plantio",
+    "dicas": "Solo bem preparado, amontoa para proteger tubérculos. Rega regular.",
+    "biodinamica": "Ideal em dias de Raiz. Lua nova favorece enraizamento profundo.",
+    "zodiacos": [
+      "Virgem",
+      "Capricórnio"
+    ],
+    "imagem": "batata.jpg"
+  },
+  {
+    "id": 33,
+    "nome": "Pepino",
+    "cientifico": "Cucumis sativus",
+    "tipo": "Fruto",
+    "categoria": "Hortaliça",
+    "descricao": "Fruto alongado e refrescante, rico em água. Perfeito para saladas.",
+    "plantio": "Setembro a Novembro",
+    "colheita": "50-70 dias após plantio",
+    "dicas": "Treliça para suporte, solo fértil, rega regular. Colher quando firme.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "pepino.jpg"
+  },
+  {
+    "id": 34,
+    "nome": "Berinjela",
+    "cientifico": "Solanum melongena",
+    "tipo": "Fruto",
+    "categoria": "Hortaliça",
+    "descricao": "Fruto roxo ou branco, versátil na culinária. Baixo em calorias.",
+    "plantio": "Setembro a Novembro",
+    "colheita": "60-90 dias após plantio",
+    "dicas": "Sol pleno, clima quente, solo fértil. Tutorar para melhor desenvolvimento.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "berinjela.jpg"
+  },
+  {
+    "id": 35,
+    "nome": "Milho",
+    "cientifico": "Zea mays",
+    "tipo": "Fruto",
+    "categoria": "Cereal",
+    "descricao": "Cereal nutritivo, rico em carboidratos e fibras. Versátil na culinária.",
+    "plantio": "Setembro a Novembro",
+    "colheita": "60-90 dias após plantio",
+    "dicas": "Solo fértil, sol pleno, rega regular. Plantar em fileiras para polinização.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece desenvolvimento.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "milho.jpg"
+  },
+  {
+    "id": 36,
+    "nome": "Feijão",
+    "cientifico": "Phaseolus vulgaris",
+    "tipo": "Fruto",
+    "categoria": "Legume",
+    "descricao": "Legume rico em proteína e fibras. Alimento essencial e nutritivo.",
+    "plantio": "Setembro a Novembro",
+    "colheita": "60-90 dias após plantio",
+    "dicas": "Solo bem preparado, treliça para suporte, rega regular. Colher quando firme.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "feijao.jpg"
+  },
+  {
+    "id": 37,
+    "nome": "Ervilha",
+    "cientifico": "Pisum sativum",
+    "tipo": "Fruto",
+    "categoria": "Legume",
+    "descricao": "Legume doce e nutritivo, rico em proteína. Colheita rápida.",
+    "plantio": "Março a Maio",
+    "colheita": "60-70 dias após plantio",
+    "dicas": "Treliça para suporte, solo bem preparado. Colher quando vagens estiverem firmes.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "ervilha.jpg"
+  },
+  {
+    "id": 38,
+    "nome": "Abacaxi",
+    "cientifico": "Ananas comosus",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto tropical doce, rico em vitamina C e bromelina. Refrescante.",
+    "plantio": "Ano todo",
+    "colheita": "18-24 meses após plantio",
+    "dicas": "Clima tropical, solo bem drenado, sol pleno. Rega moderada.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "abacaxi.jpg"
+  },
+  {
+    "id": 39,
+    "nome": "Mamão",
+    "cientifico": "Carica papaya",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto tropical doce, rico em papaína e vitaminas. Nutritivo e digestivo.",
+    "plantio": "Ano todo",
+    "colheita": "9-12 meses após plantio",
+    "dicas": "Clima tropical, solo fértil, sol pleno. Rega regular.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "mamao.jpg"
+  },
+  {
+    "id": 40,
+    "nome": "Coco",
+    "cientifico": "Cocos nucifera",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto tropical versátil, rico em gorduras saudáveis. Múltiplos usos.",
+    "plantio": "Ano todo",
+    "colheita": "6-12 meses após floração",
+    "dicas": "Clima tropical, solo bem drenado, proteção do vento. Rega regular.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "coco.jpg"
+  },
+  {
+    "id": 41,
+    "nome": "Melancia Amarela",
+    "cientifico": "Citrullus lanatus var. yellow",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Variante amarela da melancia, refrescante e nutritiva. Sabor único.",
+    "plantio": "Setembro a Novembro",
+    "colheita": "70-100 dias após plantio",
+    "dicas": "Requer muito espaço, sol pleno, solo fértil. Rega abundante.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "melancia_amarela.jpg"
+  },
+  {
+    "id": 42,
+    "nome": "Mirtilo",
+    "cientifico": "Vaccinium corymbosum",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto pequeno e azul, rico em antioxidantes. Superalimento.",
+    "plantio": "Março a Maio",
+    "colheita": "60-80 dias após floração",
+    "dicas": "Solo ácido, meia-sombra, rega regular. Poda anual para melhor produção.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "mirtilo.jpg"
+  },
+  {
+    "id": 43,
+    "nome": "Framboesa",
+    "cientifico": "Rubus idaeus",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto vermelho delicado, rico em vitamina C. Doce e aromático.",
+    "plantio": "Março a Maio",
+    "colheita": "60-80 dias após floração",
+    "dicas": "Treliça para suporte, solo bem drenado, poda anual. Proteção de pragas.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "framboesa.jpg"
+  },
+  {
+    "id": 44,
+    "nome": "Amora",
+    "cientifico": "Morus alba",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto preto ou roxo, doce e nutritivo. Árvore produtiva.",
+    "plantio": "Março a Maio",
+    "colheita": "60-80 dias após floração",
+    "dicas": "Sol pleno, solo bem drenado, poda anual. Árvore resistente.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "amora.jpg"
+  },
+  {
+    "id": 45,
+    "nome": "Goiaba",
+    "cientifico": "Psidium guajava",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto tropical doce, rico em vitamina C. Versátil na culinária.",
+    "plantio": "Ano todo",
+    "colheita": "6-12 meses após floração",
+    "dicas": "Clima tropical/subtropical, solo bem drenado, sol pleno. Rega moderada.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "goiaba.jpg"
+  },
+  {
+    "id": 46,
+    "nome": "Manga",
+    "cientifico": "Mangifera indica",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto tropical doce, rico em vitaminas. Rainha das frutas.",
+    "plantio": "Ano todo",
+    "colheita": "6-12 meses após floração",
+    "dicas": "Clima tropical, solo bem drenado, sol pleno. Poda anual.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "manga.jpg"
+  },
+  {
+    "id": 47,
+    "nome": "Abacate",
+    "cientifico": "Persea americana",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto cremoso, rico em gorduras saudáveis. Nutritivo e versátil.",
+    "plantio": "Ano todo",
+    "colheita": "6-12 meses após floração",
+    "dicas": "Clima subtropical/tropical, solo bem drenado, sol pleno. Poda anual.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "abacate.jpg"
+  },
+  {
+    "id": 48,
+    "nome": "Pêssego",
+    "cientifico": "Prunus persica",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto doce e suculento, rico em vitaminas. Aromático.",
+    "plantio": "Março a Maio",
+    "colheita": "100-120 dias após floração",
+    "dicas": "Clima temperado, solo bem drenado, poda anual. Proteção de pragas.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "pessego.jpg"
+  },
+  {
+    "id": 49,
+    "nome": "Ameixa",
+    "cientifico": "Prunus domestica",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto doce e suculento, rico em fibras. Nutritivo e versátil.",
+    "plantio": "Março a Maio",
+    "colheita": "100-120 dias após floração",
+    "dicas": "Clima temperado, solo bem drenado, poda anual. Polinização cruzada.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "ameixa.jpg"
+  },
+  {
+    "id": 50,
+    "nome": "Morango Selvagem",
+    "cientifico": "Fragaria vesca",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Variante selvagem do morango, pequeno mas intenso em sabor.",
+    "plantio": "Março a Maio",
+    "colheita": "30-40 dias após floração",
+    "dicas": "Meia-sombra, solo rico em matéria orgânica, rega regular. Mulch protetor.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "morango_selvagem.jpg"
+  }
+];
+
+
+        window.searchPlants = function() {
+            const searchTerm = document.getElementById('plant-search-input').value.toLowerCase();
+            const filterType = document.getElementById('plant-filter-type').value;
+            const filterCategory = document.getElementById('plant-filter-category').value;
+            
+            const filtered = window.plantasData.filter(plant => {
+                const matchSearch = plant.nome.toLowerCase().includes(searchTerm) || 
+                                   plant.descricao.toLowerCase().includes(searchTerm);
+                const matchType = filterType === 'tudo' || plant.tipo === filterType;
+                const matchCategory = filterCategory === 'tudo' || plant.categoria === filterCategory;
+                return matchSearch && matchType && matchCategory;
+            });
+            
+            window.renderPlantsList(filtered);
+        };
+        
+        window.renderPlantsList = function(plants) {
+            const container = document.getElementById('plants-list-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (plants.length === 0) {
+                container.innerHTML = '<div class="p-8 text-center text-gray-500">Nenhuma planta encontrada</div>';
+                return;
+            }
+            
+            plants.forEach(plant => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-lg p-4 mb-4 border-l-4 border-green-600';
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-bold text-lg text-green-700">${plant.nome}</h3>
+                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">${plant.tipo}</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-2">${plant.cientifico}</p>
+                    <p class="text-sm mb-3">${plant.descricao}</p>
+                    <div class="grid grid-cols-2 gap-2 text-xs mb-3">
+                        <div><strong>Plantio:</strong> ${plant.plantio}</div>
+                        <div><strong>Colheita:</strong> ${plant.colheita}</div>
+                        <div><strong>Categoria:</strong> ${plant.categoria}</div>
+                        <div><strong>Zodíaco:</strong> ${plant.zodiacos.join(', ')}</div>
+                    </div>
+                    <button onclick="window.showPlantDetail(${plant.id})" class="w-full bg-green-600 text-white py-2 rounded text-sm font-semibold">
+                        Ver Detalhes
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+        };
+        
+        window.showPlantDetail = function(plantId) {
+            const plant = window.plantasData.find(p => p.id === plantId);
+            if (!plant) return;
+            
+            const detailScreen = document.getElementById('screen-plant-detail');
+            if (!detailScreen) return;
+            
+            detailScreen.innerHTML = `
+                <div class="p-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h1 class="text-2xl font-bold text-green-700">${plant.nome}</h1>
+                        <button onclick="window.showScreen('screen-catalogo')" class="text-2xl">×</button>
+                    </div>
+                    
+                    <div class="bg-green-50 rounded-lg p-4 mb-4">
+                        <p class="text-sm text-gray-600 mb-2"><strong>Nome Científico:</strong> ${plant.cientifico}</p>
+                        <p class="text-sm text-gray-600 mb-2"><strong>Categoria:</strong> ${plant.categoria}</p>
+                        <p class="text-sm text-gray-600 mb-2"><strong>Tipo Biodinâmico:</strong> ${plant.tipo}</p>
+                        <p class="text-sm text-gray-600"><strong>Zodíacos:</strong> ${plant.zodiacos.join(', ')}</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h2 class="font-bold text-green-700 mb-2">Descrição</h2>
+                        <p class="text-sm">${plant.descricao}</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h2 class="font-bold text-green-700 mb-2">Informações de Cultivo</h2>
+                        <p class="text-sm mb-2"><strong>Plantio:</strong> ${plant.plantio}</p>
+                        <p class="text-sm mb-2"><strong>Colheita:</strong> ${plant.colheita}</p>
+                        <p class="text-sm mb-2"><strong>Dicas:</strong> ${plant.dicas}</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h2 class="font-bold text-green-700 mb-2">Influência Biodinâmica</h2>
+                        <p class="text-sm">${plant.biodinamica}</p>
+                    </div>
+                    
+                    <button onclick="window.addToMyGarden(${plant.id})" class="w-full bg-green-600 text-white py-3 rounded-lg font-bold mb-2">
+                        + Adicionar à Minha Horta
+                    </button>
+                    <button onclick="window.showScreen('screen-catalogo')" class="w-full bg-gray-300 text-gray-700 py-3 rounded-lg font-bold">
+                        Voltar
+                    </button>
+                </div>
+            `;
+            
+            window.showScreen('screen-plant-detail');
+        };
+        
+        window.addToMyGarden = function(plantId) {
+            const plant = window.plantasData.find(p => p.id === plantId);
+            if (!plant) return;
+            
+            if (!state.myGarden) state.myGarden = [];
+            
+            state.myGarden.push({
+                id: plant.id,
+                nome: plant.nome,
+                dataPlanio: new Date().toLocaleDateString('pt-BR'),
+                status: 'plantado'
+            });
+            
+            window.saveState();
+            alert(`${plant.nome} adicionado à sua horta!`);
+            window.showScreen('screen-catalogo');
+        };
+        
+        window.initCatalogo = function() {
+            const searchInput = document.getElementById('plant-search-input');
+            if (searchInput) {
+                searchInput.addEventListener('input', window.searchPlants);
+            }
+            
+            const filterType = document.getElementById('plant-filter-type');
+            if (filterType) {
+                filterType.addEventListener('change', window.searchPlants);
+            }
+            
+            const filterCategory = document.getElementById('plant-filter-category');
+            if (filterCategory) {
+                filterCategory.addEventListener('change', window.searchPlants);
+            }
+            
+            window.searchPlants();
+        };
+
+
+</script>
 </body>
 </html>
