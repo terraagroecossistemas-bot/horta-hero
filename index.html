@@ -391,6 +391,99 @@
         </div>
     </div>
 
+    <!-- TELA DIAGNÓSTICO -->
+    <div id="screen-diagnostico" class="screen p-6 bg-white">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold" style="color: #2D5A27;">🔬 Diagnóstico</h2>
+            <button onclick="window.showScreen('screen-dashboard')" class="text-2xl">×</button>
+        </div>
+        
+        <div class="mb-6">
+            <label class="block text-sm font-bold text-gray-600 mb-2">Selecione a Planta:</label>
+            <select id="diag-plant-select" class="w-full p-3 rounded-lg border-2 border-[#2D5A27] text-sm" onchange="window.loadPlantDiseases()">
+                <option value="">-- Escolha uma planta --</option>
+            </select>
+        </div>
+        
+        <div class="mb-6">
+            <label class="block text-sm font-bold text-gray-600 mb-2">Descreva os Sintomas:</label>
+            <textarea id="diag-symptoms" placeholder="Ex: Folhas amareladas, manchas escuras..." class="w-full p-3 rounded-lg border-2 border-[#2D5A27] text-sm h-24"></textarea>
+        </div>
+        
+        <button onclick="window.analisarDiagnostico()" class="w-full py-3 rounded-lg btn-primary font-bold text-white mb-4">Analisar</button>
+        
+        <div id="diag-results" class="space-y-4">
+            <!-- Resultados aparecem aqui -->
+        </div>
+    </div>
+
+    <!-- TELA CULTIVO -->
+    <div id="screen-cultivo" class="screen p-6 bg-white">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold" style="color: #2D5A27;">🍃 Guia de Cultivo</h2>
+            <button onclick="window.showScreen('screen-dashboard')" class="text-2xl">×</button>
+        </div>
+        
+        <div class="mb-6">
+            <label class="block text-sm font-bold text-gray-600 mb-2">Selecione a Planta:</label>
+            <select id="cultivo-plant-select" class="w-full p-3 rounded-lg border-2 border-[#2D5A27] text-sm" onchange="window.mostrarGuiaCultivo()">
+                <option value="">-- Escolha uma planta --</option>
+            </select>
+        </div>
+        
+        <div id="cultivo-guide" class="space-y-4">
+            <!-- Guia de cultivo aparece aqui -->
+        </div>
+    </div>
+
+    <!-- TELA PLANEJADOR -->
+    <div id="screen-planejador" class="screen p-6 bg-white">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold" style="color: #2D5A27;">📅 Planejador de Horta</h2>
+            <button onclick="window.showScreen('screen-dashboard')" class="text-2xl">×</button>
+        </div>
+        
+        <div class="space-y-4 mb-6">
+            <div>
+                <label class="block text-sm font-bold text-gray-600 mb-2">Tamanho da Horta (m²):</label>
+                <input type="number" id="plano-tamanho" placeholder="Ex: 10" class="w-full p-3 rounded-lg border-2 border-[#2D5A27] text-sm">
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-600 mb-2">Clima:</label>
+                <select id="plano-clima" class="w-full p-3 rounded-lg border-2 border-[#2D5A27] text-sm">
+                    <option value="">-- Selecione --</option>
+                    <option value="tropical">Tropical</option>
+                    <option value="subtropical">Subtropical</option>
+                    <option value="temperado">Temperado</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-bold text-gray-600 mb-2">Mês de Plantio:</label>
+                <select id="plano-mes" class="w-full p-3 rounded-lg border-2 border-[#2D5A27] text-sm">
+                    <option value="">-- Selecione --</option>
+                    <option value="janeiro">Janeiro</option>
+                    <option value="fevereiro">Fevereiro</option>
+                    <option value="marco">Março</option>
+                    <option value="abril">Abril</option>
+                    <option value="maio">Maio</option>
+                    <option value="junho">Junho</option>
+                    <option value="julho">Julho</option>
+                    <option value="agosto">Agosto</option>
+                    <option value="setembro">Setembro</option>
+                    <option value="outubro">Outubro</option>
+                    <option value="novembro">Novembro</option>
+                    <option value="dezembro">Dezembro</option>
+                </select>
+            </div>
+        </div>
+        
+        <button onclick="window.gerarPlano()" class="w-full py-3 rounded-lg btn-primary font-bold text-white mb-4">Gerar Plano</button>
+        
+        <div id="plano-results" class="space-y-4">
+            <!-- Plano aparece aqui -->
+        </div>
+    </div>
+
     <!-- NAVIGATION BAR -->
     <nav id="main-nav" class="fixed bottom-0 w-full glass border-t border-gray-100 px-4 py-4 flex justify-between items-center z-50 overflow-x-auto" style="display: none;">
         <button onclick="window.showScreen('screen-dashboard')" class="nav-item active flex flex-col items-center flex-shrink-0">
@@ -3475,6 +3568,270 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// ===== FUNÇÕES DO SISTEMA INTEGRADO =====
+
+// Dados do sistema integrado (carregados do JSON)
+window.sistemaIntegrado = {
+  plantas_expandidas: [
+    {
+      id: 1,
+      nome: "Tomate",
+      cientifico: "Solanum lycopersicum",
+      tipo: "Fruto",
+      categoria: "Hortaliça",
+      descricao: "Fruto vermelho rico em licopeno, vitamina C e antioxidantes. Ideal para saladas e molhos.",
+      plantio: "Setembro a Novembro",
+      colheita: "60-90 dias após plantio",
+      dicas: "Requer sol pleno (6-8h), solo bem drenado, rega regular. Tutorar a planta para melhor desenvolvimento.",
+      biodinamica: "Ideal em dias de Fruto. Lua crescente favorece crescimento.",
+      zodiacos: ["Leão", "Sagitário"],
+      doenças_comuns: [
+        { nome: "Requeima", sintomas: "Manchas escuras nas folhas, mofo branco na parte inferior", prevencao: "Boa ventilação, não molhar as folhas", tratamento: "Calda bordalesa (1% de cobre) a cada 7 dias", defensivo: "Calda Bordalesa" },
+        { nome: "Oídio", sintomas: "Pó branco nas folhas", prevencao: "Aumentar espaçamento entre plantas", tratamento: "Enxofre em pó ou calda de leite", defensivo: "Enxofre" },
+        { nome: "Traça-do-tomateiro", sintomas: "Galerias nas folhas e frutos", prevencao: "Remover folhas infestadas", tratamento: "Óleo de neem ou Bacillus thuringiensis", defensivo: "Óleo de Neem" }
+      ],
+      pragas_comuns: [
+        { nome: "Afídeo", sintomas: "Folhas enrugadas, pegajosas", prevencao: "Plantar flores que atraem predadores", tratamento: "Repelente de alho e sabão", defensivo: "Repelente de Alho" },
+        { nome: "Mosca-branca", sintomas: "Pequenos insetos brancos na parte inferior das folhas", prevencao: "Usar telas de proteção", tratamento: "Óleo de neem", defensivo: "Óleo de Neem" }
+      ],
+      checklist_cultivo: [
+        { semana: 1, tarefas: ["Preparar solo com composto", "Plantar mudas", "Regar bem"] },
+        { semana: 2, tarefas: ["Verificar brotação", "Regar regularmente", "Observar pragas"] },
+        { semana: 3, tarefas: ["Aplicar primeiro adubo", "Colocar tutor", "Regar 2x por semana"] },
+        { semana: 6, tarefas: ["Aplicar segundo adubo", "Remover folhas inferiores", "Aumentar rega"] },
+        { semana: 8, tarefas: ["Flores começam a aparecer", "Manter rega consistente", "Monitorar pragas"] },
+        { semana: 12, tarefas: ["Frutos começam a aparecer", "Reduzir nitrogênio", "Colher regularmente"] }
+      ]
+    },
+    {
+      id: 2,
+      nome: "Alface",
+      cientifico: "Lactuca sativa",
+      tipo: "Folha",
+      categoria: "Hortaliça",
+      descricao: "Folhas verdes crocantes, rica em fibras e vitaminas. Ideal para saladas frescas.",
+      plantio: "Ano todo (melhor em meses frios)",
+      colheita: "30-45 dias após plantio",
+      dicas: "Prefere meia sombra em clima quente, solo rico em matéria orgânica, rega constante.",
+      biodinamica: "Ideal em dias de Folha. Lua crescente favorece folhagem exuberante.",
+      zodiacos: ["Libra", "Aquário"],
+      doenças_comuns: [
+        { nome: "Podridão Basal", sintomas: "Folhas inferiores apodrecem", prevencao: "Boa ventilação, não molhar base", tratamento: "Remover folhas afetadas, melhorar drenagem", defensivo: "Calda de Camomila" }
+      ],
+      pragas_comuns: [
+        { nome: "Pulgão", sintomas: "Folhas enrugadas", prevencao: "Plantar com flores aromáticas", tratamento: "Repelente de alho", defensivo: "Repelente de Alho" }
+      ],
+      checklist_cultivo: [
+        { semana: 1, tarefas: ["Preparar solo", "Semear ou transplantar", "Regar bem"] },
+        { semana: 2, tarefas: ["Manter solo úmido", "Observar germinação", "Proteger de sol forte"] },
+        { semana: 3, tarefas: ["Desbastar mudas", "Aplicar adubo líquido", "Regar diariamente"] },
+        { semana: 4, tarefas: ["Colher folhas externas", "Manter rega", "Monitorar pragas"] },
+        { semana: 5, tarefas: ["Colheita principal", "Cortar rente ao solo", "Preparar próximo plantio"] }
+      ]
+    }
+  ]
+};
+
+// Inicializar selects de plantas
+window.initializePlantSelects = function() {
+  const diagSelect = document.getElementById('diag-plant-select');
+  const cultivoSelect = document.getElementById('cultivo-plant-select');
+  
+  if (diagSelect) {
+    window.sistemaIntegrado.plantas_expandidas.forEach(plant => {
+      const option = document.createElement('option');
+      option.value = plant.id;
+      option.textContent = plant.nome;
+      diagSelect.appendChild(option);
+    });
+  }
+  
+  if (cultivoSelect) {
+    window.sistemaIntegrado.plantas_expandidas.forEach(plant => {
+      const option = document.createElement('option');
+      option.value = plant.id;
+      option.textContent = plant.nome;
+      cultivoSelect.appendChild(option);
+    });
+  }
+};
+
+// Função: Analisar Diagnóstico
+window.analisarDiagnostico = function() {
+  const plantId = document.getElementById('diag-plant-select').value;
+  const symptoms = document.getElementById('diag-symptoms').value;
+  const resultsDiv = document.getElementById('diag-results');
+  
+  if (!plantId || !symptoms) {
+    alert('Por favor, selecione uma planta e descreva os sintomas.');
+    return;
+  }
+  
+  const plant = window.sistemaIntegrado.plantas_expandidas.find(p => p.id == plantId);
+  if (!plant) return;
+  
+  let html = `<div class="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500"><h3 class="font-bold text-blue-700 mb-3">Análise para ${plant.nome}</h3>`;
+  
+  // Analisar doenças
+  const matchedDiseases = plant.doenças_comuns.filter(d => 
+    symptoms.toLowerCase().includes(d.sintomas.toLowerCase().split(',')[0])
+  );
+  
+  if (matchedDiseases.length > 0) {
+    html += `<div class="mb-4"><h4 class="font-bold text-red-600 mb-2">🚨 Possíveis Doenças:</h4>`;
+    matchedDiseases.forEach(disease => {
+      html += `
+        <div class="bg-white p-3 rounded mb-2 border-l-4 border-red-400">
+          <p class="font-bold text-red-600">${disease.nome}</p>
+          <p class="text-sm"><strong>Sintomas:</strong> ${disease.sintomas}</p>
+          <p class="text-sm"><strong>Prevenção:</strong> ${disease.prevencao}</p>
+          <p class="text-sm"><strong>Tratamento:</strong> ${disease.tratamento}</p>
+          <p class="text-sm"><strong>Defensivo:</strong> ${disease.defensivo}</p>
+        </div>
+      `;
+    });
+    html += `</div>`;
+  }
+  
+  // Analisar pragas
+  const matchedPests = plant.pragas_comuns.filter(p => 
+    symptoms.toLowerCase().includes(p.sintomas.toLowerCase().split(',')[0])
+  );
+  
+  if (matchedPests.length > 0) {
+    html += `<div class="mb-4"><h4 class="font-bold text-orange-600 mb-2">🐛 Possíveis Pragas:</h4>`;
+    matchedPests.forEach(pest => {
+      html += `
+        <div class="bg-white p-3 rounded mb-2 border-l-4 border-orange-400">
+          <p class="font-bold text-orange-600">${pest.nome}</p>
+          <p class="text-sm"><strong>Sintomas:</strong> ${pest.sintomas}</p>
+          <p class="text-sm"><strong>Prevenção:</strong> ${pest.prevencao}</p>
+          <p class="text-sm"><strong>Tratamento:</strong> ${pest.tratamento}</p>
+          <p class="text-sm"><strong>Defensivo:</strong> ${pest.defensivo}</p>
+        </div>
+      `;
+    });
+    html += `</div>`;
+  }
+  
+  if (matchedDiseases.length === 0 && matchedPests.length === 0) {
+    html += `<p class="text-gray-600">Nenhuma doença ou praga identificada com esses sintomas. Consulte um especialista.</p>`;
+  }
+  
+  html += `</div>`;
+  resultsDiv.innerHTML = html;
+};
+
+// Função: Carregar doenças da planta
+window.loadPlantDiseases = function() {
+  const plantId = document.getElementById('diag-plant-select').value;
+  if (plantId) {
+    const plant = window.sistemaIntegrado.plantas_expandidas.find(p => p.id == plantId);
+    if (plant) {
+      document.getElementById('diag-symptoms').placeholder = `Ex: ${plant.doenças_comuns[0]?.sintomas || 'Descreva os sintomas...'}`;
+    }
+  }
+};
+
+// Função: Mostrar Guia de Cultivo
+window.mostrarGuiaCultivo = function() {
+  const plantId = document.getElementById('cultivo-plant-select').value;
+  const guideDiv = document.getElementById('cultivo-guide');
+  
+  if (!plantId) {
+    guideDiv.innerHTML = '';
+    return;
+  }
+  
+  const plant = window.sistemaIntegrado.plantas_expandidas.find(p => p.id == plantId);
+  if (!plant) return;
+  
+  let html = `
+    <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+      <h3 class="font-bold text-green-700 mb-4 text-lg">📋 Guia de Cultivo: ${plant.nome}</h3>
+      
+      <div class="mb-4">
+        <h4 class="font-bold text-green-700 mb-2">ℹ️ Informações Básicas</h4>
+        <p class="text-sm mb-1"><strong>Plantio:</strong> ${plant.plantio}</p>
+        <p class="text-sm mb-1"><strong>Colheita:</strong> ${plant.colheita}</p>
+        <p class="text-sm mb-1"><strong>Dicas:</strong> ${plant.dicas}</p>
+      </div>
+      
+      <div class="mb-4">
+        <h4 class="font-bold text-green-700 mb-2">📅 Checklist de Cultivo</h4>
+  `;
+  
+  plant.checklist_cultivo.forEach(week => {
+    html += `
+      <div class="bg-white p-3 rounded mb-2 border-l-4 border-green-400">
+        <p class="font-bold text-green-600">Semana ${week.semana}</p>
+        <ul class="text-sm ml-4 list-disc">
+          ${week.tarefas.map(t => `<li>${t}</li>`).join('')}
+        </ul>
+      </div>
+    `;
+  });
+  
+  html += `</div></div>`;
+  guideDiv.innerHTML = html;
+};
+
+// Função: Gerar Plano de Horta
+window.gerarPlano = function() {
+  const tamanho = document.getElementById('plano-tamanho').value;
+  const clima = document.getElementById('plano-clima').value;
+  const mes = document.getElementById('plano-mes').value;
+  const resultsDiv = document.getElementById('plano-results');
+  
+  if (!tamanho || !clima || !mes) {
+    alert('Por favor, preencha todos os campos.');
+    return;
+  }
+  
+  const sugestoes = {
+    janeiro: { tropical: ["Tomate", "Pimentão", "Abóbora"], subtropical: ["Tomate", "Alface"], temperado: ["Alface", "Brócolis"] },
+    fevereiro: { tropical: ["Melancia", "Melão", "Feijão"], subtropical: ["Tomate", "Pimentão"], temperado: ["Alface", "Espinafre"] },
+    maio: { tropical: ["Alface", "Cenoura", "Rabanete"], subtropical: ["Alface", "Brócolis"], temperado: ["Alface", "Cenoura"] }
+  };
+  
+  const plantasSugeridas = sugestoes[mes]?.[clima] || ["Tomate", "Alface"];
+  
+  let html = `
+    <div class="bg-green-50 p-4 rounded-lg border-l-4 border-green-500">
+      <h3 class="font-bold text-green-700 mb-4 text-lg">📊 Seu Plano de Horta</h3>
+      
+      <div class="bg-white p-3 rounded mb-4">
+        <p class="text-sm mb-1"><strong>Tamanho:</strong> ${tamanho} m²</p>
+        <p class="text-sm mb-1"><strong>Clima:</strong> ${clima}</p>
+        <p class="text-sm mb-1"><strong>Mês de Plantio:</strong> ${mes}</p>
+      </div>
+      
+      <div class="mb-4">
+        <h4 class="font-bold text-green-700 mb-2">🌱 Plantas Recomendadas</h4>
+        <div class="grid grid-cols-2 gap-2">
+          ${plantasSugeridas.map(p => `<div class="bg-green-100 p-2 rounded text-sm font-bold text-green-700">${p}</div>`).join('')}
+        </div>
+      </div>
+      
+      <div class="mb-4">
+        <h4 class="font-bold text-green-700 mb-2">💡 Dicas de Espaçamento</h4>
+        <p class="text-sm">Para uma horta de ${tamanho}m², distribua as plantas com espaçamento de 30-40cm entre elas.</p>
+      </div>
+      
+      <div class="mb-4">
+        <h4 class="font-bold text-green-700 mb-2">🔄 Rotação de Culturas</h4>
+        <p class="text-sm">Próximo mês, alterne para plantas de outro tipo (raiz, folha, fruto) para manter a fertilidade do solo.</p>
+      </div>
+    </div>
+  `;
+  
+  resultsDiv.innerHTML = html;
+};
+
+// Inicializar ao carregar a página
+document.addEventListener('DOMContentLoaded', function() {
+  window.initializePlantSelects();
+});
 
 </script>
 </body>
