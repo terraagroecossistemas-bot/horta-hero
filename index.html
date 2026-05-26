@@ -1,1 +1,1056 @@
-<h1>Horta Hero - Em desenvolvimento</h1><p>Testando atualizações...</p>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Horta Hero 5.0 - Missão Regenerativa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        
+        :root {
+            --primary: #2D5A27;
+            --secondary: #4A7C44;
+            --accent: #86B049;
+            --bg: #F8FAF7;
+            --card: #FFFFFF;
+            --text: #1A2E19;
+            --gold: #D4AF37;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+            margin: 0;
+            padding: 0;
+        }
+
+        .premium-shadow { box-shadow: 0 10px 30px rgba(45, 90, 39, 0.08); }
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+        
+        .screen { display: none; min-height: 100vh; padding-bottom: 100px; }
+        .screen.active { display: block; animation: fadeIn 0.2s ease-out; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .nav-item.active { color: var(--primary); }
+        .nav-item.active i { transform: translateY(-4px); color: var(--primary); }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .btn-primary:active { transform: scale(0.96); opacity: 0.9; }
+
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+
+        .card-gradient { background: linear-gradient(135deg, #2D5A27 0%, #4A7C44 100%); }
+        
+        .onboarding-dot { width: 8px; height: 8px; border-radius: 50%; background: #D1D5DB; transition: all 0.3s; }
+        .onboarding-dot.active { width: 24px; background: var(--primary); }
+
+        .water-drop {
+            position: absolute;
+            color: #3B82F6;
+            animation: floatUp 1s ease-out forwards;
+            pointer-events: none;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-50px) scale(1.5); opacity: 0; }
+        }
+
+        .dark-mode {
+            --bg: #0F170E;
+            --card: #1A2619;
+            --text: #E8F0E7;
+        }
+
+        button { cursor: pointer; -webkit-appearance: none; }
+
+        /* Estilos para o Livro */
+        .book-content {
+            line-height: 1.8;
+            color: var(--text);
+        }
+        .book-content h1 { font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem; color: var(--primary); }
+        .book-content h2 { font-size: 1.2rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 1rem; }
+        .book-content p { margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+
+    <!-- 1. SPLASH SCREEN -->
+    <div id="screen-splash" class="screen active flex flex-col items-center justify-center bg-white p-8 text-center">
+        <div class="mb-8">
+            <img src="https://cdn-icons-png.flaticon.com/512/628/628283.png" class="w-32 h-32 mx-auto" alt="Logo">
+        </div>
+        <h1 class="text-4xl font-extrabold text-[#2D5A27] mb-2">Horta Hero</h1>
+        <p class="text-gray-500 mb-12">Cada semente muda o futuro.</p>
+        <button onclick="window.showScreen('screen-onboarding')" class="btn-primary w-full py-4 rounded-2xl font-bold text-lg premium-shadow">Começar</button>
+    </div>
+
+    <!-- 2. ONBOARDING -->
+    <div id="screen-onboarding" class="screen bg-white p-8">
+        <div class="flex justify-center gap-2 mb-12">
+            <div class="onboarding-dot active"></div>
+            <div class="onboarding-dot"></div>
+            <div class="onboarding-dot"></div>
+        </div>
+        <div class="text-center mb-12">
+            <img src="https://cdn-icons-png.flaticon.com/512/71/71126.png" class="w-64 h-64 mx-auto mb-8" alt="Onboarding">
+            <h2 class="text-3xl font-bold mb-4">Plante alimentos</h2>
+            <p class="text-gray-500">Ganha créditos climáticos e transforme sua realidade local.</p>
+        </div>
+        <button onclick="window.showScreen('screen-cadastro')" class="btn-primary w-full py-4 rounded-2xl font-bold text-lg premium-shadow">Próximo</button>
+    </div>
+
+    <!-- 3. CADASTRO -->
+    <div id="screen-cadastro" class="screen p-6">
+        <div class="flex items-center mb-8">
+            <button onclick="window.showScreen('screen-onboarding')" class="w-10 h-10 rounded-full bg-white flex items-center justify-center premium-shadow mr-4">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <h2 class="text-2xl font-bold">Criar Conta</h2>
+        </div>
+        <div class="space-y-6">
+            <div>
+                <label class="block text-sm font-bold mb-2">Nome Completo</label>
+                <input type="text" id="user-name" placeholder="Como quer ser chamado?" class="w-full p-4 rounded-2xl border-none bg-white premium-shadow focus:ring-2 focus:ring-[#2D5A27]">
+            </div>
+            <div>
+                <label class="block text-sm font-bold mb-2">Tipo de Guardião</label>
+                <div class="grid grid-cols-2 gap-4">
+                    <button onclick="window.selectType('Urbano')" id="type-urbano" class="p-4 rounded-2xl bg-white premium-shadow border-2 border-transparent transition-all">
+                        <i class="fa-solid fa-city mb-2 text-xl"></i>
+                        <div class="font-bold">Urbano</div>
+                    </button>
+                    <button onclick="window.selectType('Agricultor')" id="type-agricultor" class="p-4 rounded-2xl bg-white premium-shadow border-2 border-transparent transition-all">
+                        <i class="fa-solid fa-tractor mb-2 text-xl"></i>
+                        <div class="font-bold">Agricultor</div>
+                    </button>
+                </div>
+            </div>
+            <button onclick="window.finishRegistration()" class="btn-primary w-full py-4 rounded-2xl font-bold text-lg premium-shadow mt-8">Cadastrar</button>
+        </div>
+    </div>
+
+    <!-- 4. DASHBOARD -->
+    <div id="screen-dashboard" class="screen p-6">
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <p class="text-gray-500 text-sm">Olá, <span id="display-name">Guardião</span>!</p>
+                <h2 class="text-2xl font-extrabold">Horta Hero</h2>
+            </div>
+            <button onclick="window.toggleDarkMode()" class="w-10 h-10 rounded-full bg-white flex items-center justify-center premium-shadow">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
+
+        <div class="bg-gradient-to-br from-amber-50 to-orange-50 p-6 rounded-3xl mb-6 border-2 border-amber-200 premium-shadow">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <p class="text-[10px] font-bold text-amber-800 uppercase tracking-wider mb-1">Guia Biodinâmico de Hoje</p>
+                    <p class="text-lg font-bold text-amber-900" id="data-biodinamica">Carregando data...</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl mb-2" id="lua-desenho">🌙</div>
+                    <p class="text-xs font-bold text-amber-700" id="fase-lunar">Fase Lunar</p>
+                </div>
+            </div>
+            <div class="bg-white/60 p-4 rounded-2xl mb-3">
+                <p class="text-sm text-amber-900 font-medium" id="dica-biodinamica">Calculando influência lunar...</p>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-white/70 p-3 rounded-xl text-center">
+                    <p class="text-[10px] text-amber-700 font-bold uppercase">Elemento</p>
+                    <p class="text-lg font-bold text-amber-900" id="elemento-dia">--</p>
+                </div>
+                <div class="bg-white/70 p-3 rounded-xl text-center">
+                    <p class="text-[10px] text-amber-700 font-bold uppercase">Astro</p>
+                    <p class="text-lg font-bold text-amber-900" id="astro-dia">--</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-gradient p-6 rounded-[32px] text-white mb-6 premium-shadow relative overflow-hidden">
+            <div class="relative z-10">
+                <p class="text-sm opacity-80 mb-1">CO₂ Sequestrado</p>
+                <h1 class="text-4xl font-black mb-4"><span id="stat-co2">0.0</span> kg</h1>
+                <div class="w-full bg-white/20 h-2 rounded-full mb-2">
+                    <div id="bar-co2" class="bg-white h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+                <p class="text-xs opacity-80">Meta mensal: 50 kg</p>
+            </div>
+            <i class="fa-solid fa-leaf absolute -right-4 -bottom-4 text-8xl opacity-10"></i>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 mb-8">
+            <div class="bg-white p-4 rounded-2xl premium-shadow flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600">
+                    <i class="fa-solid fa-coins"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] text-gray-500 font-bold uppercase">AgriEcoCoins</p>
+                    <p class="font-bold" id="stat-coins">0</p>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-2xl premium-shadow flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600">
+                    <i class="fa-solid fa-book"></i>
+                </div>
+                <div>
+                    <p class="text-[10px] text-gray-500 font-bold uppercase">Progresso</p>
+                    <p class="font-bold">Livro 1</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold text-lg">Desafio Carbono Zero</h3>
+                <span class="text-[10px] bg-green-100 text-green-700 px-2 py-1 rounded-full font-bold">META SEMANAL</span>
+            </div>
+            <div class="bg-white p-5 rounded-3xl premium-shadow">
+                <div class="flex justify-between items-center mb-3">
+                    <p class="text-sm font-medium">Reduza 5 kg de CO₂</p>
+                    <p class="text-sm font-bold text-[#2D5A27]"><span id="challenge-progress">0.0</span> / 5 kg</p>
+                </div>
+                <div class="w-full bg-gray-100 h-3 rounded-full">
+                    <div id="bar-challenge" class="bg-[#2D5A27] h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold text-lg">Minha Horta</h3>
+                <button onclick="window.showScreen('screen-jardim')" class="text-sm font-bold text-[#2D5A27]">Ver Tudo</button>
+            </div>
+            <div id="dashboard-garden-preview" class="space-y-3">
+                <p class="text-center text-gray-400 py-4 text-sm italic">Sua horta está vazia. Comece a plantar!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. REGISTRAR PLANTIO -->
+    <div id="screen-registrar" class="screen p-6">
+        <div class="flex items-center mb-6">
+            <button onclick="window.showScreen('screen-dashboard')" class="w-10 h-10 rounded-full bg-white flex items-center justify-center premium-shadow mr-4">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <h2 class="text-2xl font-bold">O que vamos plantar?</h2>
+        </div>
+
+        <div class="flex gap-2 overflow-x-auto pb-4 mb-6 no-scrollbar">
+            <button onclick="window.filterCatalog('Tudo', this)" class="filter-btn active px-5 py-2 rounded-full bg-[#2D5A27] text-white text-sm font-bold whitespace-nowrap">Tudo</button>
+            <button onclick="window.filterCatalog('Horta', this)" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Horta</button>
+            <button onclick="window.filterCatalog('Frutífera', this)" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Frutíferas</button>
+            <button onclick="window.filterCatalog('Leguminosa', this)" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Leguminosas</button>
+            <button onclick="window.filterCatalog('Flor', this)" class="filter-btn px-5 py-2 rounded-full bg-white premium-shadow text-sm font-bold whitespace-nowrap">Flores</button>
+        </div>
+
+        <div id="catalog-grid" class="grid grid-cols-2 gap-4"></div>
+    </div>
+
+    <!-- 6. MEU JARDIM -->
+    <div id="screen-jardim" class="screen p-6">
+        <div class="flex items-center mb-8">
+            <button onclick="window.showScreen('screen-dashboard')" class="w-10 h-10 rounded-full bg-white flex items-center justify-center premium-shadow mr-4">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <h2 class="text-2xl font-bold">Meu Jardim Digital</h2>
+        </div>
+        <div id="garden-list" class="space-y-4"></div>
+    </div>
+
+    <!-- 7. COMUNIDADE -->
+    <div id="screen-comunidade" class="screen p-6">
+        <h2 class="text-2xl font-bold mb-6">Ranking da Comunidade</h2>
+        <div class="bg-white rounded-[32px] premium-shadow overflow-hidden">
+            <table class="w-full">
+                <thead class="bg-gray-50 text-[10px] font-bold text-gray-400 uppercase">
+                    <tr>
+                        <th class="px-6 py-4 text-left">Posição</th>
+                        <th class="px-6 py-4 text-right">CO₂ Sequestrado</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    <tr class="bg-green-50/30">
+                        <td class="px-6 py-4 flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-full bg-amber-400 text-white text-[10px] flex items-center justify-center font-bold">1º</span>
+                            <img src="https://i.pravatar.cc/150?u=fernanda" class="w-8 h-8 rounded-full border-2 border-white" alt="User">
+                            <span class="font-bold text-sm">Fernanda</span>
+                        </td>
+                        <td class="px-6 py-4 text-right font-bold text-sm">12,5 kg</td>
+                    </tr>
+                    <tr class="border-l-4 border-[#2D5A27]">
+                        <td class="px-6 py-4 flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-full bg-gray-200 text-gray-600 text-[10px] flex items-center justify-center font-bold">2º</span>
+                            <img src="https://i.pravatar.cc/150?u=you" class="w-8 h-8 rounded-full border-2 border-white" alt="User">
+                            <span class="font-bold text-sm">Você</span>
+                        </td>
+                        <td class="px-6 py-4 text-right font-bold text-sm text-[#2D5A27]"><span id="rank-co2">0.0</span> kg</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 8. LIVRO -->
+    <div id="screen-livro" class="screen p-6">
+        <h2 class="text-2xl font-bold mb-6">Jornada Raízes Invisíveis</h2>
+        <div id="book-chapters" class="space-y-6">
+            <!-- Capítulos serão renderizados aqui -->
+            <div class="bg-white p-6 rounded-[32px] premium-shadow border-l-8 border-[#2D5A27]">
+                <h3 class="font-bold text-lg">Capítulo 1</h3>
+                <p class="text-sm text-gray-500 mb-4">O Despertar da Semente</p>
+                <button onclick="window.readChapter(1)" class="w-full py-3 rounded-xl bg-[#2D5A27] text-white font-bold text-sm">Ler Agora</button>
+            </div>
+            <div class="bg-white p-6 rounded-[32px] premium-shadow border-l-8 border-gray-200 opacity-60">
+                <h3 class="font-bold text-lg">Capítulo 2</h3>
+                <p class="text-sm text-gray-500 mb-4">A Dança dos Elementos (Bloqueado)</p>
+                <button class="w-full py-3 rounded-xl bg-gray-100 font-bold text-sm text-gray-400" disabled>Bloqueado</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 9. LEITURA DO CAPÍTULO -->
+    <div id="screen-leitura" class="screen p-6">
+        <div class="flex items-center mb-8">
+            <button onclick="window.showScreen('screen-livro')" class="w-10 h-10 rounded-full bg-white flex items-center justify-center premium-shadow mr-4">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <h2 class="text-xl font-bold" id="reading-title">Lendo Capítulo</h2>
+        </div>
+        <div class="bg-white p-8 rounded-[40px] premium-shadow book-content" id="reading-content">
+            <!-- Conteúdo do capítulo -->
+        </div>
+    </div>
+
+    <!-- 10. SABERES DOS AGRICULTORES -->
+    <div id="screen-saberes" class="screen p-6">
+        <h2 class="text-2xl font-bold mb-6">Saberes Ancestrais</h2>
+        <div id="saberes-content" class="space-y-6">
+            <!-- Saberes serão renderizados aqui -->
+        </div>
+    </div>
+
+    <!-- 11. RECEITAS E DEFENSIVOS -->
+    <div id="screen-receitas" class="screen p-6">
+        <h2 class="text-2xl font-bold mb-6">Receitas e Defensivos</h2>
+        <div id="receitas-content" class="space-y-6">
+            <!-- Receitas serão renderizadas aqui -->
+        </div>
+    </div>
+
+    <!-- NAVIGATION BAR -->
+    <nav id="main-nav" class="fixed bottom-0 w-full glass border-t border-gray-100 px-4 py-4 flex justify-between items-center z-50 overflow-x-auto" style="display: none;">
+        <button onclick="window.showScreen('screen-dashboard')" class="nav-item active flex flex-col items-center flex-shrink-0">
+            <i class="fa-solid fa-house text-xl mb-1"></i>
+            <span class="text-[9px] font-bold uppercase">Home</span>
+        </button>
+        <button onclick="window.showScreen('screen-jardim')" class="nav-item flex flex-col items-center flex-shrink-0">
+            <i class="fa-solid fa-leaf text-xl mb-1"></i>
+            <span class="text-[9px] font-bold uppercase">Jardim</span>
+        </button>
+        <div class="relative -top-8 flex-shrink-0">
+            <button onclick="window.showScreen('screen-registrar')" class="w-16 h-16 rounded-full btn-primary flex items-center justify-center premium-shadow border-4 border-white">
+                <i class="fa-solid fa-plus text-2xl"></i>
+            </button>
+        </div>
+        <button onclick="window.showScreen('screen-saberes')" class="nav-item flex flex-col items-center flex-shrink-0">
+            <i class="fa-solid fa-sprout text-xl mb-1"></i>
+            <span class="text-[9px] font-bold uppercase">Saberes</span>
+        </button>
+        <button onclick="window.showScreen('screen-receitas')" class="nav-item flex flex-col items-center flex-shrink-0">
+            <i class="fa-solid fa-flask text-xl mb-1"></i>
+            <span class="text-[9px] font-bold uppercase">Receitas</span>
+        </button>
+        <button onclick="window.showScreen('screen-livro')" class="nav-item flex flex-col items-center flex-shrink-0">
+            <i class="fa-solid fa-book-open text-xl mb-1"></i>
+            <span class="text-[9px] font-bold uppercase">Livro</span>
+        </button>
+        <button onclick="window.showScreen('screen-comunidade')" class="nav-item flex flex-col items-center flex-shrink-0">
+            <i class="fa-solid fa-users text-xl mb-1"></i>
+            <span class="text-[9px] font-bold uppercase">Rede</span>
+        </button>
+    </nav>
+
+    <!-- MODAL DE PLANTIO -->
+    <div id="modal-plantio" class="fixed inset-0 bg-black/60 z-[100] flex items-end justify-center hidden">
+        <div class="bg-white w-full rounded-t-[40px] p-8 max-h-[90vh] overflow-y-auto">
+            <div class="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-8"></div>
+            <div class="flex items-center gap-4 mb-6">
+                <div id="modal-icon" class="text-4xl">🥬</div>
+                <div>
+                    <h3 id="modal-title" class="text-2xl font-bold">Alface</h3>
+                    <p id="modal-category" class="text-sm text-gray-500">Horta</p>
+                </div>
+            </div>
+
+            <!-- Informações Extras -->
+            <div class="space-y-4 mb-8">
+                <div class="bg-green-50 p-4 rounded-2xl border border-green-100">
+                    <p class="text-[10px] font-bold text-green-800 uppercase mb-1">Companheiras Ideais</p>
+                    <p id="modal-companions" class="text-sm text-green-900">Carregando...</p>
+                </div>
+                <div id="modal-lunar-tip" class="p-4 rounded-2xl border">
+                    <p class="text-[10px] font-bold uppercase mb-1">Influência Lunar</p>
+                    <p id="modal-lunar-text" class="text-sm">Carregando...</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-6 mb-8">
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Quantidade</label>
+                    <div class="flex items-center gap-4">
+                        <button onclick="window.updateQty(-1)" class="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center font-bold">-</button>
+                        <span id="plant-qty" class="text-xl font-bold">1</span>
+                        <button onclick="window.updateQty(1)" class="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center font-bold">+</button>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Área (m²)</label>
+                    <input type="number" id="plant-area" value="1" class="w-full p-3 rounded-xl bg-gray-100 font-bold text-center border-none">
+                </div>
+            </div>
+            <div class="flex gap-4">
+                <button onclick="window.closeModal()" class="flex-1 py-4 rounded-2xl bg-gray-100 font-bold text-gray-500">Cancelar</button>
+                <button onclick="window.confirmPlanting()" class="flex-[2] py-4 rounded-2xl btn-primary font-bold">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA ---
+        const catalog = [
+            { "id": "cocoa", "name": "Cacau", "category": "Frutífera", "co2": 35.0, "icon": "🍫", "stratum": "Baixo", "type": "Fruto", "companions": ["Banana", "Seringueira"] },
+            { "id": "guava", "name": "Goiaba", "category": "Frutífera", "co2": 40.0, "icon": "🍐", "stratum": "Médio", "type": "Fruto", "companions": ["Citros", "Manga"] },
+            { "id": "acerola", "name": "Acerola", "category": "Frutífera", "co2": 25.0, "icon": "🍒", "stratum": "Médio", "type": "Fruto", "companions": ["Pitanga", "Goiaba"] },
+            { "id": "pitanga", "name": "Pitanga", "category": "Frutífera", "co2": 30.0, "icon": "🍒", "stratum": "Médio", "type": "Fruto", "companions": ["Acerola", "Jabuticaba"] },
+            { "id": "passion_fruit", "name": "Maracujá", "category": "Frutífera", "co2": 12.0, "icon": "🍇", "stratum": "Alto", "type": "Fruto", "companions": ["Milho", "Cerca viva"] },
+            { "id": "sweet_potato", "name": "Batata Doce", "category": "Horta", "co2": 15.0, "icon": "🍠", "stratum": "Rasteiro", "type": "Raiz", "companions": ["Milho", "Mandioca"] },
+            { "id": "eggplant", "name": "Berinjela", "category": "Frutífera", "co2": 3.5, "icon": "🍆", "stratum": "Médio", "type": "Fruto", "companions": ["Feijão", "Pimentão"] },
+            { "id": "cabbage", "name": "Repolho", "category": "Horta", "co2": 4.0, "icon": "🥬", "stratum": "Médio", "type": "Folha", "companions": ["Alecrim", "Hortelã"] },
+            { "id": "beet", "name": "Beterraba", "category": "Horta", "co2": 3.0, "icon": "🟣", "stratum": "Baixo", "type": "Raiz", "companions": ["Cebola", "Alface"] },
+            { "id": "onion", "name": "Cebola", "category": "Horta", "co2": 2.2, "icon": "🧅", "stratum": "Baixo", "type": "Raiz", "companions": ["Cenoura", "Beterraba"] },
+            { "id": "garlic", "name": "Alho", "category": "Horta", "co2": 2.0, "icon": "🧄", "stratum": "Baixo", "type": "Raiz", "companions": ["Tomate", "Rosa"] },
+            { "id": "strawberry", "name": "Morango", "category": "Frutífera", "co2": 1.2, "icon": "🍓", "stratum": "Rasteiro", "type": "Fruto", "companions": ["Alface", "Espinafre"] },
+            { "id": "rosemary", "name": "Alecrim", "category": "Horta", "co2": 4.5, "icon": "🌿", "stratum": "Médio", "type": "Folha", "companions": ["Sálvia", "Cenoura"] },
+            { "id": "sunflower_new", "name": "Girassol", "category": "Flor", "co2": 10.0, "icon": "🌻", "stratum": "Alto", "type": "Flor", "companions": ["Milho", "Feijão"] },
+            { "id": "marigold", "name": "Calêndula", "category": "Flor", "co2": 1.5, "icon": "🌼", "stratum": "Baixo", "type": "Flor", "companions": ["Tomate", "Hortaliças"] },
+            { "id": "crotalaria_new", "name": "Crotalária", "category": "Flor", "co2": 8.0, "icon": "🌼", "stratum": "Médio", "type": "Flor", "companions": ["Café", "Citros"] },
+            { "id": "inga", "name": "Ingá", "category": "Frutífera", "co2": 55.0, "icon": "🌱", "stratum": "Alto", "type": "Fruto", "companions": ["Café", "Cacau"] },
+            { "id": "embauba", "name": "Embaúba", "category": "Leguminosa", "co2": 40.0, "icon": "🍃", "stratum": "Emergente", "type": "Nativa", "companions": ["Ingá", "Sangra d'água"] },
+            { "id": "jacaranda", "name": "Jacarandá", "category": "Leguminosa", "co2": 150.0, "icon": "🌳", "stratum": "Alto", "type": "Madeira", "companions": ["Nativas"] },
+            { "id": "avocado", "name": "Abacate", "category": "Frutífera", "co2": 70.0, "icon": "🥑", "stratum": "Alto", "type": "Fruto", "companions": ["Café", "Banana"] },
+            { "id": "citrus", "name": "Limão", "category": "Frutífera", "co2": 35.0, "icon": "🍋", "stratum": "Médio", "type": "Fruto", "companions": ["Goiaba", "Manjericão"] },
+            { "id": "mango", "name": "Manga", "category": "Frutífera", "co2": 85.0, "icon": "🥭", "stratum": "Alto", "type": "Fruto", "companions": ["Citros", "Goiaba"] },
+            { "id": "jabuticaba", "name": "Jabuticaba", "category": "Frutífera", "co2": 45.0, "icon": "🟣", "stratum": "Baixo", "type": "Fruto", "companions": ["Café", "Samambaias"] },
+            { "id": "papaya", "name": "Mamão", "category": "Frutífera", "co2": 15.0, "icon": "🥭", "stratum": "Emergente", "type": "Fruto", "companions": ["Banana", "Café"] },
+            { "id": "banana", "name": "Banana", "category": "Frutífera", "co2": 25.0, "icon": "🍌", "stratum": "Alto", "type": "Fruto", "companions": ["Café", "Cacau"] },
+            { "id": "tomato", "name": "Tomate", "category": "Frutífera", "co2": 4.5, "icon": "🍅", "stratum": "Médio", "type": "Fruto", "companions": ["Manjericão", "Cenoura", "Cebola"] },
+            { "id": "lettuce", "name": "Alface", "category": "Horta", "co2": 1.8, "icon": "🥬", "stratum": "Baixo", "type": "Folha", "companions": ["Cenoura", "Rabanete"] },
+            { "id": "spinach", "name": "Espinafre", "category": "Horta", "co2": 2.2, "icon": "🥬", "stratum": "Baixo", "type": "Folha", "companions": ["Morango", "Cebola"] },
+            { "id": "cucumber", "name": "Pepino", "category": "Frutífera", "co2": 3.2, "icon": "🥒", "stratum": "Rasteiro", "type": "Fruto", "companions": ["Milho", "Rabanete"] },
+            { "id": "radish", "name": "Rabanete", "category": "Horta", "co2": 1.0, "icon": "🌶️", "stratum": "Baixo", "type": "Raiz", "companions": ["Alface", "Cenoura"] },
+            { "id": "zucchini", "name": "Abobrinha", "category": "Frutífera", "co2": 6.0, "icon": "🥒", "stratum": "Rasteiro", "type": "Fruto", "companions": ["Milho", "Feijão"] },
+            { "id": "peas", "name": "Ervilha", "category": "Horta", "co2": 7.5, "icon": "🫛", "stratum": "Médio", "type": "Grão", "companions": ["Cenoura", "Milho"] },
+            { "id": "corn", "name": "Milho", "category": "Horta", "co2": 12.0, "icon": "🌽", "stratum": "Alto", "type": "Grão", "companions": ["Feijão", "Abóbora"] },
+            { "id": "basil", "name": "Manjericão", "category": "Horta", "co2": 1.2, "icon": "🌿", "stratum": "Baixo", "type": "Folha", "companions": ["Tomate", "Pimentão"] },
+            { "id": "sunflower_alt", "name": "Girassol Gigante", "category": "Flor", "co2": 18.0, "icon": "🌻", "stratum": "Emergente", "type": "Flor", "companions": ["Milho", "Feijão"] },
+            { "id": "lavender", "name": "Lavanda", "category": "Flor", "co2": 5.0, "icon": "💜", "stratum": "Médio", "type": "Flor", "companions": ["Alecrim", "Sálvia"] },
+            { "id": "chamomile", "name": "Camomila", "category": "Flor", "co2": 1.5, "icon": "🌼", "stratum": "Baixo", "type": "Flor", "companions": ["Hortaliças em geral"] },
+            { "id": "nasturtium", "name": "Capuchinha", "category": "Flor", "co2": 2.0, "icon": "🌺", "stratum": "Rasteiro", "type": "Flor", "companions": ["Tomate", "Abóbora"] },
+            { "id": "cedar", "name": "Cedro", "category": "Leguminosa", "co2": 120.0, "icon": "🌲", "stratum": "Alto", "type": "Madeira", "companions": ["Nativas"] },
+            { "id": "ipe", "name": "Ipê", "category": "Leguminosa", "co2": 160.0, "icon": "🌳", "stratum": "Alto", "type": "Madeira", "companions": ["Nativas"] },
+            { "id": "seringa", "name": "Seringueira", "category": "Leguminosa", "co2": 80.0, "icon": "🌳", "stratum": "Alto", "type": "Látex", "companions": ["Cacau", "Banana"] },
+            { "id": "moringa", "name": "Moringa", "category": "Horta", "co2": 35.0, "icon": "🌿", "stratum": "Médio", "type": "Folha", "companions": ["Hortaliças"] },
+            { "id": "mulberry", "name": "Amora", "category": "Frutífera", "co2": 45.0, "icon": "🫐", "stratum": "Médio", "type": "Fruto", "companions": ["Hortaliças", "Leguminosas"] },
+            { "id": "fig", "name": "Figueira", "category": "Frutífera", "co2": 40.0, "icon": "🫐", "stratum": "Médio", "type": "Fruto", "companions": ["Citros", "Goiaba"] },
+            { "id": "papaw", "name": "Ata/Graviola", "category": "Frutífera", "co2": 50.0, "icon": "🍃", "stratum": "Médio", "type": "Fruto", "companions": ["Manga", "Abacate"] },
+            { "id": "mimosa", "name": "Mimosa", "category": "Flor", "co2": 60.0, "icon": "🌼", "stratum": "Alto", "type": "Flor", "companions": ["Nativas"] },
+            { "id": "albizia", "name": "Albizia", "category": "Horta", "co2": 70.0, "icon": "🌳", "stratum": "Alto", "type": "Folha", "companions": ["Café", "Cacau"] },
+            { "id": "kale", "name": "Couve Crespa", "category": "Horta", "co2": 5.0, "icon": "🥬", "stratum": "Médio", "type": "Folha", "companions": ["Cebola", "Alho"] },
+            { "id": "chard", "name": "Acelga", "category": "Horta", "co2": 3.0, "icon": "🥬", "stratum": "Baixo", "type": "Folha", "companions": ["Beterraba", "Cenoura"] },
+            { "id": "okra", "name": "Quiabo", "category": "Frutífera", "co2": 4.0, "icon": "🌿", "stratum": "Médio", "type": "Fruto", "companions": ["Milho", "Feijão"] },
+            { "id": "mint", "name": "Hortelã", "category": "Horta", "co2": 2.0, "icon": "🌿", "stratum": "Baixo", "type": "Folha", "companions": ["Hortaliças em geral"] },
+            { "id": "parsley", "name": "Salsa", "category": "Horta", "co2": 1.5, "icon": "🌿", "stratum": "Baixo", "type": "Folha", "companions": ["Tomate", "Cenoura"] },
+            { "id": "dill", "name": "Endro", "category": "Horta", "co2": 1.2, "icon": "🌿", "stratum": "Médio", "type": "Folha", "companions": ["Hortaliças em geral"] },
+            { "id": "turnip", "name": "Nabo", "category": "Horta", "co2": 2.5, "icon": "🟣", "stratum": "Baixo", "type": "Raiz", "companions": ["Cenoura", "Alface"] },
+            { "id": "potato", "name": "Batata", "category": "Horta", "co2": 8.0, "icon": "🥔", "stratum": "Baixo", "type": "Raiz", "companions": ["Milho", "Feijão"] },
+            { "id": "ginger", "name": "Gengibre", "category": "Horta", "co2": 5.0, "icon": "🟣", "stratum": "Baixo", "type": "Raiz", "companions": ["Banana", "Coco"] },
+            { "id": "turmeric", "name": "Cúrcuma", "category": "Horta", "co2": 6.0, "icon": "🟡", "stratum": "Baixo", "type": "Raiz", "companions": ["Gengibre", "Banana"] }
+        ];
+
+        const saberes = {
+            primavesi: {
+                title: "Saberes de Ana Primavesi",
+                content: `
+                    <h1>Saberes de Ana Primavesi</h1>
+                    <p>Ana Maria Primavesi foi a pioneira da agroecologia no Brasil. Seus ensinamentos revolucionaram a forma como entendemos o solo como um organismo vivo.</p>
+                    <p><strong>A Vida do Solo:</strong> Para ela, "solo é vida". Um solo saudável não precisa de venenos, pois plantas bem nutridas são resistentes a pragas.</p>
+                    <p><strong>A Teoria da Trofobiose:</strong> Explica que as pragas só atacam plantas doentes ou mal nutridas, que possuem excesso de substâncias simples (aminoácidos) em sua seiva.</p>
+                    <div style="background: #f0f4f0; padding: 15px; border-radius: 15px; border-left: 5px solid #2d5a27; margin: 15px 0;">
+                        <p style="margin: 0; font-style: italic;">"Não existe praga, existe planta doente. O inseto é o indicador de que algo no solo não está bem."</p>
+                    </div>
+                `
+            },
+            biodinamica: {
+                title: "Agricultura Biodinâmica",
+                content: `
+                    <h1>Agricultura Biodinâmica</h1>
+                    <p>A agricultura biodinâmica é um sistema holístico que considera o solo, as plantas e os animais como um organismo integrado.</p>
+                    <p><strong>Princípios Fundamentais:</strong></p>
+                    <ul style="list-style: disc; margin-left: 20px;">
+                        <li>Trabalhar com os ciclos lunares e estelares</li>
+                        <li>Usar preparados naturais para fortalecer o solo</li>
+                        <li>Integrar animais no sistema produtivo</li>
+                        <li>Manter a biodiversidade</li>
+                    </ul>
+                `
+            },
+            permacultura: {
+                title: "Permacultura",
+                content: `
+                    <h1>Princípios da Permacultura</h1>
+                    <p>Permacultura é um sistema de design que trabalha com a natureza, não contra ela.</p>
+                    <p><strong>Ética Permacultural:</strong></p>
+                    <ul style="list-style: disc; margin-left: 20px;">
+                        <li>Cuidado com a Terra</li>
+                        <li>Cuidado com as Pessoas</li>
+                        <li>Partilha Justa</li>
+                    </ul>
+                    <p>Ao aplicar estes princípios, criamos sistemas regenerativos que produzem alimento enquanto restauram o ecossistema.</p>
+                `
+            }
+        };
+
+        const receitas = {
+            bordalesa: {
+                title: "Calda Bordalesa (Fungicida)",
+                content: `
+                    <h1>Calda Bordalesa</h1>
+                    <p>Ideal para controlar fungos em frutíferas e hortaliças.</p>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Ingredientes:</h3>
+                    <ul style="list-style: disc; margin-left: 20px; margin-bottom: 10px;">
+                        <li>100g de Sulfato de Cobre</li>
+                        <li>100g de Cal Virgem</li>
+                        <li>10 Litros de Água</li>
+                    </ul>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Preparo:</h3>
+                    <p>Dissolva o cobre em 5L de água e a cal em outros 5L. Misture o cobre sobre a cal (nunca o contrário!). Teste a acidez com um prego antes de usar.</p>
+                `
+            },
+            alho: {
+                title: "Repelente de Alho e Sabão",
+                content: `
+                    <h1>Repelente de Alho e Sabão</h1>
+                    <p>Eficiente contra pulgões, cochonilhas e lagartas pequenas.</p>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Ingredientes:</h3>
+                    <ul style="list-style: disc; margin-left: 20px; margin-bottom: 10px;">
+                        <li>3 dentes de alho grandes</li>
+                        <li>1 colher de sabão de coco neutro</li>
+                        <li>1 Litro de água</li>
+                    </ul>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Preparo:</h3>
+                    <p>Bata o alho com a água no liquidificador. Coe e misture o sabão dissolvido. Pulverize no final da tarde.</p>
+                `
+            },
+            supermagro: {
+                title: "Biofertilizante Supermagro",
+                content: `
+                    <h1>Biofertilizante Supermagro</h1>
+                    <p>Um poderoso tônico para fortalecer as plantas.</p>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Composição:</h3>
+                    <p>Utiliza esterco fresco, leite, melado e micronutrientes fermentados aerobicamente por 30 dias. É a base da nutrição foliar agroecológica.</p>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Aplicação:</h3>
+                    <p>Pulverizar nas folhas no final da tarde, a cada 15 dias. Fortalece as plantas contra pragas e doenças.</p>
+                `
+            }
+        };
+
+        const chapters = {
+            0: {
+                title: "Introdução — O Mundo em Transição",
+                content: `
+                    <h1>Introdução — O Mundo em Transição</h1>
+                    <p>Vivemos um tempo em que o chão parece mudar mais rápido do que os nossos passos. Ondas de calor recordes, secas históricas, enchentes cada vez mais frequentes e debates globais sobre inteligência artificial, automatização e propósito. As pessoas buscam sentido em meio à hiperconexão e ao excesso de estímulos. A tecnologia avança como se tivesse vida própria, enquanto a terra — silenciosa, ancestral — chama por cuidado.</p>
+                    <p style="margin-top: 1.5rem;"><strong>É nesse cenário que sua jornada começa.</strong></p>
+                `
+            },
+            1: {
+                title: "Capítulo 1 – O Silêncio Antes da Semente",
+                content: `
+                    <h1>Capítulo 1 – O Silêncio Antes da Semente</h1>
+                    <p>O silêncio que se instalou não era ausência de som; era a rendição de um corpo ao próprio limite. Durante anos, minha vida foi medida pelo ping das notificações, pelo ruído branco constante de ambientes fechados, pelo brilho frio de telas que regulavam meu humor como fases artificiais da lua. Eu acordava quando a bateria carregava e dormia quando ela ameaçava acabar. O sol era apenas um detalhe.</p>
+                    <p style="margin-top: 1rem;"><strong>Até que o motor parou.</strong></p>
+                    <p style="margin-top: 1rem;">Não houve colapso dramático, apenas uma interrupção quase imperceptível — como um sistema que entra em modo de segurança. E no espaço deixado pelo ruído, surgiu um silêncio vivo. Um silêncio que não vinha de fora, mas de dentro da terra. Pela primeira vez, percebi que o mundo não estava acelerando; eu é que estava desalinhado do ritmo antigo que sustenta tudo.</p>
+                    <p style="margin-top: 1rem;">Passei grande parte da vida seguindo o roteiro invisível da modernidade: produzir, otimizar, escalar. Cada conquista era um dado salvo, cada meta cumprida um checkpoint. Ainda assim, a sensação persistia — eu não estava plantando nada. Apenas navegava por plantações digitais cultivadas por mãos que eu nunca veria.</p>
+                    <p style="margin-top: 1rem;">Foi nesse vazio que a pergunta começou a germinar:</p>
+                    <p style="margin-top: 1rem; font-style: italic; font-weight: bold;">E se o caminho não estivesse no mapa, mas nas raízes?</p>
+                    <p style="margin-top: 1rem;">A ironia é que a faísca veio da própria engrenagem que me exauria. Algoritmos começaram a sugerir vozes dissidentes. Vídeos noturnos falavam de reconexão, de terra, de presença. Uma inteligência silenciosa, que antes ditava o ritmo da minha ansiedade, agora parecia abrir uma fresta. Como se o código tivesse decidido revelar o avesso de si mesmo.</p>
+                    <p style="margin-top: 1rem;">Mas nada substituiu o contato físico.</p>
+                    <p style="margin-top: 1rem;">O primeiro punhado de terra que segurei não foi poético. Foi estranho. Minhas mãos, desacostumadas, hesitaram antes de afundar no barro úmido. A sensação era primitiva e ao mesmo tempo familiar — como se o corpo lembrasse de algo que a mente havia esquecido.</p>
+                    <p style="margin-top: 1rem;">Observei as veias sob minha pele. Observei as raízes finas misturadas à terra. Eram sistemas semelhantes: conduíam vida sem alarde. Invisíveis na maior parte do tempo, essenciais sempre.</p>
+                    <p style="margin-top: 1rem;"><strong>Naquele instante, algo se alinhou.</strong></p>
+                    <p style="margin-top: 1rem;">A semente que eu segurava era pequena, comum à primeira vista. Mas sob o sol nascente, notei um reflexo quase imperceptível — um brilho dourado, metálico, como se carregasse uma memória do futuro. Não era apenas matéria orgânica. Era possibilidade condensada.</p>
+                    <p style="margin-top: 1rem;"><strong>Plantei-a sem testemunhas.</strong></p>
+                    <p style="margin-top: 1rem;">O gesto foi simples, quase banal. Mas havia nele uma ruptura. Pela primeira vez, eu não estava reagindo ao mundo. Estava iniciando algo.</p>
+                    <p style="margin-top: 1rem;">Enquanto cobria a semente com terra, percebi que aquele ato era um espelho. O broto que ainda não existia já tensionava o solo por baixo. Invisível, trabalhava em silêncio. Assim como algo dentro de mim.</p>
+                    <p style="margin-top: 1rem;">Compreendi então que <strong>todo começo verdadeiro exige fé no que não se vê.</strong></p>
+                    <p style="margin-top: 1rem;">E ali, entre o húmus ancestral e a lógica do código, percebi que a separação entre natureza e tecnologia talvez fosse apenas um erro de percepção. A mesma inteligência que organiza raízes organiza redes. A mesma energia que percorre veias percorre cabos subterrâneos.</p>
+                    <p style="margin-top: 1rem;">Talvez o futuro não fosse uma fuga da terra. Talvez fosse um retorno — ampliado.</p>
+                    <p style="margin-top: 1rem;">Naquele dia, não plantei apenas uma semente. Plantei uma hipótese.</p>
+                    <p style="margin-top: 1rem;"><strong>E no silêncio antes do broto, algo maior começou a respirar.</strong></p>
+                `
+            },
+            2: {
+                title: "Capítulo 2 — A Terra Chama",
+                content: `
+                    <h1>Capítulo 2 — A Terra Chama</h1>
+                    <p>Passei a caminhar por entre as fileiras de café e as clareiras de mata nativa. A terra sob meus pés não era apenas solo; era um arquivo vivo de histórias, de lutas e de regeneração. Cada planta parecia carregar um segredo sobre como o mundo funcionava antes de tentarmos controlá-lo com algoritmos e planilhas.</p>
+                    <p style="margin-top: 1rem;">Conheci agricultores cujas mãos contavam histórias de décadas de cuidado. Eles falavam da lua, da umidade do ar e do comportamento dos pássaros como se estivessem lendo um código fonte muito mais complexo e antigo do que qualquer linguagem de programação que eu conhecia.</p>
+                    <p style="margin-top: 1rem;"><strong>Eles não apenas plantavam; eles dialogavam com a vida.</strong></p>
+                    <p style="margin-top: 1rem;">Senti o chamado. Não era um grito, mas um sussurro persistente. Um convite para desacelerar e observar. Para entender que a pressa é uma invenção humana, enquanto a natureza opera em ciclos de paciência e abundância.</p>
+                `
+            },
+            3: {
+                title: "Capítulo 3 — Tecnologia Como Extensão da Terra",
+                content: `
+                    <h1>Capítulo 3 — Tecnologia Como Extensão da Terra</h1>
+                    <p>A tecnologia, quando bem utilizada, pode ser uma aliada poderosa na regeneração. Comecei a ver como sensores e dados poderiam ajudar a entender melhor as necessidades de cada planta, otimizando o uso de recursos e fortalecendo os ecossistemas.</p>
+                    <p style="margin-top: 1rem;">A inteligência artificial não era mais um fim em si mesma, mas uma ferramenta para amplificar a nossa percepção e a nossa capacidade de cuidado. Ela nos permitia enxergar padrões invisíveis aos olhos humanos, conectando-nos de forma mais profunda com os ritmos da terra.</p>
+                    <p style="margin-top: 1rem;"><strong>A tecnologia tornou-se uma extensão dos nossos sentidos e das nossas mãos.</strong></p>
+                `
+            },
+            4: {
+                title: "Capítulo 4 — As Pessoas e Seus Vazios",
+                content: `
+                    <h1>Capítulo 4 — As Pessoas e Seus Vazios</h1>
+                    <p>Muitos de nós carregamos um vazio que tentamos preencher com consumo e distrações digitais. Esse vazio é, na verdade, uma desconexão profunda com a nossa essência e com o mundo natural.</p>
+                    <p style="margin-top: 1rem;">Ao retornarmos à terra, começamos a preencher esses espaços com presença e significado. Percebemos que somos parte de algo muito maior e que o nosso bem-estar está intrinsecamente ligado à saúde do planeta.</p>
+                    <p style="margin-top: 1rem;"><strong>Regenerar a terra é, fundamentalmente, um ato de regeneração humana.</strong></p>
+                `
+            },
+            5: {
+                title: "Capítulo 5 — Crise Global, Transformação Local",
+                content: `
+                    <h1>Capítulo 5 — Crise Global, Transformação Local</h1>
+                    <p>As grandes crises globais exigem ações locais. Cada horta, cada árvore plantada e cada escolha consciente contribui para uma mudança sistêmica.</p>
+                    <p style="margin-top: 1rem;">Não podemos esperar por soluções mágicas vindas de cima. A transformação começa no nosso próprio quintal, na nossa comunidade, na forma como nos relacionamos com o alimento e com a vida ao nosso redor.</p>
+                    <p style="margin-top: 1rem;"><strong>Pequenas ações, quando multiplicadas, têm o poder de curar o mundo.</strong></p>
+                `
+            },
+            6: {
+                title: "Capítulo 6 — A Semente Digital: AgriEcoCoin",
+                content: `
+                    <h1>Capítulo 6 — A Semente Digital: AgriEcoCoin</h1>
+                    <p>A AgriEcoCoin nasceu como uma forma de valorizar o cuidado com a terra. Uma moeda que representa não apenas valor financeiro, mas compromisso regenerativo.</p>
+                    <p style="margin-top: 1rem;">Ela incentiva práticas sustentáveis e conecta agricultores e consumidores em uma rede de confiança e cooperação.</p>
+                    <p style="margin-top: 1rem;"><strong>Uma ferramenta digital a serviço da vida.</strong></p>
+                `
+            },
+            7: {
+                title: "Capítulo 7 — Comunidade Como Antídoto",
+                content: `
+                    <h1>Capítulo 7 — Comunidade Como Antídoto</h1>
+                    <p>A solidão é uma das grandes dores da modernidade. A comunidade, baseada no apoio mútuo e no propósito compartilhado, é o antídoto para esse isolamento.</p>
+                    <p style="margin-top: 1rem;">Juntos, somos mais resilientes e capazes de enfrentar os desafios do nosso tempo. A colaboração é a chave para a regeneração.</p>
+                    <p style="margin-top: 1rem;"><strong>Ninguém planta uma floresta sozinho.</strong></p>
+                `
+            },
+            8: {
+                title: "Capítulo 8 — O Mapa Invisível",
+                content: `
+                    <h1>Capítulo 8 — O Mapa Invisível</h1>
+                    <p>O mapa para o futuro não está em coordenadas geográficas, mas nos valores que escolhemos cultivar. Respeito, gratidão e cuidado são os guias dessa jornada.</p>
+                    <p style="margin-top: 1rem;">Ao seguirmos esse mapa invisível, descobrimos caminhos de abundância e harmonia que sempre estiveram lá, esperando para serem trilhados.</p>
+                    <p style="margin-top: 1rem;"><strong>O futuro é um território a ser cultivado com amor.</strong></p>
+                `
+            },
+            9: {
+                title: "Conclusão — O Futuro Germina no Presente",
+                content: `
+                    <h1>Conclusão — O Futuro Germina no Presente</h1>
+                    <p>O que plantamos hoje determinará o mundo de amanhã. A jornada de "Raízes Invisíveis" é um convite para sermos os semeadores de um novo tempo.</p>
+                    <p style="margin-top: 1rem;">A semente já está em suas mãos. O solo está pronto. Agora, cabe a você dar o próximo passo.</p>
+                    <p style="margin-top: 1rem;"><strong>A história continua em cada gesto de cuidado com a vida.</strong></p>
+                `
+            },
+            10: {
+                title: "Saberes de Ana Primavesi",
+                content: `
+                    <h1>Saberes de Ana Primavesi</h1>
+                    <p>Ana Maria Primavesi foi a pioneira da agroecologia no Brasil. Seus ensinamentos revolucionaram a forma como entendemos o solo como um organismo vivo.</p>
+                    <p><strong>A Vida do Solo:</strong> Para ela, "solo é vida". Um solo saudável não precisa de venenos, pois plantas bem nutridas são resistentes a pragas.</p>
+                    <p><strong>A Teoria da Trofobiose:</strong> Explica que as pragas só atacam plantas doentes ou mal nutridas, que possuem excesso de substâncias simples (aminoácidos) em sua seiva.</p>
+                    <div style="background: #f0f4f0; padding: 15px; border-radius: 15px; border-left: 5px solid #2d5a27; margin: 15px 0;">
+                        <p style="margin: 0; font-style: italic;">"Não existe praga, existe planta doente. O inseto é o indicador de que algo no solo não está bem."</p>
+                    </div>
+                `
+            },
+            11: {
+                title: "Receitas: Defensivos Naturais",
+                content: `
+                    <h1>Receitas de Defensivos Naturais</h1>
+                    <p>Aprenda a preparar caldas e repelentes que protegem sua horta sem agredir a natureza.</p>
+                    
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1.5rem;">1. Calda Bordalesa (Fungicida)</h3>
+                    <p>Ideal para controlar fungos em frutíferas e hortaliças.</p>
+                    <ul style="list-style: disc; margin-left: 20px; margin-bottom: 10px;">
+                        <li>100g de Sulfato de Cobre</li>
+                        <li>100g de Cal Virgem</li>
+                        <li>10 Litros de Água</li>
+                    </ul>
+                    <p><strong>Preparo:</strong> Dissolva o cobre em 5L de água e a cal em outros 5L. Misture o cobre sobre a cal (nunca o contrário!). Teste a acidez com um prego antes de usar.</p>
+
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1.5rem;">2. Repelente de Alho e Sabão</h3>
+                    <p>Eficiente contra pulgões, cochonilhas e lagartas pequenas.</p>
+                    <ul style="list-style: disc; margin-left: 20px; margin-bottom: 10px;">
+                        <li>3 dentes de alho grandes</li>
+                        <li>1 colher de sabão de coco neutro</li>
+                        <li>1 Litro de água</li>
+                    </ul>
+                    <p><strong>Preparo:</strong> Bata o alho com a água no liquidificador. Coe e misture o sabão dissolvido. Pulverize no final da tarde.</p>
+
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1.5rem;">3. Biofertilizante Supermagro</h3>
+                    <p>Um poderoso tônico para fortalecer as plantas.</p>
+                    <p>Utiliza esterco fresco, leite, melado e micronutrientes fermentados aerobicamente por 30 dias. É a base da nutrição foliar agroecológica.</p>
+                `
+            }
+        };
+
+        let state = {
+            user: { name: '', type: 'Urbano' },
+            co2: 0,
+            coins: 0,
+            garden: [],
+            selectedPlant: null,
+            qty: 1
+        };
+
+        // --- CALENDÁRIO LUNAR ---
+        window.getBiodynamicInfo = function(date) {
+            const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 86400000);
+            const zodiacCycle = dayOfYear % 28;
+            const zodiacMap = [
+                { sign: 'Áries', type: 'Fruto' }, { sign: 'Áries', type: 'Fruto' }, 
+                { sign: 'Touro', type: 'Raiz' }, { sign: 'Touro', type: 'Raiz' }, { sign: 'Touro', type: 'Raiz' },
+                { sign: 'Gêmeos', type: 'Flor' }, { sign: 'Gêmeos', type: 'Flor' },
+                { sign: 'Câncer', type: 'Folha' }, { sign: 'Câncer', type: 'Folha' },
+                { sign: 'Leão', type: 'Fruto' }, { sign: 'Leão', type: 'Fruto' },
+                { sign: 'Virgem', type: 'Raiz' }, { sign: 'Virgem', type: 'Raiz' }, { sign: 'Virgem', type: 'Raiz' },
+                { sign: 'Libra', type: 'Flor' }, { sign: 'Libra', type: 'Flor' },
+                { sign: 'Escorpião', type: 'Folha' }, { sign: 'Escorpião', type: 'Folha' }, { sign: 'Escorpião', type: 'Folha' },
+                { sign: 'Sagitário', type: 'Fruto' }, { sign: 'Sagitário', type: 'Fruto' },
+                { sign: 'Capricórnio', type: 'Raiz' }, { sign: 'Capricórnio', type: 'Raiz' },
+                { sign: 'Aquário', type: 'Flor' }, { sign: 'Aquário', type: 'Flor' }, { sign: 'Aquário', type: 'Flor' },
+                { sign: 'Peixes', type: 'Folha' }, { sign: 'Peixes', type: 'Folha' },
+            ];
+            const dayInfo = zodiacMap[Math.floor(zodiacCycle)] || { sign: 'Indefinido', type: 'Neutro' };
+            if (date.getDate() % 9 === 0) {
+                return { type: 'Desfavorável', sign: 'Nó Lunar', quality: 'Evitar trabalhos importantes.' };
+            }
+            return { ...dayInfo, quality: `Influência de ${dayInfo.type}.` };
+        };
+
+        // --- GLOBAL FUNCTIONS ---
+        window.showScreen = function(screenId) {
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(s => s.style.display = 'none');
+            const target = document.getElementById(screenId);
+            if (target) target.style.display = 'block';
+            const nav = document.getElementById('main-nav');
+            const noNav = ['screen-splash', 'screen-onboarding', 'screen-cadastro'];
+            if (nav) nav.style.display = noNav.includes(screenId) ? 'none' : 'flex';
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('onclick') && item.getAttribute('onclick').includes(screenId)) {
+                    item.classList.add('active');
+                }
+            });
+            if (screenId === 'screen-dashboard') window.updateLunarDashboard();
+            window.scrollTo(0, 0);
+        };
+
+        window.updateLunarDashboard = function() {
+            const hoje = new Date();
+            const info = window.getBiodynamicInfo(hoje);
+            
+            // Atualizar data em português
+            const opcoes = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dataFormatada = hoje.toLocaleDateString('pt-BR', opcoes);
+            const dataCapitalizada = dataFormatada.charAt(0).toUpperCase() + dataFormatada.slice(1);
+            const elData = document.getElementById('data-biodinamica');
+            if (elData) elData.innerText = dataCapitalizada;
+            
+            // Atualizar fase lunar (emoji)
+            const luaEmojis = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘'];
+            const dia = hoje.getDate();
+            const faseIndex = Math.floor((dia % 29.5) / 3.6875);
+            const elLua = document.getElementById('lua-desenho');
+            if (elLua) elLua.innerText = luaEmojis[faseIndex];
+            
+            // Atualizar nome da fase
+            const fases = ['Lua Nova', 'Crescente', 'Crescente', 'Crescente', 'Lua Cheia', 'Minguante', 'Minguante', 'Minguante'];
+            const elFase = document.getElementById('fase-lunar');
+            if (elFase) elFase.innerText = fases[faseIndex];
+            
+            // Atualizar elemento
+            const elElemento = document.getElementById('elemento-dia');
+            if (elElemento) elElemento.innerText = info.type || '--';
+            
+            // Atualizar astro/zodíaco
+            const signos = ['Capricórnio', 'Aquário', 'Peixes', 'Áries', 'Touro', 'Gêmeos', 'Câncer', 'Leão', 'Virgem', 'Libra', 'Escorpião', 'Sagitário'];
+            const mes = hoje.getMonth();
+            const diaDoMes = hoje.getDate();
+            let signo = signos[mes];
+            
+            // Ajustar para datas próximas ao fim/início do mês
+            if ((mes === 0 && diaDoMes >= 20) || (mes === 1 && diaDoMes <= 18)) signo = 'Aquário';
+            else if ((mes === 1 && diaDoMes >= 19) || (mes === 2 && diaDoMes <= 20)) signo = 'Peixes';
+            else if ((mes === 2 && diaDoMes >= 21) || (mes === 3 && diaDoMes <= 19)) signo = 'Áries';
+            else if ((mes === 3 && diaDoMes >= 20) || (mes === 4 && diaDoMes <= 20)) signo = 'Touro';
+            else if ((mes === 4 && diaDoMes >= 21) || (mes === 5 && diaDoMes <= 20)) signo = 'Gêmeos';
+            else if ((mes === 5 && diaDoMes >= 21) || (mes === 6 && diaDoMes <= 22)) signo = 'Câncer';
+            else if ((mes === 6 && diaDoMes >= 23) || (mes === 7 && diaDoMes <= 22)) signo = 'Leão';
+            else if ((mes === 7 && diaDoMes >= 23) || (mes === 8 && diaDoMes <= 22)) signo = 'Virgem';
+            else if ((mes === 8 && diaDoMes >= 23) || (mes === 9 && diaDoMes <= 22)) signo = 'Libra';
+            else if ((mes === 9 && diaDoMes >= 23) || (mes === 10 && diaDoMes <= 21)) signo = 'Escorpião';
+            else if ((mes === 10 && diaDoMes >= 22) || (mes === 11 && diaDoMes <= 21)) signo = 'Sagitário';
+            else if ((mes === 11 && diaDoMes >= 22) || (mes === 0 && diaDoMes <= 19)) signo = 'Capricórnio';
+            
+            const elAstro = document.getElementById('astro-dia');
+            if (elAstro) elAstro.innerText = signo;
+            
+            // Atualizar dica biodinâmica
+            const el = document.getElementById('dica-biodinamica');
+            if (el) el.innerText = `Hoje: Influência de ${info.type}. Ideal para cuidar de plantas de ${info.type.toLowerCase()}!`;
+        };
+
+        window.selectType = function(type) {
+            state.user.type = type;
+            document.getElementById('type-urbano').style.borderColor = type === 'Urbano' ? '#2D5A27' : 'transparent';
+            document.getElementById('type-agricultor').style.borderColor = type === 'Agricultor' ? '#2D5A27' : 'transparent';
+        };
+
+        window.finishRegistration = function() {
+            const name = document.getElementById('user-name').value;
+            if (!name) return alert('Digite seu nome');
+            state.user.name = name;
+            document.getElementById('display-name').innerText = name;
+            window.saveState();
+            window.showScreen('screen-dashboard');
+        };
+
+        window.filterCatalog = function(filter, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.style.backgroundColor = 'white';
+                b.style.color = '#1A2E19';
+            });
+            if (btn) {
+                btn.style.backgroundColor = '#2D5A27';
+                btn.style.color = 'white';
+            }
+            window.renderCatalog(filter);
+        };
+
+        window.renderCatalog = function(filter = 'Tudo') {
+            const grid = document.getElementById('catalog-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            const filtered = filter === 'Tudo' ? catalog : catalog.filter(p => p.category === filter);
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-5 rounded-[32px] premium-shadow text-center';
+                card.onclick = () => window.openModal(p);
+                card.innerHTML = `<div class="text-4xl mb-3">${p.icon}</div><h4 class="font-bold text-sm">${p.name}</h4>`;
+                grid.appendChild(card);
+            });
+        };
+
+        window.openModal = function(plant) {
+            state.selectedPlant = plant;
+            state.qty = 1;
+            document.getElementById('modal-title').innerText = plant.name;
+            document.getElementById('modal-icon').innerText = plant.icon;
+            document.getElementById('plant-qty').innerText = '1';
+            
+            // Companheiras
+            document.getElementById('modal-companions').innerText = plant.companions ? plant.companions.join(', ') : 'Nenhuma listada';
+            
+            // Dica Lunar
+            const lunar = window.getBiodynamicInfo(new Date());
+            const lunarEl = document.getElementById('modal-lunar-tip');
+            const lunarText = document.getElementById('modal-lunar-text');
+            
+            if (lunar.type === plant.type) {
+                lunarEl.className = 'p-4 rounded-2xl border border-amber-200 bg-amber-50';
+                lunarText.innerText = `Momento ideal! A lua favorece o plantio de ${plant.name} hoje.`;
+            } else if (lunar.type === 'Desfavorável') {
+                lunarEl.className = 'p-4 rounded-2xl border border-red-200 bg-red-50';
+                lunarText.innerText = `Atenção: Nó Lunar. Evite plantios hoje.`;
+            } else {
+                lunarEl.className = 'p-4 rounded-2xl border border-gray-100 bg-gray-50';
+                lunarText.innerText = `Neutro. A lua hoje favorece plantas de ${lunar.type.toLowerCase()}.`;
+            }
+            
+            document.getElementById('modal-plantio').classList.remove('hidden');
+        };
+
+        window.closeModal = function() {
+            document.getElementById('modal-plantio').classList.add('hidden');
+        };
+
+        window.updateQty = function(val) {
+            state.qty = Math.max(1, state.qty + val);
+            document.getElementById('plant-qty').innerText = state.qty;
+        };
+
+        window.confirmPlanting = function() {
+            const plant = state.selectedPlant;
+            const co2Gained = plant.co2 * state.qty;
+            state.garden.push({...plant, qty: state.qty, date: new Date().toLocaleDateString(), id: Date.now()});
+            state.co2 += co2Gained;
+            state.coins += Math.floor(co2Gained * 10);
+            window.updateStats();
+            window.saveState();
+            window.closeModal();
+            window.showScreen('screen-dashboard');
+            window.renderGarden();
+        };
+
+        window.updateStats = function() {
+            document.getElementById('stat-co2').innerText = state.co2.toFixed(1);
+            document.getElementById('stat-coins').innerText = state.coins;
+            document.getElementById('rank-co2').innerText = state.co2.toFixed(1);
+            const progress = Math.min(100, (state.co2 / 50) * 100);
+            document.getElementById('bar-co2').style.width = progress + '%';
+            const challengeProgress = Math.min(5, state.co2);
+            document.getElementById('challenge-progress').innerText = challengeProgress.toFixed(1);
+            document.getElementById('bar-challenge').style.width = (challengeProgress / 5 * 100) + '%';
+        };
+
+        window.renderGarden = function() {
+            const list = document.getElementById('garden-list');
+            const preview = document.getElementById('dashboard-garden-preview');
+            if (!list || !preview) return;
+            list.innerHTML = '';
+            preview.innerHTML = '';
+            if (state.garden.length === 0) {
+                preview.innerHTML = '<p class="text-center text-gray-400 py-4 text-sm italic">Sua horta está vazia. Comece a plantar!</p>';
+                return;
+            }
+            state.garden.forEach(item => {
+                list.innerHTML += `
+                    <div class="bg-white p-4 rounded-3xl premium-shadow flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="text-3xl">${item.icon}</div>
+                            <div>
+                                <h4 class="font-bold text-sm">${item.name}</h4>
+                                <p class="text-[10px] text-gray-400 uppercase font-bold">${item.qty} unidades • ${item.date}</p>
+                            </div>
+                        </div>
+                        <div class="text-right"><p class="text-xs font-bold text-[#2D5A27]">+${(item.co2 * item.qty).toFixed(1)} kg CO₂</p></div>
+                    </div>`;
+            });
+            state.garden.slice(-3).reverse().forEach(item => {
+                preview.innerHTML += `
+                    <div class="bg-white p-3 rounded-2xl premium-shadow flex items-center gap-3">
+                        <div class="text-xl">${item.icon}</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-xs">${item.name}</h4>
+                            <p class="text-[8px] text-gray-400 uppercase font-bold">${item.qty} un</p>
+                        </div>
+                        <p class="text-[10px] font-bold text-[#2D5A27]">+${(item.co2 * item.qty).toFixed(1)} kg</p>
+                    </div>`;
+            });
+        };        window.readChapter = function(chapterNum) {
+            window.showScreen('screen-leitura');
+            document.getElementById('reading-title').innerText = chapters[chapterNum].title;
+            document.getElementById('reading-content').innerHTML = chapters[chapterNum].content;
+        };
+
+        window.renderSaberes = function() {
+            const container = document.getElementById('saberes-content');
+            container.innerHTML = '';
+            for (const [key, saber] of Object.entries(saberes)) {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-6 rounded-[32px] premium-shadow border-l-8 border-[#2D5A27]';
+                card.innerHTML = `
+                    <h3 class="font-bold text-lg mb-2">${saber.title}</h3>
+                    <button onclick="window.showSaber('${key}')" class="w-full py-3 rounded-xl bg-[#2D5A27] text-white font-bold text-sm">Ler Mais</button>
+                `;
+                container.appendChild(card);
+            }
+        };
+
+        window.showSaber = function(saberKey) {
+            window.showScreen('screen-leitura');
+            document.getElementById('reading-title').innerText = saberes[saberKey].title;
+            document.getElementById('reading-content').innerHTML = saberes[saberKey].content;
+        };
+
+        window.renderReceitas = function() {
+            const container = document.getElementById('receitas-content');
+            container.innerHTML = '';
+            for (const [key, receita] of Object.entries(receitas)) {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-6 rounded-[32px] premium-shadow border-l-8 border-[#2D5A27]';
+                card.innerHTML = `
+                    <h3 class="font-bold text-lg mb-2">${receita.title}</h3>
+                    <button onclick="window.showReceita('${key}')" class="w-full py-3 rounded-xl bg-[#2D5A27] text-white font-bold text-sm">Ver Receita</button>
+                `;
+                container.appendChild(card);
+            }
+        };
+
+        window.showReceita = function(receitaKey) {
+            window.showScreen('screen-leitura');
+            document.getElementById('reading-title').innerText = receitas[receitaKey].title;
+            document.getElementById('reading-content').innerHTML = receitas[receitaKey].content;
+        };
+
+        window.saveState = function() { localStorage.setItem('horta_hero_state', JSON.stringify(state)); };
+        window.loadState = function() {
+            const saved = localStorage.getItem('horta_hero_state');
+            if (saved) {
+                state = JSON.parse(saved);
+                if (state.user.name) {
+                    document.getElementById('display-name').innerText = state.user.name;
+                    window.showScreen('screen-dashboard');
+                } else {
+                    window.showScreen('screen-splash');
+                }
+                window.updateStats();
+                window.renderGarden();
+            } else {
+                // Primeira vez - mostrar splash screen
+                window.showScreen('screen-splash');
+            }
+        };
+
+        window.toggleDarkMode = function() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('horta_hero_dark', document.body.classList.contains('dark-mode'));
+        };
+
+        // Init
+        window.renderCatalog();
+        window.renderSaberes();
+        window.renderReceitas();
+        window.loadState();
+        if (localStorage.getItem('horta_hero_dark') === 'true') document.body.classList.add('dark-mode');
+        
+        // Init completo
+    </script>
+</body>
+</html>
