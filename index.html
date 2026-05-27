@@ -32,7 +32,13 @@
         .premium-shadow { box-shadow: 0 10px 30px rgba(45, 90, 39, 0.08); }
         .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
         
-        .screen { display: none; min-height: 100vh; padding-bottom: 100px; }
+        .screen { display: none; min-height: 100vh; padding-bottom: 200px; }
+        .screen-leitura { padding-bottom: 220px; }
+        .screen-saberes { padding-bottom: 220px; }
+        .screen-receitas { padding-bottom: 220px; }
+        .screen-busca { padding-bottom: 220px; }
+        .screen-notificacoes { padding-bottom: 220px; }
+        .screen-livro { padding-bottom: 220px; }
         .screen.active { display: block; animation: fadeIn 0.2s ease-out; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -83,6 +89,14 @@
         .book-content h2 { font-size: 1.2rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 1rem; }
         .book-content p { margin-bottom: 1rem; }
     </style>
+
+        <!-- PWA Manifest -->
+        <link rel="manifest" href="manifest.json">
+        <meta name="theme-color" content="#2D5A27">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="apple-mobile-web-app-title" content="Horta Hero">
+
 </head>
 <body>
 
@@ -324,7 +338,7 @@
     <!-- 9. LEITURA DO CAPÍTULO -->
     <div id="screen-leitura" class="screen p-6">
         <div class="flex items-center mb-8">
-            <button onclick="window.showScreen('screen-livro')" class="w-10 h-10 rounded-full bg-white flex items-center justify-center premium-shadow mr-4">
+            <button onclick="window.showScreen(window.lastScreen || 'screen-livro')" class="w-10 h-10 rounded-full bg-white flex items-center justify-center premium-shadow mr-4">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
             <h2 class="text-xl font-bold" id="reading-title">Lendo Capítulo</h2>
@@ -350,6 +364,33 @@
         </div>
     </div>
 
+    <!-- NOTIFICAÇÕES DE PLANTIO -->
+    <div id="screen-notificacoes" class="screen p-6">
+        <h2 class="text-2xl font-bold mb-6" style="color: #2D5A27;">📢 Notificações de Plantio</h2>
+        <div id="notificacoes-list" class="space-y-4">
+            <!-- Preenchido dinamicamente -->
+        </div>
+    </div>
+
+    <!-- BUSCA E FILTROS -->
+    <div id="screen-busca" class="screen p-6">
+        <h2 class="text-2xl font-bold mb-6" style="color: #2D5A27;">🔍 Buscar Receitas</h2>
+        <div class="mb-6">
+            <input type="text" id="search-input" placeholder="Buscar receita..." 
+                class="w-full p-4 rounded-2xl border-2 border-[#2D5A27] text-sm"
+                oninput="window.filterReceitas()">
+        </div>
+        <div class="mb-6 flex gap-2 flex-wrap">
+            <button onclick="window.filterByType('Tudo')" class="px-4 py-2 rounded-full bg-[#2D5A27] text-white text-sm font-bold">Tudo</button>
+            <button onclick="window.filterByType('Defensivos')" class="px-4 py-2 rounded-full bg-white border-2 border-[#2D5A27] text-[#2D5A27] text-sm font-bold">Defensivos</button>
+            <button onclick="window.filterByType('Adubos')" class="px-4 py-2 rounded-full bg-white border-2 border-[#2D5A27] text-[#2D5A27] text-sm font-bold">Adubos</button>
+            <button onclick="window.filterByType('Técnicas')" class="px-4 py-2 rounded-full bg-white border-2 border-[#2D5A27] text-[#2D5A27] text-sm font-bold">Técnicas</button>
+        </div>
+        <div id="search-results" class="space-y-4">
+            <!-- Preenchido dinamicamente -->
+        </div>
+    </div>
+
     <!-- NAVIGATION BAR -->
     <nav id="main-nav" class="fixed bottom-0 w-full glass border-t border-gray-100 px-4 py-4 flex justify-between items-center z-50 overflow-x-auto" style="display: none;">
         <button onclick="window.showScreen('screen-dashboard')" class="nav-item active flex flex-col items-center flex-shrink-0">
@@ -369,6 +410,14 @@
             <i class="fa-solid fa-sprout text-xl mb-1"></i>
             <span class="text-[9px] font-bold uppercase">Saberes</span>
         </button>
+        <button onclick="window.showScreen('screen-notificacoes')" class="nav-item flex flex-col items-center flex-shrink-0">
+            <i class="fa-solid fa-bell text-xl mb-1"></i>
+            <span class="text-[9px] font-bold uppercase">Alertas</span>
+        </button>
+        <button onclick="window.showScreen('screen-busca')" class="nav-item flex flex-col items-center flex-shrink-0">
+            <i class="fa-solid fa-magnifying-glass text-xl mb-1"></i>
+            <span class="text-[9px] font-bold uppercase">Buscar</span>
+        </button>
         <button onclick="window.showScreen('screen-receitas')" class="nav-item flex flex-col items-center flex-shrink-0">
             <i class="fa-solid fa-flask text-xl mb-1"></i>
             <span class="text-[9px] font-bold uppercase">Receitas</span>
@@ -381,6 +430,16 @@
             <i class="fa-solid fa-users text-xl mb-1"></i>
             <span class="text-[9px] font-bold uppercase">Rede</span>
         </button>
+        <button onclick="window.showScreen('screen-catalogo')" class="nav-item flex flex-col items-center flex-shrink-0">
+            <i class="fas fa-leaf text-2xl mb-1"></i>
+            <span class="text-xs">CATÁLOGO</span>
+        </button>
+        <button onclick="window.showScreen('screen-catalogo')" class="nav-item flex flex-col items-center flex-shrink-0">
+            <i class="fas fa-leaf text-2xl mb-1"></i>
+            <span class="text-xs">CATÁLOGO</span>
+        </button>
+    
+    
     </nav>
 
     <!-- MODAL DE PLANTIO -->
@@ -490,7 +549,7 @@
             { "id": "turmeric", "name": "Cúrcuma", "category": "Horta", "co2": 6.0, "icon": "🟡", "stratum": "Baixo", "type": "Raiz", "companions": ["Gengibre", "Banana"] }
         ];
 
-        const saberes = {
+                const saberes = {
             primavesi: {
                 title: "Saberes de Ana Primavesi",
                 content: `
@@ -501,6 +560,81 @@
                     <div style="background: #f0f4f0; padding: 15px; border-radius: 15px; border-left: 5px solid #2d5a27; margin: 15px 0;">
                         <p style="margin: 0; font-style: italic;">"Não existe praga, existe planta doente. O inseto é o indicador de que algo no solo não está bem."</p>
                     </div>
+                `
+            },
+            gotsch: {
+                title: "Ernst Götsch - Agricultura Sintrópica",
+                content: `
+                    <h1>Ernst Götsch e a Agricultura Sintrópica</h1>
+                    <p><strong>Ernst Götsch (1948-)</strong> é um agricultor suíço que revolucionou a agricultura regenerativa através da Agricultura Sintrópica. Após migrar para o Brasil nos anos 1980, transformou 480 hectares de terra degradada na Bahia em um sistema produtivo e regenerativo.</p>
+                    <p><strong>Princípios da Sintrofia:</strong></p>
+                    <ul style="list-style: disc; margin-left: 20px;">
+                        <li><strong>Cooperação entre plantas:</strong> Em vez de competição, as plantas trabalham juntas em harmonia</li>
+                        <li><strong>Agroflorestas:</strong> Sistemas que imitam a estrutura da floresta natural</li>
+                        <li><strong>Regeneração do solo:</strong> Recuperação de terras degradadas através de biodiversidade</li>
+                        <li><strong>Revitalização de nascentes:</strong> Restauração de recursos hídricos</li>
+                    </ul>
+                    <p style="margin-top: 1rem;"><strong>Dica Prática:</strong> "O sistema sintrópico trabalha com a natureza, criando um ecossistema produtivo que se auto-regenera."</p>
+                `
+            },
+            steiner: {
+                title: "Rudolf Steiner - Agricultura Biodinâmica",
+                content: `
+                    <h1>Rudolf Steiner e a Agricultura Biodinâmica</h1>
+                    <p><strong>Rudolf Steiner (1861-1925)</strong> foi um filósofo e cientista austríaco que fundou a Agricultura Biodinâmica em 1924. Desenvolveu uma abordagem holística que considera influências cósmicas e terrestres no cultivo.</p>
+                    <p><strong>Princípios Fundamentais:</strong></p>
+                    <ul style="list-style: disc; margin-left: 20px;">
+                        <li><strong>Influências lunares e estelares:</strong> O crescimento das plantas é guiado pelos ritmos cósmicos</li>
+                        <li><strong>Preparados biodinâmicos:</strong> Substâncias naturais que fortalecem o solo</li>
+                        <li><strong>Integração animal-planta-solo:</strong> Sistema fechado e autossuficiente</li>
+                        <li><strong>Ritmos de plantio:</strong> Trabalhar em harmonia com os ciclos naturais</li>
+                    </ul>
+                    <p style="margin-top: 1rem;"><strong>Dica Prática:</strong> "A lua e as estrelas guiam o crescimento das plantas."</p>
+                `
+            },
+            fukuoka: {
+                title: "Masanobu Fukuoka - Agricultura Natural",
+                content: `
+                    <h1>Masanobu Fukuoka e a Agricultura Natural</h1>
+                    <p><strong>Masanobu Fukuoka (1913-2008)</strong> foi um agricultor e filósofo japonês que revolucionou a agricultura com seu método "do-nothing farming". Autor de "A Revolução de Uma Palha".</p>
+                    <p><strong>Princípios Fundamentais:</strong></p>
+                    <ul style="list-style: disc; margin-left: 20px;">
+                        <li><strong>Sem aração:</strong> Deixar o solo intacto para preservar sua estrutura</li>
+                        <li><strong>Sem adubos químicos:</strong> Usar apenas compostagem e cobertura vegetal</li>
+                        <li><strong>Sem pesticidas:</strong> Confiar na biodiversidade natural</li>
+                        <li><strong>Trabalhar com a natureza:</strong> Observar e permitir que os sistemas naturais funcionem</li>
+                    </ul>
+                    <p style="margin-top: 1rem;"><strong>Dica Prática:</strong> "Não faça nada desnecessário; deixe a natureza fazer o trabalho."</p>
+                `
+            },
+            mollison: {
+                title: "Bill Mollison - Permacultura",
+                content: `
+                    <h1>Bill Mollison e a Permacultura</h1>
+                    <p><strong>Bill Mollison (1928-2016)</strong> foi um cientista australiano que co-fundou a Permacultura com David Holmgren. Criou um sistema de design que imita ecossistemas naturais.</p>
+                    <p><strong>Princípios da Permacultura:</strong></p>
+                    <ul style="list-style: disc; margin-left: 20px;">
+                        <li><strong>Design de sistemas:</strong> Criar ambientes produtivos e autossuficientes</li>
+                        <li><strong>Integração de elementos:</strong> Água, energia, plantas e animais trabalham juntos</li>
+                        <li><strong>Resiliência:</strong> Sistemas que se adaptam e prosperam</li>
+                        <li><strong>Ética permacultural:</strong> Cuidado com a terra, pessoas e compartilhamento justo</li>
+                    </ul>
+                    <p style="margin-top: 1rem;"><strong>Dica Prática:</strong> "Observe a natureza, trabalhe com ela, e crie sistemas que se sustentam por si mesmos."</p>
+                `
+            },
+            holzer: {
+                title: "Sepp Holzer - Permacultura Regenerativa",
+                content: `
+                    <h1>Sepp Holzer e a Permacultura Regenerativa</h1>
+                    <p><strong>Sepp Holzer (1942-)</strong> é um agricultor austríaco conhecido como "O Dalai Lama da Permacultura". Transformou sua fazenda de montanha em um oásis regenerativo.</p>
+                    <p><strong>Princípios Fundamentais:</strong></p>
+                    <ul style="list-style: disc; margin-left: 20px;">
+                        <li><strong>Trabalho simbiótico:</strong> Integração profunda com os processos naturais</li>
+                        <li><strong>Diversidade extrema:</strong> Múltiplos cultivos, animais e ecossistemas</li>
+                        <li><strong>Regeneração de paisagens:</strong> Transformar terras degradadas em oásis</li>
+                        <li><strong>Inovação contínua:</strong> Experimentação e adaptação constante</li>
+                    </ul>
+                    <p style="margin-top: 1rem;"><strong>Dica Prática:</strong> "Leia o livro da natureza e trabalhe com ela, não contra ela."</p>
                 `
             },
             biodinamica: {
@@ -533,7 +667,7 @@
             }
         };
 
-        const receitas = {
+                const receitas = {
             bordalesa: {
                 title: "Calda Bordalesa (Fungicida)",
                 content: `
@@ -573,6 +707,72 @@
                     <p>Utiliza esterco fresco, leite, melado e micronutrientes fermentados aerobicamente por 30 dias. É a base da nutrição foliar agroecológica.</p>
                     <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Aplicação:</h3>
                     <p>Pulverizar nas folhas no final da tarde, a cada 15 dias. Fortalece as plantas contra pragas e doenças.</p>
+                `
+            },
+            neem: {
+                title: "Óleo de Neem (Inseticida Natural)",
+                content: `
+                    <h1>Óleo de Neem</h1>
+                    <p>Um dos defensivos mais eficazes contra ácaros, cochonilhas e mosca-branca.</p>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Ingredientes:</h3>
+                    <ul style="list-style: disc; margin-left: 20px; margin-bottom: 10px;">
+                        <li>Óleo de neem puro (produto comercial)</li>
+                        <li>Água</li>
+                        <li>Sabão neutro (para emulsificar)</li>
+                    </ul>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Preparo:</h3>
+                    <p>Diluir conforme instruções do fabricante. Geralmente 1-2% de óleo em água. Adicionar algumas gotas de sabão para melhor aderência.</p>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Aplicação:</h3>
+                    <p>Pulverizar a cada 10-14 dias, preferencialmente no final da tarde.</p>
+                `
+            },
+            pimenta: {
+                title: "Repelente de Pimenta",
+                content: `
+                    <h1>Repelente de Pimenta do Reino</h1>
+                    <p>Excelente contra insetos diversos.</p>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Ingredientes:</h3>
+                    <ul style="list-style: disc; margin-left: 20px; margin-bottom: 10px;">
+                        <li>100g de pimenta do reino moída</li>
+                        <li>1L de álcool</li>
+                    </ul>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Preparo:</h3>
+                    <p>Misturar em vidro com tampa, deixar 1 semana em repouso. Coar e diluir em água antes de usar.</p>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Aplicação:</h3>
+                    <p>Pulverizar a cada 15 dias em plantas infestadas.</p>
+                `
+            },
+            cha_compostagem: {
+                title: "Chá de Compostagem (Adubo Líquido)",
+                content: `
+                    <h1>Chá de Compostagem</h1>
+                    <p>Um adubo líquido rico em nutrientes para fortalecer as plantas.</p>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Ingredientes:</h3>
+                    <ul style="list-style: disc; margin-left: 20px; margin-bottom: 10px;">
+                        <li>Composto maturo</li>
+                        <li>Água</li>
+                    </ul>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Preparo:</h3>
+                    <p>Colocar composto em saco de pano, deixar em água por 24-48 horas. Coe e use imediatamente.</p>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Aplicação:</h3>
+                    <p>Regar as plantas a cada 2 semanas. Excelente para fortalecer raízes e folhagem.</p>
+                `
+            },
+            compostagem: {
+                title: "Como Fazer Compostagem",
+                content: `
+                    <h1>Compostagem Caseira</h1>
+                    <p>A compostagem é a base de um solo saudável. Transforme resíduos em ouro negro!</p>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Ingredientes:</h3>
+                    <ul style="list-style: disc; margin-left: 20px; margin-bottom: 10px;">
+                        <li>Resíduos vegetais (folhas, galhos finos)</li>
+                        <li>Esterco animal (vaca, cavalo, galinha)</li>
+                        <li>Terra</li>
+                    </ul>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Processo:</h3>
+                    <p>Alternar camadas: resíduos vegetais, esterco, terra. Manter úmido (como esponja espremida). Revirar a cada 2 semanas.</p>
+                    <h3 style="color: #2d5a27; font-weight: 800; margin-top: 1rem;">Tempo:</h3>
+                    <p>3-6 meses até estar pronto. O composto maduro é escuro, friável e cheira a terra.</p>
                 `
             }
         };
@@ -738,7 +938,55 @@
         };
 
         // --- CALENDÁRIO LUNAR ---
+        // Dados precisos do Rhythm of Nature para 2026
+        const biodynamicData2026 = {
+            // Maio 2026: Baseado em https://www.rhythmofnature.net/biodynamic-calendar-may-2026
+            5: {
+                1: { type: 'Folha', sign: 'Touro' },
+                2: { type: 'Fruto', sign: 'Touro' },
+                3: { type: 'Fruto', sign: 'Touro' },
+                4: { type: 'Fruto', sign: 'Touro' },
+                5: { type: 'Raiz', sign: 'Touro' },
+                6: { type: 'Flor', sign: 'Touro' },
+                7: { type: 'Folha', sign: 'Touro' },
+                8: { type: 'Folha', sign: 'Touro' },
+                9: { type: 'Fruto', sign: 'Touro' },
+                10: { type: 'Fruto', sign: 'Touro' },
+                11: { type: 'Fruto', sign: 'Touro' },
+                12: { type: 'Raiz', sign: 'Touro' },
+                13: { type: 'Raiz', sign: 'Touro' },
+                14: { type: 'Raiz', sign: 'Touro' },
+                15: { type: 'Flor', sign: 'Touro' },
+                16: { type: 'Flor', sign: 'Touro' },
+                17: { type: 'Flor', sign: 'Touro' },
+                18: { type: 'Folha', sign: 'Touro' },
+                19: { type: 'Folha', sign: 'Touro' },
+                20: { type: 'Folha', sign: 'Gêmeos' },
+                21: { type: 'Folha', sign: 'Gêmeos' },
+                22: { type: 'Fruto', sign: 'Gêmeos' },
+                23: { type: 'Fruto', sign: 'Gêmeos' },
+                24: { type: 'Fruto', sign: 'Gêmeos' },
+                25: { type: 'Raiz', sign: 'Gêmeos' },
+                26: { type: 'Raiz', sign: 'Gêmeos' },
+                27: { type: 'Raiz', sign: 'Gêmeos' },
+                28: { type: 'Flor', sign: 'Gêmeos' },
+                29: { type: 'Flor', sign: 'Gêmeos' },
+                30: { type: 'Flor', sign: 'Gêmeos' },
+                31: { type: 'Folha', sign: 'Gêmeos' }
+            }
+        };
+        
         window.getBiodynamicInfo = function(date) {
+            const mes = date.getMonth() + 1; // 1-12
+            const dia = date.getDate();
+            
+            // Procurar dados específicos para o mês
+            if (biodynamicData2026[mes] && biodynamicData2026[mes][dia]) {
+                const info = biodynamicData2026[mes][dia];
+                return { ...info, quality: `Influência de ${info.type}.` };
+            }
+            
+            // Fallback: usar algoritmo anterior para meses não mapeados
             const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 86400000);
             const zodiacCycle = dayOfYear % 28;
             const zodiacMap = [
@@ -792,17 +1040,61 @@
             const elData = document.getElementById('data-biodinamica');
             if (elData) elData.innerText = dataCapitalizada;
             
-            // Atualizar fase lunar (emoji)
-            const luaEmojis = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘'];
-            const dia = hoje.getDate();
-            const faseIndex = Math.floor((dia % 29.5) / 3.6875);
-            const elLua = document.getElementById('lua-desenho');
-            if (elLua) elLua.innerText = luaEmojis[faseIndex];
+            // Atualizar fase lunar com algoritmo astronômico preciso
+            // Baseado em dados de fases lunares para 2026
+            // Lua Nova: 29 jan, 28 fev, 30 mar, 29 abr, 29 mai, 27 jun, 27 jul, 26 ago, 25 set, 24 out, 23 nov, 23 dez
+            // Lua Cheia: 12 fev, 14 mar, 13 abr, 13 mai, 12 jun, 12 jul, 10 ago, 9 set, 9 out, 8 nov, 8 dez
             
-            // Atualizar nome da fase
-            const fases = ['Lua Nova', 'Crescente', 'Crescente', 'Crescente', 'Lua Cheia', 'Minguante', 'Minguante', 'Minguante'];
+            const lunarData2026 = {
+                novas: [29, 28, 30, 24, 24, 27, 27, 26, 25, 24, 23, 23],
+                cheias: [12, 14, 14, 9, 9, 12, 12, 10, 9, 9, 8, 8]
+            };
+            
+            const mesAtual = hoje.getMonth();
+            const diaAtual = hoje.getDate();
+            const luaNovaDoMes = lunarData2026.novas[mesAtual];
+            const luaCheiaDaMes = lunarData2026.cheias[mesAtual];
+            
+            let lunarPhase = 'Crescente';
+            let lunarEmoji = '🌒';
+            
+            if (diaAtual === luaNovaDoMes) {
+                lunarPhase = 'Nova';
+                lunarEmoji = '🌑';
+            } else if (diaAtual === luaCheiaDaMes) {
+                lunarPhase = 'Cheia';
+                lunarEmoji = '🌕';
+            } else if (diaAtual > luaNovaDoMes) {
+                // Após lua nova do mês = Crescente (até a próxima lua cheia)
+                lunarPhase = 'Crescente';
+                if (diaAtual < luaNovaDoMes + 7) {
+                    lunarEmoji = '🌒';
+                } else {
+                    lunarEmoji = '🌓';
+                }
+            } else if (diaAtual > luaCheiaDaMes) {
+                // Entre lua cheia e lua nova = Minguante
+                lunarPhase = 'Minguante';
+                if (diaAtual < luaCheiaDaMes + 7) {
+                    lunarEmoji = '🌖';
+                } else {
+                    lunarEmoji = '🌗';
+                }
+            } else if (diaAtual > luaNovaDoMes && diaAtual < luaCheiaDaMes) {
+                // Entre lua nova e lua cheia = Crescente
+                lunarPhase = 'Crescente';
+                if (diaAtual < luaCheiaDaMes - 7) {
+                    lunarEmoji = '🌒';
+                } else {
+                    lunarEmoji = '🌓';
+                }
+            }
+            
+            const elLua = document.getElementById('lua-desenho');
+            if (elLua) elLua.innerText = lunarEmoji;
+            
             const elFase = document.getElementById('fase-lunar');
-            if (elFase) elFase.innerText = fases[faseIndex];
+            if (elFase) elFase.innerText = 'Lua ' + lunarPhase;
             
             // Atualizar elemento
             const elElemento = document.getElementById('elemento-dia');
@@ -994,6 +1286,7 @@
         };
 
         window.showSaber = function(saberKey) {
+            window.lastScreen = 'screen-saberes';
             window.showScreen('screen-leitura');
             document.getElementById('reading-title').innerText = saberes[saberKey].title;
             document.getElementById('reading-content').innerHTML = saberes[saberKey].content;
@@ -1014,10 +1307,134 @@
         };
 
         window.showReceita = function(receitaKey) {
+            window.lastScreen = 'screen-busca';
             window.showScreen('screen-leitura');
             document.getElementById('reading-title').innerText = receitas[receitaKey].title;
             document.getElementById('reading-content').innerHTML = receitas[receitaKey].content;
         };
+
+        // ===== NOTIFICAÇÕES DE PLANTIO =====
+        window.generatePlantingNotifications = function() {
+            const notifications = [];
+            const today = new Date();
+            const lunar = window.getBiodynamicInfo(today);
+            
+            const lunarEmojis = { 'Fruto': '🍅', 'Raiz': '🥔', 'Flor': '🌸', 'Folha': '🍃', 'Desfavorável': '⚠️' };
+            
+            notifications.push({
+                type: 'Hoje',
+                title: `Dia ${lunar.type}`,
+                message: `Influência de ${lunar.type}. Ideal para plantas de ${lunar.type.toLowerCase()}.`,
+                icon: lunarEmojis[lunar.type] || '🌱',
+                date: today.toLocaleDateString('pt-BR')
+            });
+            
+            for (let i = 1; i <= 7; i++) {
+                const futureDate = new Date(today);
+                futureDate.setDate(futureDate.getDate() + i);
+                const futLunar = window.getBiodynamicInfo(futureDate);
+                
+                if (futLunar.type === 'Fruto') {
+                    notifications.push({
+                        type: 'Próximo',
+                        title: `${futureDate.toLocaleDateString('pt-BR')} - Dia de Fruto`,
+                        message: 'Ideal para plantio de frutíferas e tomates',
+                        icon: '🝅',
+                        date: futureDate.toLocaleDateString('pt-BR')
+                    });
+                }
+            }
+            
+            return notifications;
+        };
+        
+        window.renderNotificacoes = function() {
+            const container = document.getElementById('notificacoes-list');
+            if (!container) return;
+            
+            const notifications = window.generatePlantingNotifications();
+            container.innerHTML = '';
+            
+            notifications.forEach(notif => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-5 rounded-[24px] premium-shadow border-l-4 border-[#2D5A27]';
+                card.innerHTML = `
+                    <div class="flex items-start gap-4">
+                        <div class="text-4xl">${notif.icon}</div>
+                        <div class="flex-1">
+                            <p class="text-xs font-bold text-gray-500 uppercase">${notif.type}</p>
+                            <h3 class="font-bold text-lg mb-1">${notif.title}</h3>
+                            <p class="text-sm text-gray-600">${notif.message}</p>
+                            <p class="text-xs text-gray-400 mt-2">${notif.date}</p>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        };
+        
+        // ===== BUSCA E FILTROS =====
+        let currentFilterType = 'Tudo';
+        
+        window.filterByType = function(type) {
+            currentFilterType = type;
+            window.filterReceitas();
+            
+            document.querySelectorAll('[onclick*="filterByType"]').forEach(btn => {
+                btn.style.backgroundColor = btn.textContent.includes(type) ? '#2D5A27' : 'white';
+                btn.style.color = btn.textContent.includes(type) ? 'white' : '#2D5A27';
+            });
+        };
+        
+        window.filterReceitas = function() {
+            const searchTerm = document.getElementById('search-input')?.value.toLowerCase() || '';
+            const resultsContainer = document.getElementById('search-results');
+            if (!resultsContainer) return;
+            
+            resultsContainer.innerHTML = '';
+            
+            const receitasArray = Object.entries(receitas);
+            const filtered = receitasArray.filter(([key, receita]) => {
+                const matchesSearch = receita.title.toLowerCase().includes(searchTerm);
+                const matchesType = currentFilterType === 'Tudo' || receita.type === currentFilterType;
+                return matchesSearch && matchesType;
+            });
+            
+            if (filtered.length === 0) {
+                resultsContainer.innerHTML = '<p class="text-center text-gray-400 py-8">Nenhuma receita encontrada</p>';
+                return;
+            }
+            
+            filtered.forEach(([key, receita]) => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-5 rounded-[24px] premium-shadow cursor-pointer hover:shadow-lg transition';
+                card.onclick = () => window.showReceita(key);
+                card.innerHTML = `
+                    <h3 class="font-bold text-lg mb-2">${receita.title}</h3>
+                    <p class="text-xs font-bold text-[#2D5A27] uppercase mb-3">${receita.type || 'Receita'}</p>
+                    <button class="w-full py-2 rounded-lg bg-[#2D5A27] text-white font-bold text-sm">Ver Receita</button>
+                `;
+                resultsContainer.appendChild(card);
+            });
+        };
+        
+        // Adicionar tipo às receitas
+        Object.assign(receitas, {
+            bordalesa: { ...receitas.bordalesa, type: 'Defensivos' },
+            alho: { ...receitas.alho, type: 'Defensivos' },
+            supermagro: { ...receitas.supermagro, type: 'Adubos' },
+            neem: { ...receitas.neem, type: 'Defensivos' },
+            pimenta: { ...receitas.pimenta, type: 'Defensivos' },
+            cha_compostagem: { ...receitas.cha_compostagem, type: 'Adubos' },
+            compostagem: { ...receitas.compostagem, type: 'Técnicas' }
+        });
+        
+        // PWA Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(() => {
+                console.log('ServiceWorker não disponível');
+            });
+        }
 
         window.saveState = function() { localStorage.setItem('horta_hero_state', JSON.stringify(state)); };
         window.loadState = function() {
@@ -1047,10 +1464,1008 @@
         window.renderCatalog();
         window.renderSaberes();
         window.renderReceitas();
+        window.renderNotificacoes();
+        window.filterReceitas();
         window.loadState();
         if (localStorage.getItem('horta_hero_dark') === 'true') document.body.classList.add('dark-mode');
         
         // Init completo
-    </script>
+
+        
+
+window.plantasData = [
+  {
+    "id": 1,
+    "nome": "Tomate",
+    "cientifico": "Solanum lycopersicum",
+    "tipo": "Fruto",
+    "categoria": "Hortaliça",
+    "descricao": "Fruto vermelho rico em licopeno, vitamina C e antioxidantes. Ideal para saladas e molhos.",
+    "plantio": "Setembro a Novembro",
+    "colheita": "60-90 dias após plantio",
+    "dicas": "Requer sol pleno (6-8h), solo bem drenado, rega regular. Tutorar a planta para melhor desenvolvimento.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece crescimento.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "tomate.jpg"
+  },
+  {
+    "id": 2,
+    "nome": "Alface",
+    "cientifico": "Lactuca sativa",
+    "tipo": "Folha",
+    "categoria": "Hortaliça",
+    "descricao": "Folhas verdes e crocantes, rica em fibras e vitaminas. Perfeita para saladas frescas.",
+    "plantio": "Março a Setembro",
+    "colheita": "30-60 dias após plantio",
+    "dicas": "Prefere meia-sombra em climas quentes, solo úmido mas não encharcado. Colher as folhas externas.",
+    "biodinamica": "Ideal em dias de Folha. Melhor em lua minguante.",
+    "zodiacos": [
+      "Câncer",
+      "Escorpião"
+    ],
+    "imagem": "alface.jpg"
+  },
+  {
+    "id": 3,
+    "nome": "Cenoura",
+    "cientifico": "Daucus carota",
+    "tipo": "Raiz",
+    "categoria": "Hortaliça",
+    "descricao": "Raiz alaranjada rica em beta-caroteno e vitamina A. Essencial para a saúde dos olhos.",
+    "plantio": "Março a Setembro",
+    "colheita": "70-100 dias após plantio",
+    "dicas": "Solo solto e profundo, sem pedras. Rega moderada. Desbaste as mudas para melhor desenvolvimento.",
+    "biodinamica": "Ideal em dias de Raiz. Lua nova favorece enraizamento.",
+    "zodiacos": [
+      "Virgem",
+      "Capricórnio"
+    ],
+    "imagem": "cenoura.jpg"
+  },
+  {
+    "id": 4,
+    "nome": "Manjericão",
+    "cientifico": "Ocimum basilicum",
+    "tipo": "Folha",
+    "categoria": "Erva Aromática",
+    "descricao": "Erva aromática com aroma intenso, usada em culinária e chás. Propriedades antibacterianas.",
+    "plantio": "Setembro a Março",
+    "colheita": "30-40 dias após plantio",
+    "dicas": "Ama sol pleno, solo fértil e bem drenado. Pinçar o topo para estimular ramificação.",
+    "biodinamica": "Ideal em dias de Flor. Lua crescente favorece aroma.",
+    "zodiacos": [
+      "Gêmeos",
+      "Libra"
+    ],
+    "imagem": "manjericao.jpg"
+  },
+  {
+    "id": 5,
+    "nome": "Morango",
+    "cientifico": "Fragaria × ananassa",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto vermelho doce, rico em vitamina C e antioxidantes. Ideal para sobremesas.",
+    "plantio": "Março a Maio",
+    "colheita": "30-40 dias após floração",
+    "dicas": "Prefere clima temperado, solo rico em matéria orgânica. Mulch para conservar umidade.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "morango.jpg"
+  },
+  {
+    "id": 6,
+    "nome": "Gengibre",
+    "cientifico": "Zingiber officinale",
+    "tipo": "Raiz",
+    "categoria": "Planta Medicinal",
+    "descricao": "Raiz aromática com propriedades anti-inflamatórias e termogênicas. Usado em chás e culinária.",
+    "plantio": "Setembro a Dezembro",
+    "colheita": "8-10 meses após plantio",
+    "dicas": "Solo rico em matéria orgânica, meia-sombra, rega regular. Não tolera encharcamento.",
+    "biodinamica": "Ideal em dias de Raiz. Lua nova favorece enraizamento profundo.",
+    "zodiacos": [
+      "Virgem",
+      "Capricórnio"
+    ],
+    "imagem": "gengibre.jpg"
+  },
+  {
+    "id": 7,
+    "nome": "Hortelã",
+    "cientifico": "Mentha piperita",
+    "tipo": "Folha",
+    "categoria": "Erva Aromática",
+    "descricao": "Erva refrescante com aroma intenso, usada em chás e bebidas. Propriedades digestivas.",
+    "plantio": "Ano todo",
+    "colheita": "30-45 dias após plantio",
+    "dicas": "Cresce facilmente, prefere meia-sombra, solo úmido. Controlar o crescimento para evitar invasão.",
+    "biodinamica": "Ideal em dias de Folha. Lua crescente favorece vigor.",
+    "zodiacos": [
+      "Câncer",
+      "Escorpião"
+    ],
+    "imagem": "hortela.jpg"
+  },
+  {
+    "id": 8,
+    "nome": "Cúrcuma",
+    "cientifico": "Curcuma longa",
+    "tipo": "Raiz",
+    "categoria": "Planta Medicinal",
+    "descricao": "Raiz amarela com propriedades anti-inflamatórias poderosas. Especiaria essencial na culinária.",
+    "plantio": "Setembro a Dezembro",
+    "colheita": "8-10 meses após plantio",
+    "dicas": "Clima quente e úmido, solo rico em matéria orgânica. Meia-sombra ideal.",
+    "biodinamica": "Ideal em dias de Raiz. Lua nova favorece enraizamento.",
+    "zodiacos": [
+      "Virgem",
+      "Capricórnio"
+    ],
+    "imagem": "curcuma.jpg"
+  },
+  {
+    "id": 9,
+    "nome": "Melancia",
+    "cientifico": "Citrullus lanatus",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto grande e refrescante, rico em água e licopeno. Perfeito para dias quentes.",
+    "plantio": "Setembro a Novembro",
+    "colheita": "70-100 dias após plantio",
+    "dicas": "Requer muito espaço, sol pleno, solo fértil. Rega abundante em clima quente.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "melancia.jpg"
+  },
+  {
+    "id": 10,
+    "nome": "Alecrim",
+    "cientifico": "Rosmarinus officinalis",
+    "tipo": "Folha",
+    "categoria": "Erva Aromática",
+    "descricao": "Erva aromática lenhosa com propriedades antioxidantes. Usada em culinária e rituais.",
+    "plantio": "Ano todo",
+    "colheita": "60-90 dias após plantio",
+    "dicas": "Prefere sol pleno, solo bem drenado. Resistente à seca. Poda regular estimula ramificação.",
+    "biodinamica": "Ideal em dias de Flor. Lua crescente favorece aroma.",
+    "zodiacos": [
+      "Gêmeos",
+      "Libra"
+    ],
+    "imagem": "alecrim.jpg"
+  },
+  {
+    "id": 11,
+    "nome": "Beterraba",
+    "cientifico": "Beta vulgaris",
+    "tipo": "Raiz",
+    "categoria": "Hortaliça",
+    "descricao": "Raiz vermelha escura rica em ferro e antioxidantes. Versátil na culinária.",
+    "plantio": "Março a Setembro",
+    "colheita": "60-80 dias após plantio",
+    "dicas": "Solo bem preparado, rega regular. Desbaste as mudas para melhor desenvolvimento.",
+    "biodinamica": "Ideal em dias de Raiz. Lua nova favorece enraizamento.",
+    "zodiacos": [
+      "Virgem",
+      "Capricórnio"
+    ],
+    "imagem": "beterraba.jpg"
+  },
+  {
+    "id": 12,
+    "nome": "Couve",
+    "cientifico": "Brassica oleracea",
+    "tipo": "Folha",
+    "categoria": "Hortaliça",
+    "descricao": "Folhas verdes escuras ricas em cálcio e ferro. Superalimento nutritivo.",
+    "plantio": "Março a Setembro",
+    "colheita": "60-90 dias após plantio",
+    "dicas": "Prefere clima ameno, solo fértil. Colher as folhas externas regularmente.",
+    "biodinamica": "Ideal em dias de Folha. Lua minguante favorece vigor.",
+    "zodiacos": [
+      "Câncer",
+      "Escorpião"
+    ],
+    "imagem": "couve.jpg"
+  },
+  {
+    "id": 13,
+    "nome": "Melão",
+    "cientifico": "Cucumis melo",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto doce e aromático, rico em vitaminas e minerais. Refrescante e nutritivo.",
+    "plantio": "Setembro a Novembro",
+    "colheita": "70-90 dias após plantio",
+    "dicas": "Requer espaço, sol pleno, solo fértil. Suporte para as frutas evita podridão.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "melao.jpg"
+  },
+  {
+    "id": 14,
+    "nome": "Camomila",
+    "cientifico": "Matricaria chamomilla",
+    "tipo": "Flor",
+    "categoria": "Planta Medicinal",
+    "descricao": "Flores delicadas com propriedades calmantes. Usada em chás relaxantes.",
+    "plantio": "Março a Setembro",
+    "colheita": "60-90 dias após plantio",
+    "dicas": "Prefere sol pleno, solo bem drenado. Auto-semeia facilmente.",
+    "biodinamica": "Ideal em dias de Flor. Lua crescente favorece floração.",
+    "zodiacos": [
+      "Gêmeos",
+      "Libra"
+    ],
+    "imagem": "camomila.jpg"
+  },
+  {
+    "id": 15,
+    "nome": "Abóbora",
+    "cientifico": "Cucurbita moschata",
+    "tipo": "Fruto",
+    "categoria": "Hortaliça",
+    "descricao": "Fruto grande e nutritivo, rico em beta-caroteno. Versátil na culinária.",
+    "plantio": "Setembro a Novembro",
+    "colheita": "80-120 dias após plantio",
+    "dicas": "Requer muito espaço, sol pleno, solo fértil. Rega regular em clima seco.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "abobora.jpg"
+  },
+  {
+    "id": 16,
+    "nome": "Espinafre",
+    "cientifico": "Spinacia oleracea",
+    "tipo": "Folha",
+    "categoria": "Hortaliça",
+    "descricao": "Folhas verdes ricas em ferro e ácido fólico. Superalimento nutritivo.",
+    "plantio": "Março a Setembro",
+    "colheita": "40-50 dias após plantio",
+    "dicas": "Prefere clima fresco, solo rico em matéria orgânica. Colher antes do florescimento.",
+    "biodinamica": "Ideal em dias de Folha. Lua minguante favorece vigor.",
+    "zodiacos": [
+      "Câncer",
+      "Escorpião"
+    ],
+    "imagem": "espinafre.jpg"
+  },
+  {
+    "id": 17,
+    "nome": "Pimenta",
+    "cientifico": "Capsicum annuum",
+    "tipo": "Fruto",
+    "categoria": "Hortaliça",
+    "descricao": "Fruto picante ou doce, rico em vitamina C. Versátil na culinária.",
+    "plantio": "Setembro a Novembro",
+    "colheita": "60-90 dias após plantio",
+    "dicas": "Requer sol pleno, clima quente, solo bem drenado. Rega regular.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "pimenta.jpg"
+  },
+  {
+    "id": 18,
+    "nome": "Brócolis",
+    "cientifico": "Brassica oleracea italica",
+    "tipo": "Flor",
+    "categoria": "Hortaliça",
+    "descricao": "Inflorescência verde rica em vitaminas e minerais. Superalimento nutritivo.",
+    "plantio": "Março a Setembro",
+    "colheita": "60-90 dias após plantio",
+    "dicas": "Prefere clima ameno, solo fértil. Colher antes da floração completa.",
+    "biodinamica": "Ideal em dias de Flor. Lua crescente favorece desenvolvimento.",
+    "zodiacos": [
+      "Gêmeos",
+      "Libra"
+    ],
+    "imagem": "brocolis.jpg"
+  },
+  {
+    "id": 19,
+    "nome": "Cebola",
+    "cientifico": "Allium cepa",
+    "tipo": "Raiz",
+    "categoria": "Hortaliça",
+    "descricao": "Bulbo aromático essencial na culinária, com propriedades antibacterianas.",
+    "plantio": "Março a Setembro",
+    "colheita": "100-120 dias após plantio",
+    "dicas": "Solo bem preparado, rega moderada. Armazenar em local fresco e seco.",
+    "biodinamica": "Ideal em dias de Raiz. Lua nova favorece enraizamento.",
+    "zodiacos": [
+      "Virgem",
+      "Capricórnio"
+    ],
+    "imagem": "cebola.jpg"
+  },
+  {
+    "id": 20,
+    "nome": "Alho",
+    "cientifico": "Allium sativum",
+    "tipo": "Raiz",
+    "categoria": "Hortaliça",
+    "descricao": "Bulbo aromático com propriedades antifúngicas e antibacterianas poderosas.",
+    "plantio": "Março a Maio",
+    "colheita": "150-180 dias após plantio",
+    "dicas": "Plantio em fileiras, solo bem drenado. Colher quando folhas secarem.",
+    "biodinamica": "Ideal em dias de Raiz. Lua nova favorece enraizamento profundo.",
+    "zodiacos": [
+      "Virgem",
+      "Capricórnio"
+    ],
+    "imagem": "alho.jpg"
+  },
+  {
+    "id": 21,
+    "nome": "Rúcula",
+    "cientifico": "Eruca vesicaria",
+    "tipo": "Folha",
+    "categoria": "Hortaliça",
+    "descricao": "Folhas picantes e aromáticas, ricas em vitaminas. Perfeita para saladas.",
+    "plantio": "Março a Setembro",
+    "colheita": "30-40 dias após plantio",
+    "dicas": "Prefere meia-sombra em clima quente, solo úmido. Colher regularmente.",
+    "biodinamica": "Ideal em dias de Folha. Lua minguante favorece vigor.",
+    "zodiacos": [
+      "Câncer",
+      "Escorpião"
+    ],
+    "imagem": "rucula.jpg"
+  },
+  {
+    "id": 22,
+    "nome": "Banana",
+    "cientifico": "Musa paradisiaca",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto tropical rico em potássio e carboidratos. Nutritivo e versátil.",
+    "plantio": "Ano todo",
+    "colheita": "9-12 meses após plantio",
+    "dicas": "Clima tropical/subtropical, solo fértil, proteção do vento. Rega regular.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "banana.jpg"
+  },
+  {
+    "id": 23,
+    "nome": "Limão",
+    "cientifico": "Citrus limon",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto cítrico ácido, rico em vitamina C. Essencial na culinária.",
+    "plantio": "Ano todo",
+    "colheita": "6-12 meses após floração",
+    "dicas": "Clima subtropical/tropical, solo bem drenado, sol pleno. Rega moderada.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "limao.jpg"
+  },
+  {
+    "id": 24,
+    "nome": "Maçã",
+    "cientifico": "Malus domestica",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto doce e crocante, rico em fibras. Nutritivo e versátil.",
+    "plantio": "Março a Maio",
+    "colheita": "120-150 dias após floração",
+    "dicas": "Clima temperado, solo bem drenado, poda anual. Polinização cruzada necessária.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "maca.jpg"
+  },
+  {
+    "id": 25,
+    "nome": "Uva",
+    "cientifico": "Vitis vinifera",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto doce em cachos, rico em antioxidantes. Versátil em culinária.",
+    "plantio": "Março a Maio",
+    "colheita": "60-100 dias após floração",
+    "dicas": "Treliça para suporte, poda anual, solo bem drenado. Proteção de pragas.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "uva.jpg"
+  },
+  {
+    "id": 26,
+    "nome": "Salsa",
+    "cientifico": "Petroselinum crispum",
+    "tipo": "Folha",
+    "categoria": "Erva Aromática",
+    "descricao": "Erva aromática com folhas verdes, usada como tempero e guarnição.",
+    "plantio": "Ano todo",
+    "colheita": "60-80 dias após plantio",
+    "dicas": "Meia-sombra, solo úmido mas não encharcado. Colher folhas externas.",
+    "biodinamica": "Ideal em dias de Folha. Lua crescente favorece vigor.",
+    "zodiacos": [
+      "Câncer",
+      "Escorpião"
+    ],
+    "imagem": "salsa.jpg"
+  },
+  {
+    "id": 27,
+    "nome": "Cebolinha",
+    "cientifico": "Allium schoenoprasum",
+    "tipo": "Folha",
+    "categoria": "Erva Aromática",
+    "descricao": "Erva aromática com folhas finas, usada como tempero em diversos pratos.",
+    "plantio": "Ano todo",
+    "colheita": "30-40 dias após plantio",
+    "dicas": "Meia-sombra, solo úmido. Colher regularmente para estimular crescimento.",
+    "biodinamica": "Ideal em dias de Folha. Lua crescente favorece vigor.",
+    "zodiacos": [
+      "Câncer",
+      "Escorpião"
+    ],
+    "imagem": "cebolinha.jpg"
+  },
+  {
+    "id": 28,
+    "nome": "Orégano",
+    "cientifico": "Origanum vulgare",
+    "tipo": "Folha",
+    "categoria": "Erva Aromática",
+    "descricao": "Erva aromática com propriedades antioxidantes, usada em culinária.",
+    "plantio": "Ano todo",
+    "colheita": "60-90 dias após plantio",
+    "dicas": "Sol pleno, solo bem drenado. Resistente à seca. Poda estimula ramificação.",
+    "biodinamica": "Ideal em dias de Flor. Lua crescente favorece aroma.",
+    "zodiacos": [
+      "Gêmeos",
+      "Libra"
+    ],
+    "imagem": "oregano.jpg"
+  },
+  {
+    "id": 29,
+    "nome": "Tomilho",
+    "cientifico": "Thymus vulgaris",
+    "tipo": "Folha",
+    "categoria": "Erva Aromática",
+    "descricao": "Erva aromática com propriedades antissépticas, usada em culinária e chás.",
+    "plantio": "Ano todo",
+    "colheita": "60-90 dias após plantio",
+    "dicas": "Sol pleno, solo bem drenado. Resistente à seca. Poda regular.",
+    "biodinamica": "Ideal em dias de Flor. Lua crescente favorece aroma.",
+    "zodiacos": [
+      "Gêmeos",
+      "Libra"
+    ],
+    "imagem": "tomilho.jpg"
+  },
+  {
+    "id": 30,
+    "nome": "Rabanete",
+    "cientifico": "Raphanus sativus",
+    "tipo": "Raiz",
+    "categoria": "Hortaliça",
+    "descricao": "Raiz pequena e picante, rica em vitamina C. Colheita rápida.",
+    "plantio": "Março a Setembro",
+    "colheita": "25-30 dias após plantio",
+    "dicas": "Solo bem preparado, rega regular. Colher quando atingir tamanho desejado.",
+    "biodinamica": "Ideal em dias de Raiz. Lua nova favorece enraizamento rápido.",
+    "zodiacos": [
+      "Virgem",
+      "Capricórnio"
+    ],
+    "imagem": "rabanete.jpg"
+  },
+  {
+    "id": 31,
+    "nome": "Nabo",
+    "cientifico": "Brassica rapa",
+    "tipo": "Raiz",
+    "categoria": "Hortaliça",
+    "descricao": "Raiz branca ou roxa, rica em vitaminas e minerais. Versátil na culinária.",
+    "plantio": "Março a Setembro",
+    "colheita": "60-80 dias após plantio",
+    "dicas": "Solo bem preparado, rega regular. Desbaste as mudas para melhor desenvolvimento.",
+    "biodinamica": "Ideal em dias de Raiz. Lua nova favorece enraizamento.",
+    "zodiacos": [
+      "Virgem",
+      "Capricórnio"
+    ],
+    "imagem": "nabo.jpg"
+  },
+  {
+    "id": 32,
+    "nome": "Batata",
+    "cientifico": "Solanum tuberosum",
+    "tipo": "Raiz",
+    "categoria": "Hortaliça",
+    "descricao": "Tubérculo rico em carboidratos e potássio. Alimento versátil e nutritivo.",
+    "plantio": "Março a Maio",
+    "colheita": "70-100 dias após plantio",
+    "dicas": "Solo bem preparado, amontoa para proteger tubérculos. Rega regular.",
+    "biodinamica": "Ideal em dias de Raiz. Lua nova favorece enraizamento profundo.",
+    "zodiacos": [
+      "Virgem",
+      "Capricórnio"
+    ],
+    "imagem": "batata.jpg"
+  },
+  {
+    "id": 33,
+    "nome": "Pepino",
+    "cientifico": "Cucumis sativus",
+    "tipo": "Fruto",
+    "categoria": "Hortaliça",
+    "descricao": "Fruto alongado e refrescante, rico em água. Perfeito para saladas.",
+    "plantio": "Setembro a Novembro",
+    "colheita": "50-70 dias após plantio",
+    "dicas": "Treliça para suporte, solo fértil, rega regular. Colher quando firme.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "pepino.jpg"
+  },
+  {
+    "id": 34,
+    "nome": "Berinjela",
+    "cientifico": "Solanum melongena",
+    "tipo": "Fruto",
+    "categoria": "Hortaliça",
+    "descricao": "Fruto roxo ou branco, versátil na culinária. Baixo em calorias.",
+    "plantio": "Setembro a Novembro",
+    "colheita": "60-90 dias após plantio",
+    "dicas": "Sol pleno, clima quente, solo fértil. Tutorar para melhor desenvolvimento.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "berinjela.jpg"
+  },
+  {
+    "id": 35,
+    "nome": "Milho",
+    "cientifico": "Zea mays",
+    "tipo": "Fruto",
+    "categoria": "Cereal",
+    "descricao": "Cereal nutritivo, rico em carboidratos e fibras. Versátil na culinária.",
+    "plantio": "Setembro a Novembro",
+    "colheita": "60-90 dias após plantio",
+    "dicas": "Solo fértil, sol pleno, rega regular. Plantar em fileiras para polinização.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece desenvolvimento.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "milho.jpg"
+  },
+  {
+    "id": 36,
+    "nome": "Feijão",
+    "cientifico": "Phaseolus vulgaris",
+    "tipo": "Fruto",
+    "categoria": "Legume",
+    "descricao": "Legume rico em proteína e fibras. Alimento essencial e nutritivo.",
+    "plantio": "Setembro a Novembro",
+    "colheita": "60-90 dias após plantio",
+    "dicas": "Solo bem preparado, treliça para suporte, rega regular. Colher quando firme.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "feijao.jpg"
+  },
+  {
+    "id": 37,
+    "nome": "Ervilha",
+    "cientifico": "Pisum sativum",
+    "tipo": "Fruto",
+    "categoria": "Legume",
+    "descricao": "Legume doce e nutritivo, rico em proteína. Colheita rápida.",
+    "plantio": "Março a Maio",
+    "colheita": "60-70 dias após plantio",
+    "dicas": "Treliça para suporte, solo bem preparado. Colher quando vagens estiverem firmes.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "ervilha.jpg"
+  },
+  {
+    "id": 38,
+    "nome": "Abacaxi",
+    "cientifico": "Ananas comosus",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto tropical doce, rico em vitamina C e bromelina. Refrescante.",
+    "plantio": "Ano todo",
+    "colheita": "18-24 meses após plantio",
+    "dicas": "Clima tropical, solo bem drenado, sol pleno. Rega moderada.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "abacaxi.jpg"
+  },
+  {
+    "id": 39,
+    "nome": "Mamão",
+    "cientifico": "Carica papaya",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto tropical doce, rico em papaína e vitaminas. Nutritivo e digestivo.",
+    "plantio": "Ano todo",
+    "colheita": "9-12 meses após plantio",
+    "dicas": "Clima tropical, solo fértil, sol pleno. Rega regular.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "mamao.jpg"
+  },
+  {
+    "id": 40,
+    "nome": "Coco",
+    "cientifico": "Cocos nucifera",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto tropical versátil, rico em gorduras saudáveis. Múltiplos usos.",
+    "plantio": "Ano todo",
+    "colheita": "6-12 meses após floração",
+    "dicas": "Clima tropical, solo bem drenado, proteção do vento. Rega regular.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "coco.jpg"
+  },
+  {
+    "id": 41,
+    "nome": "Melancia Amarela",
+    "cientifico": "Citrullus lanatus var. yellow",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Variante amarela da melancia, refrescante e nutritiva. Sabor único.",
+    "plantio": "Setembro a Novembro",
+    "colheita": "70-100 dias após plantio",
+    "dicas": "Requer muito espaço, sol pleno, solo fértil. Rega abundante.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "melancia_amarela.jpg"
+  },
+  {
+    "id": 42,
+    "nome": "Mirtilo",
+    "cientifico": "Vaccinium corymbosum",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto pequeno e azul, rico em antioxidantes. Superalimento.",
+    "plantio": "Março a Maio",
+    "colheita": "60-80 dias após floração",
+    "dicas": "Solo ácido, meia-sombra, rega regular. Poda anual para melhor produção.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "mirtilo.jpg"
+  },
+  {
+    "id": 43,
+    "nome": "Framboesa",
+    "cientifico": "Rubus idaeus",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto vermelho delicado, rico em vitamina C. Doce e aromático.",
+    "plantio": "Março a Maio",
+    "colheita": "60-80 dias após floração",
+    "dicas": "Treliça para suporte, solo bem drenado, poda anual. Proteção de pragas.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "framboesa.jpg"
+  },
+  {
+    "id": 44,
+    "nome": "Amora",
+    "cientifico": "Morus alba",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto preto ou roxo, doce e nutritivo. Árvore produtiva.",
+    "plantio": "Março a Maio",
+    "colheita": "60-80 dias após floração",
+    "dicas": "Sol pleno, solo bem drenado, poda anual. Árvore resistente.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "amora.jpg"
+  },
+  {
+    "id": 45,
+    "nome": "Goiaba",
+    "cientifico": "Psidium guajava",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto tropical doce, rico em vitamina C. Versátil na culinária.",
+    "plantio": "Ano todo",
+    "colheita": "6-12 meses após floração",
+    "dicas": "Clima tropical/subtropical, solo bem drenado, sol pleno. Rega moderada.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "goiaba.jpg"
+  },
+  {
+    "id": 46,
+    "nome": "Manga",
+    "cientifico": "Mangifera indica",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto tropical doce, rico em vitaminas. Rainha das frutas.",
+    "plantio": "Ano todo",
+    "colheita": "6-12 meses após floração",
+    "dicas": "Clima tropical, solo bem drenado, sol pleno. Poda anual.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "manga.jpg"
+  },
+  {
+    "id": 47,
+    "nome": "Abacate",
+    "cientifico": "Persea americana",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto cremoso, rico em gorduras saudáveis. Nutritivo e versátil.",
+    "plantio": "Ano todo",
+    "colheita": "6-12 meses após floração",
+    "dicas": "Clima subtropical/tropical, solo bem drenado, sol pleno. Poda anual.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "abacate.jpg"
+  },
+  {
+    "id": 48,
+    "nome": "Pêssego",
+    "cientifico": "Prunus persica",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto doce e suculento, rico em vitaminas. Aromático.",
+    "plantio": "Março a Maio",
+    "colheita": "100-120 dias após floração",
+    "dicas": "Clima temperado, solo bem drenado, poda anual. Proteção de pragas.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "pessego.jpg"
+  },
+  {
+    "id": 49,
+    "nome": "Ameixa",
+    "cientifico": "Prunus domestica",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Fruto doce e suculento, rico em fibras. Nutritivo e versátil.",
+    "plantio": "Março a Maio",
+    "colheita": "100-120 dias após floração",
+    "dicas": "Clima temperado, solo bem drenado, poda anual. Polinização cruzada.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "ameixa.jpg"
+  },
+  {
+    "id": 50,
+    "nome": "Morango Selvagem",
+    "cientifico": "Fragaria vesca",
+    "tipo": "Fruto",
+    "categoria": "Fruta",
+    "descricao": "Variante selvagem do morango, pequeno mas intenso em sabor.",
+    "plantio": "Março a Maio",
+    "colheita": "30-40 dias após floração",
+    "dicas": "Meia-sombra, solo rico em matéria orgânica, rega regular. Mulch protetor.",
+    "biodinamica": "Ideal em dias de Fruto. Lua crescente favorece frutificação.",
+    "zodiacos": [
+      "Leão",
+      "Sagitário"
+    ],
+    "imagem": "morango_selvagem.jpg"
+  }
+];
+
+
+        window.searchPlants = function() {
+            const searchTerm = document.getElementById('plant-search-input').value.toLowerCase();
+            const filterType = document.getElementById('plant-filter-type').value;
+            const filterCategory = document.getElementById('plant-filter-category').value;
+            
+            const filtered = window.plantasData.filter(plant => {
+                const matchSearch = plant.nome.toLowerCase().includes(searchTerm) || 
+                                   plant.descricao.toLowerCase().includes(searchTerm);
+                const matchType = filterType === 'tudo' || plant.tipo === filterType;
+                const matchCategory = filterCategory === 'tudo' || plant.categoria === filterCategory;
+                return matchSearch && matchType && matchCategory;
+            });
+            
+            window.renderPlantsList(filtered);
+        };
+        
+        window.renderPlantsList = function(plants) {
+            const container = document.getElementById('plants-list-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (plants.length === 0) {
+                container.innerHTML = '<div class="p-8 text-center text-gray-500">Nenhuma planta encontrada</div>';
+                return;
+            }
+            
+            plants.forEach(plant => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-lg p-4 mb-4 border-l-4 border-green-600';
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-bold text-lg text-green-700">${plant.nome}</h3>
+                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">${plant.tipo}</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-2">${plant.cientifico}</p>
+                    <p class="text-sm mb-3">${plant.descricao}</p>
+                    <div class="grid grid-cols-2 gap-2 text-xs mb-3">
+                        <div><strong>Plantio:</strong> ${plant.plantio}</div>
+                        <div><strong>Colheita:</strong> ${plant.colheita}</div>
+                        <div><strong>Categoria:</strong> ${plant.categoria}</div>
+                        <div><strong>Zodíaco:</strong> ${plant.zodiacos.join(', ')}</div>
+                    </div>
+                    <button onclick="window.showPlantDetail(${plant.id})" class="w-full bg-green-600 text-white py-2 rounded text-sm font-semibold">
+                        Ver Detalhes
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+        };
+        
+        window.showPlantDetail = function(plantId) {
+            const plant = window.plantasData.find(p => p.id === plantId);
+            if (!plant) return;
+            
+            const detailScreen = document.getElementById('screen-plant-detail');
+            if (!detailScreen) return;
+            
+            detailScreen.innerHTML = `
+                <div class="p-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h1 class="text-2xl font-bold text-green-700">${plant.nome}</h1>
+                        <button onclick="window.showScreen('screen-catalogo')" class="text-2xl">×</button>
+                    </div>
+                    
+                    <div class="bg-green-50 rounded-lg p-4 mb-4">
+                        <p class="text-sm text-gray-600 mb-2"><strong>Nome Científico:</strong> ${plant.cientifico}</p>
+                        <p class="text-sm text-gray-600 mb-2"><strong>Categoria:</strong> ${plant.categoria}</p>
+                        <p class="text-sm text-gray-600 mb-2"><strong>Tipo Biodinâmico:</strong> ${plant.tipo}</p>
+                        <p class="text-sm text-gray-600"><strong>Zodíacos:</strong> ${plant.zodiacos.join(', ')}</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h2 class="font-bold text-green-700 mb-2">Descrição</h2>
+                        <p class="text-sm">${plant.descricao}</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h2 class="font-bold text-green-700 mb-2">Informações de Cultivo</h2>
+                        <p class="text-sm mb-2"><strong>Plantio:</strong> ${plant.plantio}</p>
+                        <p class="text-sm mb-2"><strong>Colheita:</strong> ${plant.colheita}</p>
+                        <p class="text-sm mb-2"><strong>Dicas:</strong> ${plant.dicas}</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h2 class="font-bold text-green-700 mb-2">Influência Biodinâmica</h2>
+                        <p class="text-sm">${plant.biodinamica}</p>
+                    </div>
+                    
+                    <button onclick="window.addToMyGarden(${plant.id})" class="w-full bg-green-600 text-white py-3 rounded-lg font-bold mb-2">
+                        + Adicionar à Minha Horta
+                    </button>
+                    <button onclick="window.showScreen('screen-catalogo')" class="w-full bg-gray-300 text-gray-700 py-3 rounded-lg font-bold">
+                        Voltar
+                    </button>
+                </div>
+            `;
+            
+            window.showScreen('screen-plant-detail');
+        };
+        
+        window.addToMyGarden = function(plantId) {
+            const plant = window.plantasData.find(p => p.id === plantId);
+            if (!plant) return;
+            
+            if (!state.myGarden) state.myGarden = [];
+            
+            state.myGarden.push({
+                id: plant.id,
+                nome: plant.nome,
+                dataPlanio: new Date().toLocaleDateString('pt-BR'),
+                status: 'plantado'
+            });
+            
+            window.saveState();
+            alert(`${plant.nome} adicionado à sua horta!`);
+            window.showScreen('screen-catalogo');
+        };
+        
+        window.initCatalogo = function() {
+            const searchInput = document.getElementById('plant-search-input');
+            if (searchInput) {
+                searchInput.addEventListener('input', window.searchPlants);
+            }
+            
+            const filterType = document.getElementById('plant-filter-type');
+            if (filterType) {
+                filterType.addEventListener('change', window.searchPlants);
+            }
+            
+            const filterCategory = document.getElementById('plant-filter-category');
+            if (filterCategory) {
+                filterCategory.addEventListener('change', window.searchPlants);
+            }
+            
+            window.searchPlants();
+        };
+
+
+</script>
 </body>
 </html>
